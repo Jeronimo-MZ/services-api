@@ -2,20 +2,25 @@ import { mockAddUserParams } from "@/domain/test/mockUser";
 import { throwError } from "@/domain/test/testHelpers";
 
 import { Hasher } from "../protocols/cryptography/Hasher";
+import { LoadUserByEmailRepository } from "../protocols/database/User/LoadUserByEmailRepository";
+import { mockLoadUserByEmailRepository } from "../test";
 import { mockHasher } from "../test/mockCryptography";
 import { DbAddUser } from "./DbAddUser";
 
 type SutTypes = {
     sut: DbAddUser;
     hasherStub: Hasher;
+    loadUserByEmailRepositoryStub: LoadUserByEmailRepository;
 };
 
 const makeSut = (): SutTypes => {
     const hasherStub = mockHasher();
-    const sut = new DbAddUser(hasherStub);
+    const loadUserByEmailRepositoryStub = mockLoadUserByEmailRepository();
+    const sut = new DbAddUser(hasherStub, loadUserByEmailRepositoryStub);
     return {
         sut,
         hasherStub,
+        loadUserByEmailRepositoryStub,
     };
 };
 
@@ -36,5 +41,17 @@ describe("DbAddUser", () => {
 
         const promise = sut.add(addUserParams);
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call LoadUserByEmailRepository with correct email", async () => {
+        const { sut, loadUserByEmailRepositoryStub } = makeSut();
+        const loadByEmailSpy = jest.spyOn(
+            loadUserByEmailRepositoryStub,
+            "loadByEmail",
+        );
+
+        const addUserParams = mockAddUserParams();
+        await sut.add(addUserParams);
+        expect(loadByEmailSpy).toHaveBeenCalledWith(addUserParams.email);
     });
 });
