@@ -1,7 +1,11 @@
 import faker from "faker";
 
-import { MissingParamError } from "@/presentation/errors/MissingParamError";
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import { throwError } from "@/domain/mocks";
+import { MissingParamError, ServerError } from "@/presentation/errors";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import { AdduserSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
@@ -35,6 +39,7 @@ const mockRequest = (): HttpRequest => {
         },
     };
 };
+
 describe("SignUp Controller", () => {
     it("should call Validation with correct values", async () => {
         const { sut, validationSpy } = makeSut();
@@ -61,5 +66,12 @@ describe("SignUp Controller", () => {
             email: httpRequest.body.email,
             password: httpRequest.body.password,
         });
+    });
+
+    it("should return 500 if AddUser throws", async () => {
+        const { sut, addUserSpy } = makeSut();
+        jest.spyOn(addUserSpy, "add").mockImplementationOnce(throwError);
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
 });
