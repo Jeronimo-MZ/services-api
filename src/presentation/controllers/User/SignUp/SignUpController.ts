@@ -32,7 +32,7 @@ export class SignUpController implements Controller {
                 return forbidden(new EmailInUseError());
             }
 
-            return ok({ user });
+            return ok({ user: { ...user, password: undefined } });
         } catch (error) {
             return serverError(error as Error);
         }
