@@ -1,12 +1,16 @@
+import { InvalidParamError } from "@/presentation/errors";
 import { Validation } from "@/presentation/protocols";
 
 export class MinLengthValidation implements Validation {
     constructor(
-        private readonly _field: string,
+        private readonly field: string,
         private readonly _minLength: number,
     ) {}
 
-    validate(_input: any): Error | null {
+    validate(input: any): Error | null {
+        if (typeof input[this.field] !== "string") {
+            return new InvalidParamError(this.field);
+        }
         return null;
     }
 }
