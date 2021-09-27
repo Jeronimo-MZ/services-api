@@ -21,6 +21,7 @@
         "@types/faker": "^5.5.8",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.10.1",
+        "@types/validator": "^13.6.3",
         "@typescript-eslint/eslint-plugin": "^4.31.2",
         "@typescript-eslint/parser": "^4.31.2",
         "eslint": "^7.32.0",
@@ -43,6 +44,7 @@
     "dependencies": {
         "bcrypt": "^5.0.1",
         "module-alias": "^2.2.2",
-        "mongodb": "^4.1.2"
+        "mongodb": "^4.1.2",
+        "validator": "^13.6.0"
     }
 }
