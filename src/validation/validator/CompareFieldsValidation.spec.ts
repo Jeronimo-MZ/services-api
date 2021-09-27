@@ -20,4 +20,14 @@ describe("Compare Fields Validation", () => {
         });
         expect(error).toEqual(new InvalidParamError(fieldToCompare));
     });
+
+    it("should return null if validation succeeds", () => {
+        const sut = makeSut();
+        const value = faker.random.word();
+        const error = sut.validate({
+            [field]: value,
+            [fieldToCompare]: value,
+        });
+        expect(error).toBeNull();
+    });
 });
