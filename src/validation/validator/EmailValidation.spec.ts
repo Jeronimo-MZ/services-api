@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
+import { InvalidParamError } from "@/presentation/errors";
 import { EmailValidatorSpy } from "@/validation/mocks/mockEmailValidator";
 
 import { EmailValidation } from "./EmailValidation";
@@ -30,8 +31,7 @@ describe("Email Validation", () => {
     });
 
     it("should return null if EmailValidator returns true", () => {
-        const { sut, emailValidatorSpy } = makeSut();
-        emailValidatorSpy.isEmailValid = false;
+        const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.internet.email() });
         expect(error).toBeNull();
     });
@@ -42,5 +42,13 @@ describe("Email Validation", () => {
             throwError,
         );
         expect(sut.validate).toThrow();
+    });
+
+    it("should return an error if EmailValidator returns false", () => {
+        const { sut, emailValidatorSpy } = makeSut();
+        emailValidatorSpy.isEmailValid = false;
+
+        const error = sut.validate({ [field]: faker.internet.email() });
+        expect(error).toEqual(new InvalidParamError(field));
     });
 });
