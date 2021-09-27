@@ -3,6 +3,7 @@ import { EmailInUseError } from "@/presentation/errors";
 import {
     badRequest,
     forbidden,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import {
@@ -31,7 +32,7 @@ export class SignUpController implements Controller {
                 return forbidden(new EmailInUseError());
             }
 
-            return null as unknown as HttpResponse;
+            return ok({ user });
         } catch (error) {
             return serverError(error as Error);
         }
