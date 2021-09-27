@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import { MissingParamError } from "@/presentation/errors";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { ValidationComposite } from "./ValidationComposite";
@@ -28,5 +29,12 @@ describe("Validation Composite", () => {
         const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.random.word() });
         expect(error).toBeNull();
+    });
+
+    it("should return an error if any validation fails", () => {
+        const { sut, validationSpies } = makeSut();
+        validationSpies[1].error = new MissingParamError(field);
+        const error = sut.validate({ [field]: faker.random.word() });
+        expect(error).toEqual(validationSpies[1].error);
     });
 });
