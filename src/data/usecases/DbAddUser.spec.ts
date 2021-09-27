@@ -67,4 +67,10 @@ describe("DbAddUser", () => {
         const promise = sut.add(addUserParams);
         await expect(promise).rejects.toThrow();
     });
+
+    it("should return null if LoadUserByEmailRepository returns a User", async () => {
+        const { sut } = makeSut();
+        const user = await sut.add(mockAddUserParams());
+        expect(user).toBeNull();
+    });
 });
