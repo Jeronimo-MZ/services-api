@@ -38,6 +38,11 @@ export class UserMongoRepository
         );
 
         const user = (await usersCollection.findOne({ email })) as Document;
+
+        if (!user) {
+            return null;
+        }
+
         return MongoHelper.map({
             ...user,
         });
