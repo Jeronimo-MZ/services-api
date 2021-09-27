@@ -22,4 +22,11 @@ describe("EmailValidatorAdapter", () => {
         sut.isValid(email);
         expect(isEmailSpy).toHaveBeenCalledWith(email);
     });
+
+    it("should return false if validator returns false", () => {
+        const sut = makeSut();
+        jest.spyOn(validator, "isEmail").mockReturnValueOnce(false);
+        const isValid = sut.isValid(faker.internet.email());
+        expect(isValid).toBe(false);
+    });
 });
