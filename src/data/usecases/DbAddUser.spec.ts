@@ -19,7 +19,7 @@ const makeSut = (): SutTypes => {
 };
 
 describe("DbAddUser", () => {
-    it("should Hasher with correct password", async () => {
+    it("should call Hasher with correct password", async () => {
         const { sut, hasherStub } = makeSut();
         const hashSpy = jest.spyOn(hasherStub, "hash");
         const addUserParams = mockAddUserParams();
