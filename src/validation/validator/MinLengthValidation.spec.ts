@@ -1,5 +1,7 @@
 import faker from "faker";
 
+import { InvalidParamError } from "@/presentation/errors";
+
 import { MinLengthValidation } from "./MinLengthValidation";
 
 const field = faker.random.word();
@@ -21,5 +23,11 @@ describe("Email Validation", () => {
         const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.random.alphaNumeric(5) });
         expect(error).toBeNull();
+    });
+
+    it("should return InvalidParamError if field is not string", () => {
+        const { sut } = makeSut();
+        const error = sut.validate({ [field]: faker.datatype.number() });
+        expect(error).toEqual(new InvalidParamError(field));
     });
 });
