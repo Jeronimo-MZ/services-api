@@ -2,12 +2,12 @@ import faker from "faker";
 
 import { Hasher } from "@/data/protocols/cryptography";
 
-export const mockHasher = (): Hasher => {
-    class HasherStub implements Hasher {
-        async hash(_payload: string): Promise<string> {
-            return faker.random.alphaNumeric(30);
-        }
-    }
+export class HasherSpy implements Hasher {
+    digest = faker.datatype.uuid();
+    plaintext: string;
 
-    return new HasherStub();
-};
+    async hash(plaintext: string): Promise<string> {
+        this.plaintext = plaintext;
+        return this.digest;
+    }
+}

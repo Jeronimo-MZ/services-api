@@ -6,22 +6,22 @@ import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
 
-export const mockLoadUserByEmailRepository = (): LoadUserByEmailRepository => {
-    class LoadUserByEmailRepositoryStub implements LoadUserByEmailRepository {
-        async loadByEmail(_email: string): Promise<User | null> {
-            return mockUserModel();
-        }
+export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
+    email: string;
+    result: User | null = mockUserModel();
+
+    async loadByEmail(email: string): Promise<User | null> {
+        this.email = email;
+        return this.result;
     }
+}
 
-    return new LoadUserByEmailRepositoryStub();
-};
+export class AddUserRepositorySpy implements AddUserRepository {
+    params: AddUserParams;
+    result: User = mockUserModel();
 
-export const mockAddUserRepository = (): AddUserRepository => {
-    class AddUserRepositoryStub implements AddUserRepository {
-        async add(_userData: AddUserParams): Promise<User> {
-            return mockUserModel();
-        }
+    async add(params: AddUserParams): Promise<User> {
+        this.params = params;
+        return this.result;
     }
-
-    return new AddUserRepositoryStub();
-};
+}

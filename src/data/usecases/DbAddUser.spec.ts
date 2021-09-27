@@ -1,136 +1,103 @@
 import {
-    mockAddUserRepository,
-    mockHasher,
-    mockLoadUserByEmailRepository,
+    AddUserRepositorySpy,
+    HasherSpy,
+    LoadUserByEmailRepositorySpy,
 } from "@/data/mocks";
-import { Hasher } from "@/data/protocols/cryptography";
-import {
-    AddUserRepository,
-    LoadUserByEmailRepository,
-} from "@/data/protocols/database/User/";
 import { mockAddUserParams, mockUserModel, throwError } from "@/domain/mocks";
 
 import { DbAddUser } from "./DbAddUser";
 
 type SutTypes = {
     sut: DbAddUser;
-    hasherStub: Hasher;
-    loadUserByEmailRepositoryStub: LoadUserByEmailRepository;
-    addUserRepositoryStub: AddUserRepository;
+    hasherSpy: HasherSpy;
+    loadUserByEmailRepositorySpy: LoadUserByEmailRepositorySpy;
+    addUserRepositorySpy: AddUserRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
-    const loadUserByEmailRepositoryStub = mockLoadUserByEmailRepository();
-    jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockReturnValue(
-        Promise.resolve(null),
-    );
+    const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy();
+    loadUserByEmailRepositorySpy.result = null;
 
-    const hasherStub = mockHasher();
-    const addUserRepositoryStub = mockAddUserRepository();
+    const hasherSpy = new HasherSpy();
+    const addUserRepositorySpy = new AddUserRepositorySpy();
     const sut = new DbAddUser(
-        hasherStub,
-        loadUserByEmailRepositoryStub,
-        addUserRepositoryStub,
+        hasherSpy,
+        loadUserByEmailRepositorySpy,
+        addUserRepositorySpy,
     );
     return {
         sut,
-        hasherStub,
-        loadUserByEmailRepositoryStub,
-        addUserRepositoryStub,
+        hasherSpy,
+        loadUserByEmailRepositorySpy,
+        addUserRepositorySpy,
     };
 };
 
 describe("DbAddUser", () => {
     it("should call Hasher with correct password", async () => {
-        const { sut, hasherStub } = makeSut();
-        const hashSpy = jest.spyOn(hasherStub, "hash");
+        const { sut, hasherSpy } = makeSut();
         const addUserParams = mockAddUserParams();
         await sut.add(addUserParams);
-        expect(hashSpy).toHaveBeenCalledWith(addUserParams.password);
+        expect(hasherSpy.plaintext).toEqual(addUserParams.password);
     });
 
     it("should throw if Hasher throws", async () => {
-        const { hasherStub, sut } = makeSut();
-
-        jest.spyOn(hasherStub, "hash").mockImplementationOnce(throwError);
-        const addUserParams = mockAddUserParams();
-
-        const promise = sut.add(addUserParams);
+        const { hasherSpy, sut } = makeSut();
+        jest.spyOn(hasherSpy, "hash").mockImplementationOnce(throwError);
+        const promise = sut.add(mockAddUserParams());
         await expect(promise).rejects.toThrow();
     });
 
     it("should call LoadUserByEmailRepository with correct email", async () => {
-        const { sut, loadUserByEmailRepositoryStub } = makeSut();
-        const loadByEmailSpy = jest.spyOn(
-            loadUserByEmailRepositoryStub,
-            "loadByEmail",
-        );
-
+        const { sut, loadUserByEmailRepositorySpy } = makeSut();
         const addUserParams = mockAddUserParams();
         await sut.add(addUserParams);
-        expect(loadByEmailSpy).toHaveBeenCalledWith(addUserParams.email);
+        expect(loadUserByEmailRepositorySpy.email).toEqual(addUserParams.email);
     });
 
     it("should throw if LoadUserByEmailRepository throws", async () => {
-        const { sut, loadUserByEmailRepositoryStub } = makeSut();
-
+        const { sut, loadUserByEmailRepositorySpy } = makeSut();
         jest.spyOn(
-            loadUserByEmailRepositoryStub,
+            loadUserByEmailRepositorySpy,
             "loadByEmail",
         ).mockImplementationOnce(throwError);
-        const addUserParams = mockAddUserParams();
-
-        const promise = sut.add(addUserParams);
+        const promise = sut.add(mockAddUserParams());
         await expect(promise).rejects.toThrow();
     });
 
     it("should return null if LoadUserByEmailRepository returns a User", async () => {
-        const { sut, loadUserByEmailRepositoryStub } = makeSut();
-        jest.spyOn(
-            loadUserByEmailRepositoryStub,
-            "loadByEmail",
-        ).mockReturnValueOnce(Promise.resolve(mockUserModel()));
+        const { sut, loadUserByEmailRepositorySpy } = makeSut();
+        loadUserByEmailRepositorySpy.result = mockUserModel();
         const user = await sut.add(mockAddUserParams());
         expect(user).toBeNull();
     });
 
     it("should call AddUserRepository with correct values", async () => {
-        const { addUserRepositoryStub, sut, hasherStub } = makeSut();
-
-        const addSpy = jest.spyOn(addUserRepositoryStub, "add");
-        jest.spyOn(hasherStub, "hash").mockReturnValueOnce(
-            Promise.resolve("hashed_password"),
-        );
-
+        const { addUserRepositorySpy, sut, hasherSpy } = makeSut();
+        hasherSpy.digest = "hashed_password";
         const addUserParams = mockAddUserParams();
-
         await sut.add(addUserParams);
-        expect(addSpy).toBeCalledWith({
+        expect(addUserRepositorySpy.params).toEqual({
             ...addUserParams,
             password: "hashed_password",
         });
     });
 
     it("should throw if AddUserRepository throws", async () => {
-        const { sut, addUserRepositoryStub } = makeSut();
+        const { sut, addUserRepositorySpy } = makeSut();
 
-        jest.spyOn(addUserRepositoryStub, "add").mockImplementationOnce(
+        jest.spyOn(addUserRepositorySpy, "add").mockImplementationOnce(
             throwError,
         );
         const addUserParams = mockAddUserParams();
-
         const promise = sut.add(addUserParams);
         await expect(promise).rejects.toThrow();
     });
 
     it("should return an User on success", async () => {
-        const { sut, addUserRepositoryStub } = makeSut();
-        const userModel = mockUserModel();
-        jest.spyOn(addUserRepositoryStub, "add").mockReturnValueOnce(
-            Promise.resolve(userModel),
-        );
+        const { sut, addUserRepositorySpy } = makeSut();
         const user = await sut.add(mockAddUserParams());
         expect(user).toBeTruthy();
-        expect(user).toBe(userModel);
+        expect(user).toBe(addUserRepositorySpy.result);
     });
 });
