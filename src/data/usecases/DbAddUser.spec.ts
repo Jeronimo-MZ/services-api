@@ -98,4 +98,16 @@ describe("DbAddUser", () => {
             password: "hashed_password",
         });
     });
+
+    it("should throw if AddUserRepository throws", async () => {
+        const { sut, addUserRepositoryStub } = makeSut();
+
+        jest.spyOn(addUserRepositoryStub, "add").mockImplementationOnce(
+            throwError,
+        );
+        const addUserParams = mockAddUserParams();
+
+        const promise = sut.add(addUserParams);
+        await expect(promise).rejects.toThrow();
+    });
 });
