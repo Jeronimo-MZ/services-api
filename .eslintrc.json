@@ -19,6 +19,10 @@
         "indent": "off",
         "prettier/prettier": "error",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": [
+            "error",
+            { "allowArgumentsExplicitlyTypedAsAny": true }
+        ],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"]
