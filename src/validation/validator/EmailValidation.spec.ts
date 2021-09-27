@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import { throwError } from "@/domain/mocks";
 import { EmailValidatorSpy } from "@/validation/mocks/mockEmailValidator";
 
 import { EmailValidation } from "./EmailValidation";
@@ -33,5 +34,13 @@ describe("Email Validation", () => {
         emailValidatorSpy.isEmailValid = false;
         const error = sut.validate({ [field]: faker.internet.email() });
         expect(error).toBeNull();
+    });
+
+    it("should throw if EmailValidator throws", () => {
+        const { sut, emailValidatorSpy } = makeSut();
+        jest.spyOn(emailValidatorSpy, "isValid").mockImplementationOnce(
+            throwError,
+        );
+        expect(sut.validate).toThrow();
     });
 });
