@@ -1,5 +1,8 @@
 import { AddUser } from "@/domain/usecases/AddUser";
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import {
     Controller,
     HttpRequest,
@@ -13,13 +16,17 @@ export class SignUpController implements Controller {
         private readonly addUser: AddUser,
     ) {}
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const error = this.validation.validate(httpRequest.body);
-        if (error) {
-            return badRequest(error);
-        }
+        try {
+            const error = this.validation.validate(httpRequest.body);
+            if (error) {
+                return badRequest(error);
+            }
 
-        const { name, email, password } = httpRequest.body;
-        await this.addUser.add({ name, email, password });
-        return null as unknown as HttpResponse;
+            const { name, email, password } = httpRequest.body;
+            await this.addUser.add({ name, email, password });
+            return null as unknown as HttpResponse;
+        } catch (error) {
+            return serverError(error as Error);
+        }
     }
 }
