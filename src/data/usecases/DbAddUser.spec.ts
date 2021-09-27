@@ -54,4 +54,17 @@ describe("DbAddUser", () => {
         await sut.add(addUserParams);
         expect(loadByEmailSpy).toHaveBeenCalledWith(addUserParams.email);
     });
+
+    it("should throw if LoadUserByEmailRepository throws", async () => {
+        const { sut, loadUserByEmailRepositoryStub } = makeSut();
+
+        jest.spyOn(
+            loadUserByEmailRepositoryStub,
+            "loadByEmail",
+        ).mockImplementationOnce(throwError);
+        const addUserParams = mockAddUserParams();
+
+        const promise = sut.add(addUserParams);
+        await expect(promise).rejects.toThrow();
+    });
 });
