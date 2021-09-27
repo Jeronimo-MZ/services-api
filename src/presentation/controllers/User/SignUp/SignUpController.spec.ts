@@ -9,6 +9,7 @@ import {
 import {
     badRequest,
     forbidden,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { AdduserSpy } from "@/presentation/mocks/mockUser";
@@ -85,5 +86,11 @@ describe("SignUp Controller", () => {
         addUserSpy.result = null;
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(forbidden(new EmailInUseError()));
+    });
+
+    it("should return 200 if valid data is provided", async () => {
+        const { sut, addUserSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(ok({ user: addUserSpy.result }));
     });
 });
