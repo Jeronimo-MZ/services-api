@@ -4,5 +4,8 @@
     "author": {
         "name": "Jerónimo Matavel"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "git-commit-msg-linter": "^3.2.8"
+    }
 }
