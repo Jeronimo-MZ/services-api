@@ -15,8 +15,6 @@ export const mockUserModel = (): User => ({
     email: faker.internet.email(),
     password: faker.internet.password(),
     isAdmin: false,
-    avatar: undefined,
-    occupation: undefined,
-    createdAt: faker.date.past(),
-    updatedAt: faker.date.past(),
+    avatar: null,
+    occupation: null,
 });

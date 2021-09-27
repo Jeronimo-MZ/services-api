@@ -21,11 +21,11 @@ export const MongoHelper = {
         return this.client.db().collection(name);
     },
 
-    map(collection: Document): any {
-        const { _id, ...collectionWithoutId } = collection;
+    map(document: Document): any {
+        const { _id, ...documentWithoutId } = document;
         return {
-            id: _id,
-            ...collectionWithoutId,
+            id: _id.toHexString(),
+            ...documentWithoutId,
         };
     },
 };

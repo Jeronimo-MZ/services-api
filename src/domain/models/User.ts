@@ -3,9 +3,7 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    avatar?: string;
-    occupation?: string;
+    avatar: string | null;
+    occupation: string | null;
     isAdmin: boolean;
-    createdAt: Date;
-    updatedAt: Date;
 }
