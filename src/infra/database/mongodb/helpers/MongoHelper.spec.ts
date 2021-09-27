@@ -1,3 +1,4 @@
+import { CollectionNames } from ".";
 import { MongoHelper as sut } from "./MongoHelper";
 
 describe("Mongo Helper", () => {
@@ -10,10 +11,10 @@ describe("Mongo Helper", () => {
     });
 
     it("Should reconnect if mongodb client is down", async () => {
-        let accountCollection = await sut.getCollection("accounts");
-        expect(accountCollection).toBeTruthy();
+        let usersCollection = await sut.getCollection(CollectionNames.USER);
+        expect(usersCollection).toBeTruthy();
         await sut.disconnect();
-        accountCollection = await sut.getCollection("accounts");
-        expect(accountCollection).toBeTruthy();
+        usersCollection = await sut.getCollection(CollectionNames.USER);
+        expect(usersCollection).toBeTruthy();
     });
 });

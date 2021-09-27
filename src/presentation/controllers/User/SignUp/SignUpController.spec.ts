@@ -2,6 +2,7 @@ import faker from "faker";
 
 import { MissingParamError } from "@/presentation/errors/MissingParamError";
 import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import { AdduserSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
 
@@ -10,14 +11,17 @@ import { SignUpController } from "./SignUpController";
 type SutTypes = {
     sut: SignUpController;
     validationSpy: ValidationSpy;
+    addUserSpy: AdduserSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new SignUpController(validationSpy);
+    const addUserSpy = new AdduserSpy();
+    const sut = new SignUpController(validationSpy, addUserSpy);
     return {
         sut,
         validationSpy,
+        addUserSpy,
     };
 };
 const mockRequest = (): HttpRequest => {
@@ -44,5 +48,18 @@ describe("SignUp Controller", () => {
         validationSpy.error = new MissingParamError(faker.random.word());
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(badRequest(validationSpy.error));
+    });
+
+    it("should call AddUser with correct values", async () => {
+        const { sut, addUserSpy } = makeSut();
+
+        const httpRequest = mockRequest();
+
+        await sut.handle(httpRequest);
+        expect(addUserSpy.params).toEqual({
+            name: httpRequest.body.name,
+            email: httpRequest.body.email,
+            password: httpRequest.body.password,
+        });
     });
 });
