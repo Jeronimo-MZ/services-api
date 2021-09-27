@@ -1,5 +1,5 @@
+import { mockUserModel } from "@/domain/mocks/mockUser";
 import { User } from "@/domain/models/User";
-import { mockUserModel } from "@/domain/test/mockUser";
 import { AddUserParams } from "@/domain/usecases/AddUser";
 
 import { AddUserRepository } from "../protocols/database/User/AddUserRepository";
