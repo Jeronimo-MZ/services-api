@@ -30,4 +30,10 @@ describe("Email Validation", () => {
         const error = sut.validate({ [field]: faker.datatype.number() });
         expect(error).toEqual(new InvalidParamError(field));
     });
+
+    it("should return InvalidParamError if validation fails", () => {
+        const { sut } = makeSut();
+        const error = sut.validate({ [field]: faker.random.alphaNumeric(4) });
+        expect(error).toEqual(new InvalidParamError(field));
+    });
 });
