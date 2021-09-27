@@ -1,4 +1,4 @@
-import { mockAddUserParams } from "@/domain/test/mockUser";
+import { mockAddUserParams, mockUserModel } from "@/domain/test/mockUser";
 import { throwError } from "@/domain/test/testHelpers";
 
 import { Hasher } from "../protocols/cryptography/Hasher";
@@ -16,8 +16,12 @@ type SutTypes = {
 };
 
 const makeSut = (): SutTypes => {
-    const hasherStub = mockHasher();
     const loadUserByEmailRepositoryStub = mockLoadUserByEmailRepository();
+    jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockReturnValue(
+        Promise.resolve(null),
+    );
+
+    const hasherStub = mockHasher();
     const addUserRepositoryStub = mockAddUserRepository();
     const sut = new DbAddUser(
         hasherStub,
@@ -77,7 +81,11 @@ describe("DbAddUser", () => {
     });
 
     it("should return null if LoadUserByEmailRepository returns a User", async () => {
-        const { sut } = makeSut();
+        const { sut, loadUserByEmailRepositoryStub } = makeSut();
+        jest.spyOn(
+            loadUserByEmailRepositoryStub,
+            "loadByEmail",
+        ).mockReturnValueOnce(Promise.resolve(mockUserModel()));
         const user = await sut.add(mockAddUserParams());
         expect(user).toBeNull();
     });
@@ -90,11 +98,11 @@ describe("DbAddUser", () => {
             Promise.resolve("hashed_password"),
         );
 
-        const userData = mockAddUserParams();
+        const addUserParams = mockAddUserParams();
 
-        await sut.add(userData);
+        await sut.add(addUserParams);
         expect(addSpy).toBeCalledWith({
-            ...userData,
+            ...addUserParams,
             password: "hashed_password",
         });
     });
@@ -109,5 +117,16 @@ describe("DbAddUser", () => {
 
         const promise = sut.add(addUserParams);
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should return an User on success", async () => {
+        const { sut, addUserRepositoryStub } = makeSut();
+        const userModel = mockUserModel();
+        jest.spyOn(addUserRepositoryStub, "add").mockReturnValueOnce(
+            Promise.resolve(userModel),
+        );
+        const user = await sut.add(mockAddUserParams());
+        expect(user).toBeTruthy();
+        expect(user).toBe(userModel);
     });
 });
