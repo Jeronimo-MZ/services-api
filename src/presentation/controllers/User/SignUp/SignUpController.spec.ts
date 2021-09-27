@@ -1,5 +1,7 @@
 import faker from "faker";
 
+import { MissingParamError } from "@/presentation/errors/MissingParamError";
+import { badRequest } from "@/presentation/helpers/http/httpHelper";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
 
@@ -35,5 +37,12 @@ describe("SignUp Controller", () => {
         const httpRequest = mockRequest();
         await sut.handle(httpRequest);
         expect(validationSpy.input).toEqual(httpRequest.body);
+    });
+
+    it("should return 400 if validation fails", async () => {
+        const { sut, validationSpy } = makeSut();
+        validationSpy.error = new MissingParamError(faker.random.word());
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(badRequest(validationSpy.error));
     });
 });
