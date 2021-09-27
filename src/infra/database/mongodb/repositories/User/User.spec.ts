@@ -1,3 +1,4 @@
+import faker from "faker";
 import { Collection } from "mongodb";
 
 import { mockAddUserParams } from "@/domain/mocks";
@@ -41,7 +42,7 @@ describe("User Mongo Repository", () => {
     });
 
     describe("loadByEmail", () => {
-        it("Should return a user on success", async () => {
+        it("should return a user on success", async () => {
             const sut = makeSut();
             const addUserParams = mockAddUserParams();
             await usersCollection.insertOne({
@@ -61,6 +62,12 @@ describe("User Mongo Repository", () => {
             expect(user?.avatar).toBeNull();
             expect(user?.occupation).toBeNull();
             expect(user?.avatar).toBeNull();
+        });
+
+        it("should return null if loadByEmail fails", async () => {
+            const sut = makeSut();
+            const account = await sut.loadByEmail(faker.internet.email());
+            expect(account).toBeNull();
         });
     });
 });

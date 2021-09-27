@@ -10,7 +10,7 @@ describe("Mongo Helper", () => {
         await sut.disconnect();
     });
 
-    it("Should reconnect if mongodb client is down", async () => {
+    it("should reconnect if mongodb client is down", async () => {
         let usersCollection = await sut.getCollection(CollectionNames.USER);
         expect(usersCollection).toBeTruthy();
         await sut.disconnect();
