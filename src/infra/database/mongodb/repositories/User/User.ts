@@ -1,11 +1,16 @@
-import { AddUserRepository } from "@/data/protocols/database/User";
+import {
+    AddUserRepository,
+    LoadUserByEmailRepository,
+} from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
 
 import { CollectionNames } from "../../helpers/Collections";
 import { MongoHelper } from "../../helpers/MongoHelper";
 
-export class UserMongoRepository implements AddUserRepository {
+export class UserMongoRepository
+    implements AddUserRepository, LoadUserByEmailRepository
+{
     async add({ name, email, password }: AddUserParams): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
             CollectionNames.USER,
@@ -22,6 +27,17 @@ export class UserMongoRepository implements AddUserRepository {
         const user = (await usersCollection.findOne(
             result.insertedId,
         )) as Document;
+        return MongoHelper.map({
+            ...user,
+        });
+    }
+
+    async loadByEmail(email: string): Promise<User | null> {
+        const usersCollection = await MongoHelper.getCollection(
+            CollectionNames.USER,
+        );
+
+        const user = (await usersCollection.findOne({ email })) as Document;
         return MongoHelper.map({
             ...user,
         });
