@@ -17,6 +17,7 @@
     },
     "devDependencies": {
         "@shelf/jest-mongodb": "^2.1.0",
+        "@types/bcrypt": "^5.0.0",
         "@types/faker": "^5.5.8",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.10.1",
@@ -40,6 +41,7 @@
         "@": "dist"
     },
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "module-alias": "^2.2.2",
         "mongodb": "^4.1.2"
     }
