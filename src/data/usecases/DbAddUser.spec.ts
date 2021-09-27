@@ -1,4 +1,5 @@
 import { mockAddUserParams } from "@/domain/test/mockUser";
+import { throwError } from "@/domain/test/testHelpers";
 
 import { Hasher } from "../protocols/cryptography/Hasher";
 import { mockHasher } from "../test/mockCryptography";
@@ -25,5 +26,15 @@ describe("DbAddUser", () => {
         const addUserParams = mockAddUserParams();
         await sut.add(addUserParams);
         expect(hashSpy).toHaveBeenCalledWith(addUserParams.password);
+    });
+
+    it("should throw if Hasher throws", async () => {
+        const { hasherStub, sut } = makeSut();
+
+        jest.spyOn(hasherStub, "hash").mockImplementationOnce(throwError);
+        const addUserParams = mockAddUserParams();
+
+        const promise = sut.add(addUserParams);
+        await expect(promise).rejects.toThrow();
     });
 });
