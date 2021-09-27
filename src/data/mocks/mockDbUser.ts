@@ -1,9 +1,10 @@
-import { mockUserModel } from "@/domain/mocks/mockUser";
+import {
+    AddUserRepository,
+    LoadUserByEmailRepository,
+} from "@/data/protocols/database/User";
+import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
-
-import { AddUserRepository } from "../protocols/database/User/AddUserRepository";
-import { LoadUserByEmailRepository } from "../protocols/database/User/LoadUserByEmailRepository";
 
 export const mockLoadUserByEmailRepository = (): LoadUserByEmailRepository => {
     class LoadUserByEmailRepositoryStub implements LoadUserByEmailRepository {

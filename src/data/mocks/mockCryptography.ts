@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { Hasher } from "../protocols/cryptography/Hasher";
+import { Hasher } from "@/data/protocols/cryptography";
 
 export const mockHasher = (): Hasher => {
     class HasherStub implements Hasher {

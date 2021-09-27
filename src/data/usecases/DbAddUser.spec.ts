@@ -1,11 +1,15 @@
-import { mockAddUserParams, mockUserModel } from "@/domain/mocks/mockUser";
-import { throwError } from "@/domain/mocks/testHelpers";
+import {
+    mockAddUserRepository,
+    mockHasher,
+    mockLoadUserByEmailRepository,
+} from "@/data/mocks";
+import { Hasher } from "@/data/protocols/cryptography";
+import {
+    AddUserRepository,
+    LoadUserByEmailRepository,
+} from "@/data/protocols/database/User/";
+import { mockAddUserParams, mockUserModel, throwError } from "@/domain/mocks";
 
-import { mockAddUserRepository, mockLoadUserByEmailRepository } from "../mocks";
-import { mockHasher } from "../mocks/mockCryptography";
-import { Hasher } from "../protocols/cryptography/Hasher";
-import { AddUserRepository } from "../protocols/database/User/AddUserRepository";
-import { LoadUserByEmailRepository } from "../protocols/database/User/LoadUserByEmailRepository";
 import { DbAddUser } from "./DbAddUser";
 
 type SutTypes = {

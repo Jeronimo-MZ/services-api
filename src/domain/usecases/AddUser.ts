@@ -1,4 +1,4 @@
-import { User } from "../models/User";
+import { User } from "@/domain/models/User";
 
 export type AddUserParams = {
     name: string;
