@@ -27,4 +27,11 @@ describe("Email Validation", () => {
         sut.validate({ [field]: email });
         expect(emailValidatorSpy.email).toBe(email);
     });
+
+    it("should return null if EmailValidator returns true", () => {
+        const { sut, emailValidatorSpy } = makeSut();
+        emailValidatorSpy.isEmailValid = false;
+        const error = sut.validate({ [field]: faker.internet.email() });
+        expect(error).toBeNull();
+    });
 });
