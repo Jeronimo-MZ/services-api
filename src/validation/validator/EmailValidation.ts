@@ -1,3 +1,4 @@
+import { InvalidParamError } from "@/presentation/errors";
 import { Validation } from "@/presentation/protocols";
 
 import { EmailValidator } from "../protocols/EmailValidator";
@@ -9,7 +10,10 @@ export class EmailValidation implements Validation {
     ) {}
 
     validate(input: any): Error | null {
-        this.emailValidator.isValid(input[this.fieldName]);
+        const isValid = this.emailValidator.isValid(input[this.fieldName]);
+        if (!isValid) {
+            return new InvalidParamError(this.fieldName);
+        }
         return null;
     }
 }
