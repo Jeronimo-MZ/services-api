@@ -2,16 +2,24 @@ import { User } from "@/domain/models/User";
 import { AddUser, AddUserParams } from "@/domain/usecases/AddUser";
 
 import { Hasher } from "../protocols/cryptography/Hasher";
+import { AddUserRepository } from "../protocols/database/User/AddUserRepository";
 import { LoadUserByEmailRepository } from "../protocols/database/User/LoadUserByEmailRepository";
 
 export class DbAddUser implements AddUser {
     constructor(
         private readonly hasher: Hasher,
         private readonly loadUserByEmailRepository: LoadUserByEmailRepository,
+        private readonly addUserRepository: AddUserRepository,
     ) {}
-    async add({ password, email }: AddUserParams): Promise<User | null> {
-        await this.hasher.hash(password);
+    async add({ name, password, email }: AddUserParams): Promise<User | null> {
+        const hashed_password = await this.hasher.hash(password);
+
         await this.loadUserByEmailRepository.loadByEmail(email);
+        await this.addUserRepository.add({
+            email,
+            name,
+            password: hashed_password,
+        });
         return null;
     }
 }
