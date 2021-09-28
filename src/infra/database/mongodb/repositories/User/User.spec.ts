@@ -66,8 +66,8 @@ describe("User Mongo Repository", () => {
 
         it("should return null if loadByEmail fails", async () => {
             const sut = makeSut();
-            const account = await sut.loadByEmail(faker.internet.email());
-            expect(account).toBeNull();
+            const user = await sut.loadByEmail(faker.internet.email());
+            expect(user).toBeNull();
         });
     });
 });
