@@ -5,7 +5,7 @@ import {
     EmailValidation,
     RequiredFieldValidation,
     ValidationComposite,
-} from "@/validation/validator";
+} from "@/validation/validators";
 
 export const makeSignUpValidation = (): Validation => {
     const validations: Validation[] = [];

@@ -5,11 +5,11 @@ import {
     EmailValidation,
     RequiredFieldValidation,
     ValidationComposite,
-} from "@/validation/validator";
+} from "@/validation/validators";
 
 import { makeSignUpValidation } from "./SignUpValidationFactory";
 
-jest.mock("@/validation/validator/ValidationComposite");
+jest.mock("@/validation/validators/ValidationComposite");
 
 describe("SignUp Validation", () => {
     it("should call ValidationComposite with all validations", () => {
