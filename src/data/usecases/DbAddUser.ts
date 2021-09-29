@@ -17,11 +17,11 @@ export class DbAddUser implements AddUser {
         if (user) {
             return null;
         }
-        const hashed_password = await this.hasher.hash(password);
+        const hashedPassword = await this.hasher.hash(password);
         return await this.addUserRepository.add({
             email,
             name,
-            password: hashed_password,
+            password: hashedPassword,
         });
     }
 }
