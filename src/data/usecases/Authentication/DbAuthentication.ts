@@ -1,5 +1,8 @@
 import { Encryter, HashComparer } from "@/data/protocols/cryptography";
-import { LoadUserByEmailRepository } from "@/data/protocols/database/User";
+import {
+    LoadUserByEmailRepository,
+    UpdateAccessTokenRepository,
+} from "@/data/protocols/database/User";
 import {
     Authentication,
     AuthenticationParams,
@@ -10,6 +13,7 @@ export class DbAuthentication implements Authentication {
         private readonly loadUserByEmailRepository: LoadUserByEmailRepository,
         private readonly hashComparer: HashComparer,
         private readonly encrypter: Encryter,
+        private readonly updateAccessTokenRepository: UpdateAccessTokenRepository,
     ) {}
 
     async auth({
@@ -19,7 +23,11 @@ export class DbAuthentication implements Authentication {
         const user = await this.loadUserByEmailRepository.loadByEmail(email);
         if (!user) return null;
         await this.hashComparer.compare(password, user?.password);
-        await this.encrypter.encrypt(user.id);
+        const token = await this.encrypter.encrypt(user.id);
+        await this.updateAccessTokenRepository.updateAccessToken(
+            user.id,
+            token,
+        );
         return null;
     }
 }
