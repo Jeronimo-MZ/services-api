@@ -7,6 +7,8 @@ import { BcryptAdapter } from "./BcryptAdapter";
 
 const salt = 12;
 const generatedHash = faker.random.alphaNumeric(30);
+const plaintext = faker.internet.password();
+const digest = faker.datatype.uuid();
 
 jest.mock("bcrypt", () => ({
     hash: async (): Promise<string> => {
@@ -46,11 +48,15 @@ describe("BcryptAdapter", () => {
         it("should call compare with correct values", async () => {
             const sut = makeSut();
             const compareSpy = jest.spyOn(bcrypt, "compare");
-            const plaintext = faker.internet.password();
-            const digest = faker.datatype.uuid();
-
             await sut.compare(plaintext, digest);
             expect(compareSpy).toHaveBeenCalledWith(plaintext, digest);
+        });
+
+        it("should return false if compare fails", async () => {
+            const sut = makeSut();
+            jest.spyOn(bcrypt, "compare").mockImplementationOnce(() => false);
+            const isValid = await sut.compare(plaintext, digest);
+            expect(isValid).toBe(false);
         });
     });
 });
