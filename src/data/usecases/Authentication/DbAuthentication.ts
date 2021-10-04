@@ -1,4 +1,4 @@
-import { Encryter, HashComparer } from "@/data/protocols/cryptography";
+import { Encrypter, HashComparer } from "@/data/protocols/cryptography";
 import {
     LoadUserByEmailRepository,
     UpdateAccessTokenRepository,
@@ -12,7 +12,7 @@ export class DbAuthentication implements Authentication {
     constructor(
         private readonly loadUserByEmailRepository: LoadUserByEmailRepository,
         private readonly hashComparer: HashComparer,
-        private readonly encrypter: Encryter,
+        private readonly encrypter: Encrypter,
         private readonly updateAccessTokenRepository: UpdateAccessTokenRepository,
     ) {}
 
