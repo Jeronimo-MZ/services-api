@@ -57,4 +57,11 @@ describe("DbAuthentication", () => {
             loadUserByEmailRepositorySpy.result?.password,
         );
     });
+
+    it("should return null if HashComparer returns false", async () => {
+        const { sut, hashComparerSpy } = makeSut();
+        hashComparerSpy.isValid = false;
+        const token = await sut.auth(mockAuthenticationParams());
+        expect(token).toBeNull();
+    });
 });
