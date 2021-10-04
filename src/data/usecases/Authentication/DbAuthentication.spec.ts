@@ -1,5 +1,5 @@
 import { LoadUserByEmailRepositorySpy } from "@/data/mocks";
-import { mockAuthenticationParams } from "@/domain/mocks";
+import { mockAuthenticationParams, throwError } from "@/domain/mocks";
 
 import { DbAuthentication } from "./DbAuthentication";
 
@@ -30,5 +30,15 @@ describe("DbAuthentication", () => {
         loadUserByEmailRepositorySpy.result = null;
         const token = await sut.auth(mockAuthenticationParams());
         expect(token).toBeNull();
+    });
+
+    it("should throw if LoadUserByEmailRepository throws", async () => {
+        const { sut, loadUserByEmailRepositorySpy } = makeSut();
+        jest.spyOn(
+            loadUserByEmailRepositorySpy,
+            "loadByEmail",
+        ).mockImplementation(throwError);
+        const promise = sut.auth(mockAuthenticationParams());
+        await expect(promise).rejects.toThrow();
     });
 });
