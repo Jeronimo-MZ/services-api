@@ -1,23 +1,30 @@
-import { HashComparerSpy, LoadUserByEmailRepositorySpy } from "@/data/mocks";
+import {
+    EncrypterSpy,
+    HashComparerSpy,
+    LoadUserByEmailRepositorySpy,
+} from "@/data/mocks";
 import { mockAuthenticationParams, throwError } from "@/domain/mocks";
 
 import { DbAuthentication } from "./DbAuthentication";
 
 type SutTypes = {
     sut: DbAuthentication;
-    loadUserByEmailRepositorySpy: LoadUserByEmailRepositorySpy;
+    encrypterSpy: EncrypterSpy;
     hashComparerSpy: HashComparerSpy;
+    loadUserByEmailRepositorySpy: LoadUserByEmailRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
     const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy();
+    const encrypterSpy = new EncrypterSpy();
     const hashComparerSpy = new HashComparerSpy();
     const sut = new DbAuthentication(
         loadUserByEmailRepositorySpy,
         hashComparerSpy,
+        encrypterSpy,
     );
 
-    return { sut, loadUserByEmailRepositorySpy, hashComparerSpy };
+    return { sut, loadUserByEmailRepositorySpy, hashComparerSpy, encrypterSpy };
 };
 
 describe("DbAuthentication", () => {
@@ -70,5 +77,13 @@ describe("DbAuthentication", () => {
         jest.spyOn(hashComparerSpy, "compare").mockImplementation(throwError);
         const promise = sut.auth(mockAuthenticationParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call Encrypter with correct plaintext", async () => {
+        const { sut, encrypterSpy, loadUserByEmailRepositorySpy } = makeSut();
+        await sut.auth(mockAuthenticationParams());
+        expect(encrypterSpy.plaintext).toBe(
+            loadUserByEmailRepositorySpy.result?.id,
+        );
     });
 });
