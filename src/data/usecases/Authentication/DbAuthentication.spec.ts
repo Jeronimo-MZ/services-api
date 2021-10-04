@@ -64,4 +64,11 @@ describe("DbAuthentication", () => {
         const token = await sut.auth(mockAuthenticationParams());
         expect(token).toBeNull();
     });
+
+    it("should throw if HashComparer throws", async () => {
+        const { sut, hashComparerSpy } = makeSut();
+        jest.spyOn(hashComparerSpy, "compare").mockImplementation(throwError);
+        const promise = sut.auth(mockAuthenticationParams());
+        await expect(promise).rejects.toThrow();
+    });
 });
