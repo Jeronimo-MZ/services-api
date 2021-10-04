@@ -38,6 +38,7 @@ describe("User Mongo Repository", () => {
             expect(user.avatar).toBeNull();
             expect(user.occupation).toBeNull();
             expect(user.avatar).toBeNull();
+            expect(user.accessToken).toBeNull();
         });
     });
 
@@ -50,6 +51,7 @@ describe("User Mongo Repository", () => {
                 isAdmin: false,
                 avatar: null,
                 occupation: null,
+                accessToken: null,
             });
             const user = await sut.loadByEmail(addUserParams.email);
 
@@ -62,6 +64,7 @@ describe("User Mongo Repository", () => {
             expect(user?.avatar).toBeNull();
             expect(user?.occupation).toBeNull();
             expect(user?.avatar).toBeNull();
+            expect(user?.accessToken).toBeNull();
         });
 
         it("should return null if loadByEmail fails", async () => {

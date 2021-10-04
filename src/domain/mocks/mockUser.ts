@@ -19,6 +19,7 @@ export const mockUserModel = (): User => ({
     isAdmin: false,
     avatar: null,
     occupation: null,
+    accessToken: null,
 });
 
 export const mockAuthenticationParams = (): AuthenticationParams => ({

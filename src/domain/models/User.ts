@@ -6,4 +6,5 @@ export interface User {
     avatar: string | null;
     occupation: string | null;
     isAdmin: boolean;
+    accessToken: string | null;
 }

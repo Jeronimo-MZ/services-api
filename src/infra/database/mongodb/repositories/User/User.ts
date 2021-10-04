@@ -15,15 +15,17 @@ export class UserMongoRepository
         const usersCollection = await MongoHelper.getCollection(
             CollectionNames.USER,
         );
-
-        const result = await usersCollection.insertOne({
+        const userData: Omit<User, "id"> = {
             name,
             email,
             password,
             isAdmin: false,
             avatar: null,
             occupation: null,
-        });
+            accessToken: null,
+        };
+
+        const result = await usersCollection.insertOne(userData);
         const user = (await usersCollection.findOne(
             result.insertedId,
         )) as Document;
