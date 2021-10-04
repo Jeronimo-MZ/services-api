@@ -1,6 +1,5 @@
-import faker from "faker";
-
 import { LoadUserByEmailRepositorySpy } from "@/data/mocks";
+import { mockAuthenticationParams } from "@/domain/mocks";
 
 import { DbAuthentication } from "./DbAuthentication";
 
@@ -19,26 +18,17 @@ const makeSut = (): SutTypes => {
 describe("DbAuthentication", () => {
     it("should call LoadUserByEmailRepository with correct email", async () => {
         const { sut, loadUserByEmailRepositorySpy } = makeSut();
-        const email = faker.internet.email();
-
-        await sut.auth({
-            email,
-            password: faker.internet.password(),
-        });
-
-        expect(loadUserByEmailRepositorySpy.email).toBe(email);
+        const authenticationParams = mockAuthenticationParams();
+        await sut.auth(authenticationParams);
+        expect(loadUserByEmailRepositorySpy.email).toBe(
+            authenticationParams.email,
+        );
     });
 
     it("should return null if LoadUserByEmailRepository returns null", async () => {
         const { sut, loadUserByEmailRepositorySpy } = makeSut();
-        const email = faker.internet.email();
         loadUserByEmailRepositorySpy.result = null;
-
-        const token = await sut.auth({
-            email,
-            password: faker.internet.password(),
-        });
-
+        const token = await sut.auth(mockAuthenticationParams());
         expect(token).toBeNull();
     });
 });
