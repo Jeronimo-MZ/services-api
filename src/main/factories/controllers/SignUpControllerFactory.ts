@@ -1,4 +1,4 @@
-import { DbAddUser } from "@/data/usecases/DbAddUser";
+import { DbAddUser } from "@/data/usecases/AddUser/DbAddUser";
 import { BcryptAdapter } from "@/infra/cryptography/BcryptAdapter/BcryptAdapter";
 import { UserMongoRepository } from "@/infra/database/mongodb/repositories/User/User";
 import { SignUpController } from "@/presentation/controllers/User/SignUp/SignUpController";
