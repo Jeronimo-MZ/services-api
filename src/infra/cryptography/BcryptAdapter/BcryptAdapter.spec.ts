@@ -64,5 +64,12 @@ describe("BcryptAdapter", () => {
             const isValid = await sut.compare(plaintext, digest);
             expect(isValid).toBe(true);
         });
+
+        it("should throw if compare throws", async () => {
+            const sut = makeSut();
+            jest.spyOn(bcrypt, "compare").mockImplementationOnce(throwError);
+            const promise = sut.compare(plaintext, digest);
+            await expect(promise).rejects.toThrow();
+        });
     });
 });
