@@ -1,6 +1,7 @@
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
 import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
@@ -23,5 +24,17 @@ export class AddUserRepositorySpy implements AddUserRepository {
     async add(params: AddUserParams): Promise<User> {
         this.params = params;
         return this.result;
+    }
+}
+
+export class UpdateAccessTokenRepositorySpy
+    implements UpdateAccessTokenRepository
+{
+    id: string;
+    token: string;
+
+    async updateAccessToken(id: string, token: string): Promise<void> {
+        this.id = id;
+        this.token = token;
     }
 }

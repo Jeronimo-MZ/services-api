@@ -2,6 +2,7 @@ import {
     EncrypterSpy,
     HashComparerSpy,
     LoadUserByEmailRepositorySpy,
+    UpdateAccessTokenRepositorySpy,
 } from "@/data/mocks";
 import { mockAuthenticationParams, throwError } from "@/domain/mocks";
 
@@ -12,19 +13,28 @@ type SutTypes = {
     encrypterSpy: EncrypterSpy;
     hashComparerSpy: HashComparerSpy;
     loadUserByEmailRepositorySpy: LoadUserByEmailRepositorySpy;
+    updateAccessTokenRepositorySpy: UpdateAccessTokenRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
     const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy();
     const encrypterSpy = new EncrypterSpy();
     const hashComparerSpy = new HashComparerSpy();
+    const updateAccessTokenRepositorySpy = new UpdateAccessTokenRepositorySpy();
     const sut = new DbAuthentication(
         loadUserByEmailRepositorySpy,
         hashComparerSpy,
         encrypterSpy,
+        updateAccessTokenRepositorySpy,
     );
 
-    return { sut, loadUserByEmailRepositorySpy, hashComparerSpy, encrypterSpy };
+    return {
+        sut,
+        loadUserByEmailRepositorySpy,
+        hashComparerSpy,
+        encrypterSpy,
+        updateAccessTokenRepositorySpy,
+    };
 };
 
 describe("DbAuthentication", () => {
@@ -92,5 +102,21 @@ describe("DbAuthentication", () => {
         jest.spyOn(encrypterSpy, "encrypt").mockImplementation(throwError);
         const promise = sut.auth(mockAuthenticationParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call UpdateAccessTokenRepository with correct values", async () => {
+        const {
+            sut,
+            updateAccessTokenRepositorySpy,
+            loadUserByEmailRepositorySpy,
+            encrypterSpy,
+        } = makeSut();
+        await sut.auth(mockAuthenticationParams());
+        expect(updateAccessTokenRepositorySpy.id).toBe(
+            loadUserByEmailRepositorySpy.result?.id,
+        );
+        expect(updateAccessTokenRepositorySpy.token).toBe(
+            encrypterSpy.ciphertext,
+        );
     });
 });
