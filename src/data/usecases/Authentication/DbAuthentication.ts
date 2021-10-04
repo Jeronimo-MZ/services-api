@@ -22,12 +22,18 @@ export class DbAuthentication implements Authentication {
     }: AuthenticationParams): Promise<string | null> {
         const user = await this.loadUserByEmailRepository.loadByEmail(email);
         if (!user) return null;
-        await this.hashComparer.compare(password, user?.password);
+
+        const isValid = await this.hashComparer.compare(
+            password,
+            user?.password,
+        );
+        if (!isValid) return null;
+
         const token = await this.encrypter.encrypt(user.id);
         await this.updateAccessTokenRepository.updateAccessToken(
             user.id,
             token,
         );
-        return null;
+        return token;
     }
 }
