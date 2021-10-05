@@ -1,6 +1,7 @@
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
 import { mockUserModel } from "@/domain/mocks";
@@ -13,6 +14,16 @@ export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
 
     async loadByEmail(email: string): Promise<User | null> {
         this.email = email;
+        return this.result;
+    }
+}
+
+export class LoadUserByTokenRepositorySpy implements LoadUserByTokenRepository {
+    token: string;
+    result: User | null = mockUserModel();
+
+    async loadByToken(token: string): Promise<User | null> {
+        this.token = token;
         return this.result;
     }
 }
