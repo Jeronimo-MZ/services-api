@@ -6,6 +6,7 @@ import {
     badRequest,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
+import { AuthenticationSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
 
@@ -14,14 +15,17 @@ import { LoginController } from "./LoginController";
 type SutTypes = {
     sut: LoginController;
     validationSpy: ValidationSpy;
+    authenticationSpy: AuthenticationSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new LoginController(validationSpy);
+    const authenticationSpy = new AuthenticationSpy();
+    const sut = new LoginController(validationSpy, authenticationSpy);
     return {
         sut,
         validationSpy,
+        authenticationSpy,
     };
 };
 const mockRequest = (): HttpRequest => {
@@ -55,5 +59,15 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should call Authentication with correct values", async () => {
+        const { sut, authenticationSpy } = makeSut();
+        const httpRequest = mockRequest();
+        await sut.handle(httpRequest);
+        expect(authenticationSpy.params).toEqual({
+            email: httpRequest.body.email,
+            password: httpRequest.body.password,
+        });
     });
 });
