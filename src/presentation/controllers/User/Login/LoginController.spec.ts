@@ -4,6 +4,7 @@ import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
+    ok,
     serverError,
     unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
@@ -86,5 +87,11 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new Error()));
+    });
+
+    it("Should return 200 if valid credentials are provided", async () => {
+        const { sut, authenticationSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(ok(authenticationSpy.result));
     });
 });
