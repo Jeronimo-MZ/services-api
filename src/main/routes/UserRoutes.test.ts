@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import faker from "faker";
 import { Collection } from "mongodb";
 import request from "supertest";
@@ -35,6 +36,32 @@ describe("User routes", () => {
                     name: faker.name.findName(),
                     password,
                     passwordConfirmation: password,
+                })
+                .expect(200);
+        });
+    });
+
+    describe("POST /login", () => {
+        beforeAll(() => {
+            setupRoutes(app);
+        });
+        it("should return an 200 on success", async () => {
+            const userData = {
+                email: faker.internet.email(),
+                name: faker.name.findName(),
+                password: faker.internet.password(),
+            };
+
+            await usersCollection.insertOne({
+                ...userData,
+                password: await bcrypt.hash(userData.password, 12),
+            });
+
+            await request(app)
+                .post("/api/login")
+                .send({
+                    email: userData.email,
+                    password: userData.password,
                 })
                 .expect(200);
         });
