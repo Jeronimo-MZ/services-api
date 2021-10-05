@@ -2,6 +2,7 @@ import faker from "faker";
 import { Collection } from "mongodb";
 
 import { mockAddUserParams } from "@/domain/mocks";
+import { User } from "@/domain/models/User";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 import { UserMongoRepository } from "./User";
@@ -42,17 +43,11 @@ describe("User Mongo Repository", () => {
         });
     });
 
-    describe("loadByEmail", () => {
+    describe("loadByEmail()", () => {
         it("should return a user on success", async () => {
             const sut = makeSut();
             const addUserParams = mockAddUserParams();
-            await usersCollection.insertOne({
-                ...addUserParams,
-                isAdmin: false,
-                avatar: null,
-                occupation: null,
-                accessToken: null,
-            });
+            await usersCollection.insertOne(addUserParams);
             const user = await sut.loadByEmail(addUserParams.email);
 
             expect(user).toBeTruthy();
@@ -60,17 +55,33 @@ describe("User Mongo Repository", () => {
             expect(user?.name).toBe(addUserParams.name);
             expect(user?.email).toBe(addUserParams.email);
             expect(user?.password).toBe(addUserParams.password);
-            expect(user?.isAdmin).toBe(false);
-            expect(user?.avatar).toBeNull();
-            expect(user?.occupation).toBeNull();
-            expect(user?.avatar).toBeNull();
-            expect(user?.accessToken).toBeNull();
         });
 
         it("should return null if loadByEmail fails", async () => {
             const sut = makeSut();
             const user = await sut.loadByEmail(faker.internet.email());
             expect(user).toBeNull();
+        });
+    });
+
+    describe("updateAccessToken()", () => {
+        it("should update the user accessToken on success", async () => {
+            const sut = makeSut();
+            const { insertedId } = await usersCollection.insertOne(
+                mockAddUserParams(),
+            );
+            let user = (await usersCollection.findOne({
+                _id: insertedId,
+            })) as User;
+            expect(user.accessToken).toBeFalsy();
+
+            const accessToken = faker.datatype.uuid();
+            await sut.updateAccessToken(insertedId.toHexString(), accessToken);
+            user = (await usersCollection.findOne({
+                _id: insertedId,
+            })) as User;
+            expect(user).toBeTruthy();
+            expect(user.accessToken).toBe(accessToken);
         });
     });
 });
