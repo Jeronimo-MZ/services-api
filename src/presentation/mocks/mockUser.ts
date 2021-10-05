@@ -20,7 +20,7 @@ export class AdduserSpy implements AddUser {
 
 export class AuthenticationSpy implements Authentication {
     params: AuthenticationParams;
-    result = faker.datatype.uuid();
+    result: string | null = faker.datatype.uuid();
     async auth(params: AuthenticationParams): Promise<string | null> {
         this.params = params;
         return this.result;

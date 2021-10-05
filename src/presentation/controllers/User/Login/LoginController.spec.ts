@@ -5,6 +5,7 @@ import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
     serverError,
+    unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
 import { AuthenticationSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
@@ -45,7 +46,7 @@ describe("SignUp Controller", () => {
         expect(validationSpy.input).toEqual(httpRequest.body);
     });
 
-    it("should return 400 if validation fails", async () => {
+    it("should return 400 if validation returns an error", async () => {
         const { sut, validationSpy } = makeSut();
         validationSpy.error = new MissingParamError(faker.random.word());
         const httpResponse = await sut.handle(mockRequest());
@@ -69,5 +70,12 @@ describe("SignUp Controller", () => {
             email: httpRequest.body.email,
             password: httpRequest.body.password,
         });
+    });
+
+    it("should return 401 if invalid credentials are provided", async () => {
+        const { sut, authenticationSpy } = makeSut();
+        authenticationSpy.result = null;
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(unauthorized());
     });
 });
