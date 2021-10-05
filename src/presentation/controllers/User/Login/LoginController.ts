@@ -1,6 +1,7 @@
 import { Authentication } from "@/domain/usecases/Authentication";
 import {
     badRequest,
+    ok,
     serverError,
     unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
@@ -26,7 +27,7 @@ export class LoginController implements Controller {
 
             if (!token) return unauthorized();
 
-            return null as unknown as HttpResponse;
+            return ok(token);
         } catch (error) {
             return serverError(error as Error);
         }
