@@ -1,27 +1,37 @@
 import faker from "faker";
 
-import { LoadUserByTokenRepositorySpy } from "@/data/mocks";
+import { DecrypterSpy, LoadUserByTokenRepositorySpy } from "@/data/mocks";
 
 import { DbLoadUserByToken } from "./DbLoadUserByToken";
 
 type SutTypes = {
     sut: DbLoadUserByToken;
     loadUserByTokenSpy: LoadUserByTokenRepositorySpy;
+    decrypterSpy: DecrypterSpy;
 };
+
+const token = faker.datatype.uuid();
 
 const makeSut = (): SutTypes => {
     const loadUserByTokenSpy = new LoadUserByTokenRepositorySpy();
-    const sut = new DbLoadUserByToken(loadUserByTokenSpy);
+    const decrypterSpy = new DecrypterSpy();
+    const sut = new DbLoadUserByToken(loadUserByTokenSpy, decrypterSpy);
 
     return {
         sut,
         loadUserByTokenSpy,
+        decrypterSpy,
     };
 };
 describe("DbLoadUserByToken", () => {
+    it("should call Decrypter with correct value", async () => {
+        const { sut, decrypterSpy } = makeSut();
+        await sut.load(token);
+        expect(decrypterSpy.ciphertext).toBe(token);
+    });
+
     it("should call LoadUserByTokenRepository with correct token", async () => {
         const { sut, loadUserByTokenSpy } = makeSut();
-        const token = faker.datatype.uuid();
         await sut.load(token);
         expect(loadUserByTokenSpy.token).toBe(token);
     });
