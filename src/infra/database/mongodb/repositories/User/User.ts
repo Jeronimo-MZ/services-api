@@ -1,6 +1,9 @@
+import { ObjectId } from "bson";
+
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
@@ -9,7 +12,10 @@ import { CollectionNames } from "../../helpers/Collections";
 import { MongoHelper } from "../../helpers/MongoHelper";
 
 export class UserMongoRepository
-    implements AddUserRepository, LoadUserByEmailRepository
+    implements
+        AddUserRepository,
+        LoadUserByEmailRepository,
+        UpdateAccessTokenRepository
 {
     async add({ name, email, password }: AddUserParams): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
@@ -48,5 +54,21 @@ export class UserMongoRepository
         return MongoHelper.map({
             ...user,
         });
+    }
+
+    async updateAccessToken(id: string, token: string): Promise<void> {
+        const usersCollection = await MongoHelper.getCollection(
+            CollectionNames.USER,
+        );
+        await usersCollection.updateOne(
+            {
+                _id: new ObjectId(id),
+            },
+            {
+                $set: {
+                    accessToken: token,
+                },
+            },
+        );
     }
 }
