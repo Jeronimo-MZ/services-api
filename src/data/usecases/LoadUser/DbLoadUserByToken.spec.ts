@@ -63,4 +63,10 @@ describe("DbLoadUserByToken", () => {
         const promise = sut.load(token);
         await expect(promise).rejects.toThrow();
     });
+
+    it("should return a user on success", async () => {
+        const { sut, loadUserByTokenRepositorySpy } = makeSut();
+        const account = await sut.load(token);
+        expect(account).toEqual(loadUserByTokenRepositorySpy.result);
+    });
 });
