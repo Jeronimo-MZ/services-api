@@ -1,7 +1,11 @@
 import faker from "faker";
 
-import { MissingParamError } from "@/presentation/errors";
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import { throwError } from "@/domain/mocks";
+import { MissingParamError, ServerError } from "@/presentation/errors";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
 
@@ -41,5 +45,14 @@ describe("SignUp Controller", () => {
         validationSpy.error = new MissingParamError(faker.random.word());
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(badRequest(validationSpy.error));
+    });
+
+    it("should return 500 if validation throws", async () => {
+        const { sut, validationSpy } = makeSut();
+        jest.spyOn(validationSpy, "validate").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
 });
