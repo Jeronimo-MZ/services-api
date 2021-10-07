@@ -89,7 +89,7 @@ describe("SignUp Controller", () => {
         expect(httpResponse).toEqual(serverError(new Error()));
     });
 
-    it("Should return 200 if valid credentials are provided", async () => {
+    it("should return 200 if valid credentials are provided", async () => {
         const { sut, authenticationSpy } = makeSut();
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(ok(authenticationSpy.result));

@@ -4,6 +4,7 @@ import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
+    ok,
     serverError,
     unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
@@ -84,5 +85,13 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new Error()));
+    });
+
+    it("should return 200 if a valid accessToken is provided", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(
+            ok({ ...loadUserByTokenSpy.result, password: undefined }),
+        );
     });
 });
