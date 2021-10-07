@@ -91,7 +91,11 @@ describe("SignUp Controller", () => {
         const { sut, loadUserByTokenSpy } = makeSut();
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(
-            ok({ ...loadUserByTokenSpy.result, password: undefined }),
+            ok({
+                ...loadUserByTokenSpy.result,
+                password: undefined,
+                accessToken: undefined,
+            }),
         );
     });
 });

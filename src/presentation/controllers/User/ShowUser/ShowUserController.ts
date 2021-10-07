@@ -27,7 +27,9 @@ export class ShowUserController implements Controller {
                 httpRequest.headers["x-access-token"],
             );
 
-            return user ? ok({ ...user, password: undefined }) : unauthorized();
+            return user
+                ? ok({ ...user, password: undefined, accessToken: undefined })
+                : unauthorized();
         } catch (error) {
             return serverError(error as Error);
         }
