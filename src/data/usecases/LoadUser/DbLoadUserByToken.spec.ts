@@ -7,20 +7,23 @@ import { DbLoadUserByToken } from "./DbLoadUserByToken";
 
 type SutTypes = {
     sut: DbLoadUserByToken;
-    loadUserByTokenSpy: LoadUserByTokenRepositorySpy;
+    loadUserByTokenRepositorySpy: LoadUserByTokenRepositorySpy;
     decrypterSpy: DecrypterSpy;
 };
 
 const token = faker.datatype.uuid();
 
 const makeSut = (): SutTypes => {
-    const loadUserByTokenSpy = new LoadUserByTokenRepositorySpy();
+    const loadUserByTokenRepositorySpy = new LoadUserByTokenRepositorySpy();
     const decrypterSpy = new DecrypterSpy();
-    const sut = new DbLoadUserByToken(loadUserByTokenSpy, decrypterSpy);
+    const sut = new DbLoadUserByToken(
+        loadUserByTokenRepositorySpy,
+        decrypterSpy,
+    );
 
     return {
         sut,
-        loadUserByTokenSpy,
+        loadUserByTokenRepositorySpy,
         decrypterSpy,
     };
 };
@@ -46,8 +49,18 @@ describe("DbLoadUserByToken", () => {
     });
 
     it("should call LoadUserByTokenRepository with correct token", async () => {
-        const { sut, loadUserByTokenSpy } = makeSut();
+        const { sut, loadUserByTokenRepositorySpy } = makeSut();
         await sut.load(token);
-        expect(loadUserByTokenSpy.token).toBe(token);
+        expect(loadUserByTokenRepositorySpy.token).toBe(token);
+    });
+
+    it("should throw if LoadUserByTokenRepository throws", async () => {
+        const { sut, loadUserByTokenRepositorySpy } = makeSut();
+        jest.spyOn(
+            loadUserByTokenRepositorySpy,
+            "loadByToken",
+        ).mockImplementationOnce(throwError);
+        const promise = sut.load(token);
+        await expect(promise).rejects.toThrow();
     });
 });
