@@ -5,18 +5,18 @@ import { throwError } from "@/domain/mocks";
 
 import { JwtAdapter } from "./JwtAdapter";
 
-jest.mock("jsonwebtoken", () => ({
-    sign: () => {
-        return "any_token";
-    },
-    verify: () => {
-        return null;
-    },
-}));
-
 const secret = faker.random.alphaNumeric(50);
 const plaintext = faker.datatype.uuid();
 const token = faker.random.alphaNumeric(50);
+
+jest.mock("jsonwebtoken", () => ({
+    sign: () => {
+        return token;
+    },
+    verify: () => {
+        return plaintext;
+    },
+}));
 
 const makeSut = (): JwtAdapter => {
     return new JwtAdapter(secret);
@@ -36,7 +36,7 @@ describe("JwtAdapter", () => {
         it("should return a token on sign success", async () => {
             const sut = makeSut();
             const accessToken = await sut.encrypt(plaintext);
-            expect(accessToken).toBe("any_token");
+            expect(accessToken).toBe(token);
         });
 
         it("should throw if sign throws", async () => {
@@ -53,6 +53,13 @@ describe("JwtAdapter", () => {
             const verifySpy = jest.spyOn(jwt, "verify");
             await sut.decrypt(token);
             expect(verifySpy).toHaveBeenCalledWith(token, secret);
+        });
+
+        it("should return null if verify throws", async () => {
+            const sut = makeSut();
+            jest.spyOn(jwt, "verify").mockImplementationOnce(throwError);
+            const data = await sut.decrypt(token);
+            expect(data).toBeNull();
         });
     });
 });
