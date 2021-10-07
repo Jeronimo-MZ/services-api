@@ -9,8 +9,12 @@ export class DbLoadUserByToken implements LoadUserByToken {
         private readonly decrypter: Decrypter,
     ) {}
     async load(accessToken: string): Promise<User | null> {
-        await this.decrypter.decrypt(accessToken);
-        await this.loadUserByTokenRepository.loadByToken(accessToken);
+        const isValid = !!(await this.decrypter.decrypt(accessToken));
+        if (isValid) {
+            return await this.loadUserByTokenRepository.loadByToken(
+                accessToken,
+            );
+        }
         return null;
     }
 }
