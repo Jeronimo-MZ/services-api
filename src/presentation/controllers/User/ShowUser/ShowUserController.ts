@@ -1,4 +1,7 @@
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import {
     Controller,
     HttpRequest,
@@ -9,10 +12,14 @@ import {
 export class ShowUserController implements Controller {
     constructor(private readonly validation: Validation) {}
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const error = this.validation.validate(httpRequest.headers);
-        if (error) {
-            return badRequest(error);
+        try {
+            const error = this.validation.validate(httpRequest.headers);
+            if (error) {
+                return badRequest(error);
+            }
+            return null as unknown as HttpResponse;
+        } catch (error) {
+            return serverError(error as Error);
         }
-        return null as unknown as HttpResponse;
     }
 }
