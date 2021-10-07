@@ -105,5 +105,11 @@ describe("User Mongo Repository", () => {
             expect(user?.password).toBe(addUserParams.password);
             expect(user?.accessToken).toBe(token);
         });
+
+        it("should return null if loadByToken fails", async () => {
+            const sut = makeSut();
+            const user = await sut.loadByEmail(faker.internet.email());
+            expect(user).toBeNull();
+        });
     });
 });
