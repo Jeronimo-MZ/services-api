@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { DecrypterSpy, LoadUserByTokenRepositorySpy } from "@/data/mocks";
+import { throwError } from "@/domain/mocks";
 
 import { DbLoadUserByToken } from "./DbLoadUserByToken";
 
@@ -35,6 +36,13 @@ describe("DbLoadUserByToken", () => {
         decrypterSpy.plaintext = null;
         const account = await sut.load(token);
         expect(account).toBeNull();
+    });
+
+    it("should throw if Decrypter throws", async () => {
+        const { sut, decrypterSpy } = makeSut();
+        jest.spyOn(decrypterSpy, "decrypt").mockImplementationOnce(throwError);
+        const promise = sut.load(token);
+        await expect(promise).rejects.toThrow();
     });
 
     it("should call LoadUserByTokenRepository with correct token", async () => {
