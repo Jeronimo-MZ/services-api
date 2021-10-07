@@ -4,7 +4,10 @@ import { adaptRoute } from "@/main/adapters/ExpressRouteAdapter";
 import { makeLoginController } from "@/main/factories/controllers/User/Login/LoginControllerFactory";
 import { makeSignUpController } from "@/main/factories/controllers/User/SignUp/SignUpControllerFactory";
 
+import { makeShowUserController } from "../factories/controllers/User/ShowUser/ShowUserControllerFactory";
+
 export default (router: Router): void => {
     router.post("/signup", adaptRoute(makeSignUpController()));
     router.post("/login", adaptRoute(makeLoginController()));
+    router.get("/users/me", adaptRoute(makeShowUserController()));
 };
