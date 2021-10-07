@@ -3,6 +3,7 @@ import { ObjectId } from "bson";
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
@@ -15,7 +16,8 @@ export class UserMongoRepository
     implements
         AddUserRepository,
         LoadUserByEmailRepository,
-        UpdateAccessTokenRepository
+        UpdateAccessTokenRepository,
+        LoadUserByTokenRepository
 {
     async add({ name, email, password }: AddUserParams): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
@@ -45,7 +47,7 @@ export class UserMongoRepository
             CollectionNames.USER,
         );
 
-        const user = (await usersCollection.findOne({ email })) as Document;
+        const user = await usersCollection.findOne({ email });
 
         if (!user) {
             return null;
@@ -70,5 +72,23 @@ export class UserMongoRepository
                 },
             },
         );
+    }
+
+    async loadByToken(token: string): Promise<User | null> {
+        const usersCollection = await MongoHelper.getCollection(
+            CollectionNames.USER,
+        );
+
+        const user = await usersCollection.findOne({
+            accessToken: token,
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return MongoHelper.map({
+            ...user,
+        });
     }
 }
