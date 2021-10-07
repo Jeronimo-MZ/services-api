@@ -30,6 +30,13 @@ describe("DbLoadUserByToken", () => {
         expect(decrypterSpy.ciphertext).toBe(token);
     });
 
+    it("should return null if Decrypter returns null", async () => {
+        const { sut, decrypterSpy } = makeSut();
+        decrypterSpy.plaintext = null;
+        const account = await sut.load(token);
+        expect(account).toBeNull();
+    });
+
     it("should call LoadUserByTokenRepository with correct token", async () => {
         const { sut, loadUserByTokenSpy } = makeSut();
         await sut.load(token);
