@@ -2,6 +2,7 @@ import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
 import {
     badRequest,
     serverError,
+    unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
 import {
     Controller,
@@ -24,7 +25,8 @@ export class ShowUserController implements Controller {
             await this.loadUserByToken.load(
                 httpRequest.headers["x-access-token"],
             );
-            return null as unknown as HttpResponse;
+
+            return unauthorized();
         } catch (error) {
             return serverError(error as Error);
         }
