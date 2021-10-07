@@ -7,6 +7,7 @@ import {
     Authentication,
     AuthenticationParams,
 } from "@/domain/usecases/Authentication";
+import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
 
 export class AdduserSpy implements AddUser {
     result: User | null = mockUserModel();
@@ -23,6 +24,15 @@ export class AuthenticationSpy implements Authentication {
     result: string | null = faker.datatype.uuid();
     async auth(params: AuthenticationParams): Promise<string | null> {
         this.params = params;
+        return this.result;
+    }
+}
+
+export class LoadUserByTokenSpy implements LoadUserByToken {
+    accessToken: string;
+    result: User | null = mockUserModel();
+    async load(accessToken: string): Promise<User | null> {
+        this.accessToken = accessToken;
         return this.result;
     }
 }

@@ -6,6 +6,7 @@ import {
     badRequest,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
+import { LoadUserByTokenSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { HttpRequest } from "@/presentation/protocols";
 
@@ -14,14 +15,17 @@ import { ShowUserController } from "./ShowUserController";
 type SutTypes = {
     sut: ShowUserController;
     validationSpy: ValidationSpy;
+    loadUserByTokenSpy: LoadUserByTokenSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new ShowUserController(validationSpy);
+    const loadUserByTokenSpy = new LoadUserByTokenSpy();
+    const sut = new ShowUserController(validationSpy, loadUserByTokenSpy);
     return {
         sut,
         validationSpy,
+        loadUserByTokenSpy,
     };
 };
 const mockRequest = (): HttpRequest => {
@@ -54,5 +58,14 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should call LoadUserByToken with correct token", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        const httpRequest = mockRequest();
+        await sut.handle(httpRequest);
+        expect(loadUserByTokenSpy.accessToken).toBe(
+            httpRequest.headers["x-access-token"],
+        );
     });
 });
