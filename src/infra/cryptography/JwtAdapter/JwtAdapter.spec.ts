@@ -14,7 +14,7 @@ jest.mock("jsonwebtoken", () => ({
         return token;
     },
     verify: () => {
-        return plaintext;
+        return { data: plaintext };
     },
 }));
 
@@ -60,6 +60,12 @@ describe("JwtAdapter", () => {
             jest.spyOn(jwt, "verify").mockImplementationOnce(throwError);
             const data = await sut.decrypt(token);
             expect(data).toBeNull();
+        });
+
+        it("should return correct value on verify success", async () => {
+            const sut = makeSut();
+            const data = await sut.decrypt(token);
+            expect(data).toBe(plaintext);
         });
     });
 });
