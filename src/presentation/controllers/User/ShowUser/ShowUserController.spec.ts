@@ -5,6 +5,7 @@ import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
     serverError,
+    unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
 import { LoadUserByTokenSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
@@ -67,5 +68,12 @@ describe("SignUp Controller", () => {
         expect(loadUserByTokenSpy.accessToken).toBe(
             httpRequest.headers["x-access-token"],
         );
+    });
+
+    it("should return 401 if an invalid accessToken is provided", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        loadUserByTokenSpy.result = null;
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(unauthorized());
     });
 });
