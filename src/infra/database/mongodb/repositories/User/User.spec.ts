@@ -8,6 +8,7 @@ import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 import { UserMongoRepository } from "./User";
 
 const makeSut = (): UserMongoRepository => new UserMongoRepository();
+const token = faker.random.alphaNumeric(50);
 
 describe("User Mongo Repository", () => {
     let usersCollection: Collection;
@@ -47,11 +48,13 @@ describe("User Mongo Repository", () => {
         it("should return a user on success", async () => {
             const sut = makeSut();
             const addUserParams = mockAddUserParams();
-            await usersCollection.insertOne(addUserParams);
+            const { insertedId } = await usersCollection.insertOne(
+                addUserParams,
+            );
             const user = await sut.loadByEmail(addUserParams.email);
 
             expect(user).toBeTruthy();
-            expect(user?.id).toBeTruthy();
+            expect(user?.id).toBe(insertedId.toHexString());
             expect(user?.name).toBe(addUserParams.name);
             expect(user?.email).toBe(addUserParams.email);
             expect(user?.password).toBe(addUserParams.password);
@@ -82,6 +85,25 @@ describe("User Mongo Repository", () => {
             })) as User;
             expect(user).toBeTruthy();
             expect(user.accessToken).toBe(accessToken);
+        });
+    });
+
+    describe("loadByToken()", () => {
+        it("should return a user on success", async () => {
+            const sut = makeSut();
+            const addUserParams = mockAddUserParams();
+            const { insertedId } = await usersCollection.insertOne({
+                ...addUserParams,
+                accessToken: token,
+            });
+            const user = await sut.loadByToken(token);
+
+            expect(user).toBeTruthy();
+            expect(user?.id).toBe(insertedId.toHexString());
+            expect(user?.name).toBe(addUserParams.name);
+            expect(user?.email).toBe(addUserParams.email);
+            expect(user?.password).toBe(addUserParams.password);
+            expect(user?.accessToken).toBe(token);
         });
     });
 });
