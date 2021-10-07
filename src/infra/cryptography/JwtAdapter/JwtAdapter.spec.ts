@@ -9,10 +9,14 @@ jest.mock("jsonwebtoken", () => ({
     sign: () => {
         return "any_token";
     },
+    verify: () => {
+        return null;
+    },
 }));
 
 const secret = faker.random.alphaNumeric(50);
 const plaintext = faker.datatype.uuid();
+const token = faker.random.alphaNumeric(50);
 
 const makeSut = (): JwtAdapter => {
     return new JwtAdapter(secret);
@@ -40,6 +44,15 @@ describe("JwtAdapter", () => {
             jest.spyOn(jwt, "sign").mockImplementationOnce(throwError);
             const promise = sut.encrypt(plaintext);
             await expect(promise).rejects.toThrow();
+        });
+    });
+
+    describe("decrypt()", () => {
+        it("should call verify with correct values", async () => {
+            const sut = makeSut();
+            const verifySpy = jest.spyOn(jwt, "verify");
+            await sut.decrypt(token);
+            expect(verifySpy).toHaveBeenCalledWith(token, secret);
         });
     });
 });
