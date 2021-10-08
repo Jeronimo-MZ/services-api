@@ -9,7 +9,7 @@ import {
 } from "@/domain/usecases/Authentication";
 import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
 
-export class AdduserSpy implements AddUser {
+export class AddUserSpy implements AddUser {
     result: User | null = mockUserModel();
     params: AddUserParams;
 

@@ -6,6 +6,7 @@ import {
     badRequest,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
+import { AddCustomerSpy } from "@/presentation/mocks/mockCustomer";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { AddCustomerController } from "./AddCustomerController";
@@ -13,14 +14,17 @@ import { AddCustomerController } from "./AddCustomerController";
 type SutTypes = {
     sut: AddCustomerController;
     validationSpy: ValidationSpy;
+    addCustomerSpy: AddCustomerSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new AddCustomerController(validationSpy);
+    const addCustomerSpy = new AddCustomerSpy();
+    const sut = new AddCustomerController(validationSpy, addCustomerSpy);
     return {
         sut,
         validationSpy,
+        addCustomerSpy,
     };
 };
 const mockRequest = (): AddCustomerController.Request => {
@@ -53,5 +57,16 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should call AddCustomer with correct values", async () => {
+        const { sut, addCustomerSpy } = makeSut();
+        const request = mockRequest();
+        await sut.handle(request);
+        expect(addCustomerSpy.params).toEqual({
+            institution: request.institution,
+            name: request.name,
+            providerId: request.userId,
+        });
     });
 });

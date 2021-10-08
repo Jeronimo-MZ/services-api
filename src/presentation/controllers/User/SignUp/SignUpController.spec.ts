@@ -12,7 +12,7 @@ import {
     ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
-import { AdduserSpy } from "@/presentation/mocks/mockUser";
+import { AddUserSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { SignUpController } from "./SignUpController";
@@ -20,12 +20,12 @@ import { SignUpController } from "./SignUpController";
 type SutTypes = {
     sut: SignUpController;
     validationSpy: ValidationSpy;
-    addUserSpy: AdduserSpy;
+    addUserSpy: AddUserSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const addUserSpy = new AdduserSpy();
+    const addUserSpy = new AddUserSpy();
     const sut = new SignUpController(validationSpy, addUserSpy);
     return {
         sut,
