@@ -1,3 +1,4 @@
+import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import { AddCustomerRepository } from "@/data/protocols/database/Customer";
 import { LoadUserByIdRepository } from "@/data/protocols/database/User/LoadUserByIdRepository";
 import { Customer } from "@/domain/models/Customer";
@@ -14,7 +15,8 @@ export class DbAddCustomer implements AddCustomer {
         institution,
         name,
     }: AddCustomerParams): Promise<Customer> {
-        await this.loadUserByIdRepository.loadById(providerId);
+        const user = await this.loadUserByIdRepository.loadById(providerId);
+        if (!user) throw new UnexpectedError();
         await this.addCustomerRepository.add({
             institution,
             name,
