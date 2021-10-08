@@ -17,11 +17,10 @@ export class DbAddCustomer implements AddCustomer {
     }: AddCustomerParams): Promise<Customer> {
         const user = await this.loadUserByIdRepository.loadById(providerId);
         if (!user) throw new UnexpectedError();
-        await this.addCustomerRepository.add({
+        return await this.addCustomerRepository.add({
             institution,
             name,
             providerId,
         });
-        return null as any;
     }
 }
