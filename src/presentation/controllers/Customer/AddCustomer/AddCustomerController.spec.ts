@@ -4,6 +4,7 @@ import { throwError } from "@/domain/mocks";
 import { InvalidParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { AddCustomerSpy } from "@/presentation/mocks/mockCustomer";
@@ -75,5 +76,11 @@ describe("SignUp Controller", () => {
         jest.spyOn(addCustomerSpy, "add").mockImplementationOnce(throwError);
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should return 200 on success", async () => {
+        const { sut, addCustomerSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(ok(addCustomerSpy.result));
     });
 });
