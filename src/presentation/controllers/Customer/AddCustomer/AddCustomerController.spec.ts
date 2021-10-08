@@ -69,4 +69,11 @@ describe("SignUp Controller", () => {
             providerId: request.userId,
         });
     });
+
+    it("should return 500 if AddCustomer throws", async () => {
+        const { sut, addCustomerSpy } = makeSut();
+        jest.spyOn(addCustomerSpy, "add").mockImplementationOnce(throwError);
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
 });
