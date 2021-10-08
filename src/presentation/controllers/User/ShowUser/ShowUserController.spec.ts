@@ -10,7 +10,6 @@ import {
 } from "@/presentation/helpers/http/httpHelper";
 import { LoadUserByTokenSpy } from "@/presentation/mocks/mockUser";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
-import { HttpRequest } from "@/presentation/protocols";
 
 import { ShowUserController } from "./ShowUserController";
 
@@ -30,20 +29,18 @@ const makeSut = (): SutTypes => {
         loadUserByTokenSpy,
     };
 };
-const mockRequest = (): HttpRequest => {
+const mockRequest = (): ShowUserController.Request => {
     return {
-        headers: {
-            "x-access-token": faker.random.alphaNumeric(50),
-        },
+        "x-access-token": faker.random.alphaNumeric(50),
     };
 };
 
 describe("SignUp Controller", () => {
     it("should call Validation with correct values", async () => {
         const { sut, validationSpy } = makeSut();
-        const httpRequest = mockRequest();
-        await sut.handle(httpRequest);
-        expect(validationSpy.input).toEqual(httpRequest.headers);
+        const request = mockRequest();
+        await sut.handle(request);
+        expect(validationSpy.input).toEqual(request);
     });
 
     it("should return 400 if Validation returns an error", async () => {
@@ -64,11 +61,9 @@ describe("SignUp Controller", () => {
 
     it("should call LoadUserByToken with correct token", async () => {
         const { sut, loadUserByTokenSpy } = makeSut();
-        const httpRequest = mockRequest();
-        await sut.handle(httpRequest);
-        expect(loadUserByTokenSpy.accessToken).toBe(
-            httpRequest.headers["x-access-token"],
-        );
+        const request = mockRequest();
+        await sut.handle(request);
+        expect(loadUserByTokenSpy.accessToken).toBe(request["x-access-token"]);
     });
 
     it("should return 401 if an invalid accessToken is provided", async () => {

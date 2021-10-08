@@ -6,26 +6,21 @@ import {
     ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
-import {
-    Controller,
-    HttpRequest,
-    HttpResponse,
-    Validation,
-} from "@/presentation/protocols";
+import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
-export class SignUpController implements Controller {
+export class SignUpController implements Controller<SignUpController.Request> {
     constructor(
         private readonly validation: Validation,
         private readonly addUser: AddUser,
     ) {}
-    async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    async handle(request: SignUpController.Request): Promise<HttpResponse> {
         try {
-            const error = this.validation.validate(httpRequest.body);
+            const error = this.validation.validate(request);
             if (error) {
                 return badRequest(error);
             }
 
-            const { name, email, password } = httpRequest.body;
+            const { name, email, password } = request;
             const user = await this.addUser.add({ name, email, password });
 
             if (!user) {
@@ -37,4 +32,13 @@ export class SignUpController implements Controller {
             return serverError(error as Error);
         }
     }
+}
+
+export namespace SignUpController {
+    export type Request = {
+        name: string;
+        email: string;
+        password: string;
+        passwordConfirmation: string;
+    };
 }

@@ -38,6 +38,7 @@
             "error",
             { "argsIgnorePattern": "_" }
         ],
+        "@typescript-eslint/no-namespace": "off",
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"]

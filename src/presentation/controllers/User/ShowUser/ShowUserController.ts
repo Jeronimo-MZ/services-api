@@ -5,26 +5,23 @@ import {
     serverError,
     unauthorized,
 } from "@/presentation/helpers/http/httpHelper";
-import {
-    Controller,
-    HttpRequest,
-    HttpResponse,
-    Validation,
-} from "@/presentation/protocols";
+import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
-export class ShowUserController implements Controller {
+export class ShowUserController
+    implements Controller<ShowUserController.Request>
+{
     constructor(
         private readonly validation: Validation,
         private readonly loadUserByToken: LoadUserByToken,
     ) {}
-    async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
+    async handle(request: ShowUserController.Request): Promise<HttpResponse> {
         try {
-            const error = this.validation.validate(httpRequest.headers);
+            const error = this.validation.validate(request);
             if (error) {
                 return badRequest(error);
             }
             const user = await this.loadUserByToken.load(
-                httpRequest.headers["x-access-token"],
+                request["x-access-token"],
             );
 
             return user
@@ -34,4 +31,10 @@ export class ShowUserController implements Controller {
             return serverError(error as Error);
         }
     }
+}
+
+export namespace ShowUserController {
+    export type Request = {
+        "x-access-token": string;
+    };
 }
