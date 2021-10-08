@@ -19,6 +19,5 @@ export class JwtAdapter implements Encrypter, Decrypter {
         } catch {
             return null;
         }
-        return null;
     }
 }
