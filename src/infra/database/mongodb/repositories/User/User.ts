@@ -83,13 +83,11 @@ export class UserMongoRepository
             accessToken: token,
         });
 
-        if (!user) {
-            return null;
-        }
-
-        return MongoHelper.map({
-            ...user,
-        });
+        return !user
+            ? user
+            : MongoHelper.map({
+                  ...user,
+              });
     }
 
     async loadById(id: string): Promise<User | null> {
