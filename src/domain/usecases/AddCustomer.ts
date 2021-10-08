@@ -1,4 +1,4 @@
-import { Customer } from "../models/Customer";
+import { Customer } from "@/domain/models/Customer";
 
 export type AddCustomerParams = {
     providerId: string;

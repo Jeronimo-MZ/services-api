@@ -9,9 +9,7 @@ import {
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
-
-import { CollectionNames } from "../../helpers/Collections";
-import { MongoHelper } from "../../helpers/MongoHelper";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 export class UserMongoRepository
     implements

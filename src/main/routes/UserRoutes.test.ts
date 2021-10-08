@@ -7,9 +7,8 @@ import request from "supertest";
 import { CollectionNames } from "@/infra/database/mongodb/helpers";
 import { MongoHelper } from "@/infra/database/mongodb/helpers/MongoHelper";
 import { app } from "@/main/config/app";
-
-import { env } from "../config/env";
-import { setupRoutes } from "../config/routes";
+import { env } from "@/main/config/env";
+import { setupRoutes } from "@/main/config/routes";
 
 describe("User routes", () => {
     let usersCollection: Collection;

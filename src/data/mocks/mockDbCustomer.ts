@@ -1,8 +1,7 @@
+import { AddCustomerRepository } from "@/data/protocols/database/Customer";
 import { mockCustomerModel } from "@/domain/mocks";
 import { Customer } from "@/domain/models/Customer";
 import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
-
-import { AddCustomerRepository } from "../protocols/database/Customer";
 
 export class AddCustomerRepositorySpy implements AddCustomerRepository {
     params: AddCustomerParams;

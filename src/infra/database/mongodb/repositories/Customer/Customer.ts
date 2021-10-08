@@ -1,8 +1,7 @@
 import { AddCustomerRepository } from "@/data/protocols/database/Customer";
 import { Customer } from "@/domain/models/Customer";
 import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
-
-import { CollectionNames, MongoHelper } from "../../helpers";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 export class CustomerMongoRepository implements AddCustomerRepository {
     async add({

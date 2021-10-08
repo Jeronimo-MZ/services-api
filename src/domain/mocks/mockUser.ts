@@ -2,8 +2,7 @@ import faker from "faker";
 
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
-
-import { AuthenticationParams } from "../usecases/Authentication";
+import { AuthenticationParams } from "@/domain/usecases/Authentication";
 
 export const mockAddUserParams = (): AddUserParams => ({
     name: faker.name.firstName() + " " + faker.name.lastName(),
