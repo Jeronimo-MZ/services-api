@@ -1,3 +1,4 @@
+import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import {
     AddCustomerRepositorySpy,
     LoadUserByIdRepositorySpy,
@@ -44,6 +45,13 @@ describe("DbAddUser", () => {
         ).mockImplementationOnce(throwError);
         const promise = sut.add(mockAddCustomerParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should throw UnexpectedError if LoadUserByIdRepository returns null", async () => {
+        const { sut, loadUserByIdRepositorySpy } = makeSut();
+        loadUserByIdRepositorySpy.result = null;
+        const promise = sut.add(mockAddCustomerParams());
+        await expect(promise).rejects.toBeInstanceOf(UnexpectedError);
     });
 
     it("should call AddCustomerRepository with correct values", async () => {
