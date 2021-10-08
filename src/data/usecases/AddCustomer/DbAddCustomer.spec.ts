@@ -61,4 +61,13 @@ describe("DbAddUser", () => {
 
         expect(addCustomerRepositorySpy.params).toEqual(addCustomerParams);
     });
+
+    it("should throw if AddCustomerRepository throws", async () => {
+        const { sut, addCustomerRepositorySpy } = makeSut();
+        jest.spyOn(addCustomerRepositorySpy, "add").mockImplementationOnce(
+            throwError,
+        );
+        const promise = sut.add(mockAddCustomerParams());
+        await expect(promise).rejects.toThrow();
+    });
 });
