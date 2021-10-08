@@ -128,5 +128,11 @@ describe("User Mongo Repository", () => {
             expect(user?.email).toBe(addUserParams.email);
             expect(user?.password).toBe(addUserParams.password);
         });
+
+        it("should return null if loadById fails", async () => {
+            const sut = makeSut();
+            const user = await sut.loadById(faker.datatype.string(12));
+            expect(user).toBeNull();
+        });
     });
 });
