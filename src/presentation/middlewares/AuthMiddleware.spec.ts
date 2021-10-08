@@ -1,7 +1,9 @@
 import faker from "faker";
 
+import { throwError } from "@/domain/mocks";
+
 import { AccessDeniedError } from "../errors/AccessDeniedError";
-import { forbidden } from "../helpers/http/httpHelper";
+import { forbidden, serverError } from "../helpers/http/httpHelper";
 import { LoadUserByTokenSpy } from "../mocks/mockUser";
 import { AuthMiddleware } from ".";
 
@@ -42,5 +44,14 @@ describe("Auth Middleware", () => {
         loadUserByTokenSpy.result = null;
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(forbidden(new AccessDeniedError()));
+    });
+
+    it("should return 500 if LoadUserByToken throws", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        jest.spyOn(loadUserByTokenSpy, "load").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new Error()));
     });
 });
