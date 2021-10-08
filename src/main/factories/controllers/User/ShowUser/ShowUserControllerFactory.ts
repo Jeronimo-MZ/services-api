@@ -6,7 +6,7 @@ import { ShowUserController } from "@/presentation/controllers/User/ShowUser/Sho
 import { RequiredFieldValidation } from "@/validation/validators";
 
 export const makeShowUserController = (): ShowUserController => {
-    const validation = new RequiredFieldValidation("x-access-token");
+    const validation = new RequiredFieldValidation("accessToken");
     const usersRepository = new UserMongoRepository();
     const jwtAdapter = new JwtAdapter(env.secret);
     const loadUserByToken = new DbLoadUserByToken(usersRepository, jwtAdapter);

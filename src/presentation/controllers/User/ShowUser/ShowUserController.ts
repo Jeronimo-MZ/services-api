@@ -20,9 +20,7 @@ export class ShowUserController
             if (error) {
                 return badRequest(error);
             }
-            const user = await this.loadUserByToken.load(
-                request["x-access-token"],
-            );
+            const user = await this.loadUserByToken.load(request.accessToken);
 
             return user
                 ? ok({ ...user, password: undefined, accessToken: undefined })
@@ -35,6 +33,6 @@ export class ShowUserController
 
 export namespace ShowUserController {
     export type Request = {
-        "x-access-token": string;
+        accessToken: string;
     };
 }

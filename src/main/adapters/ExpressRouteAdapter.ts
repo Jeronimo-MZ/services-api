@@ -5,7 +5,7 @@ import { Controller } from "@/presentation/protocols";
 export const adaptRoute = (controller: Controller) => {
     return async (request: Request, response: Response): Promise<Response> => {
         const req = {
-            ...(request.headers || {}),
+            accessToken: request.headers?.["x-access-token"],
             ...(request.body || {}),
         };
         const { statusCode, body } = await controller.handle(req);

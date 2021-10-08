@@ -31,7 +31,7 @@ const makeSut = (): SutTypes => {
 };
 const mockRequest = (): ShowUserController.Request => {
     return {
-        "x-access-token": faker.random.alphaNumeric(50),
+        accessToken: faker.random.alphaNumeric(50),
     };
 };
 
@@ -63,7 +63,7 @@ describe("SignUp Controller", () => {
         const { sut, loadUserByTokenSpy } = makeSut();
         const request = mockRequest();
         await sut.handle(request);
-        expect(loadUserByTokenSpy.accessToken).toBe(request["x-access-token"]);
+        expect(loadUserByTokenSpy.accessToken).toBe(request.accessToken);
     });
 
     it("should return 401 if an invalid accessToken is provided", async () => {
