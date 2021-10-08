@@ -3,6 +3,7 @@ import { ObjectId } from "bson";
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    LoadUserByIdRepository,
     LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
@@ -17,7 +18,8 @@ export class UserMongoRepository
         AddUserRepository,
         LoadUserByEmailRepository,
         UpdateAccessTokenRepository,
-        LoadUserByTokenRepository
+        LoadUserByTokenRepository,
+        LoadUserByIdRepository
 {
     async add({ name, email, password }: AddUserParams): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
@@ -86,6 +88,20 @@ export class UserMongoRepository
         if (!user) {
             return null;
         }
+
+        return MongoHelper.map({
+            ...user,
+        });
+    }
+
+    async loadById(id: string): Promise<User | null> {
+        const usersCollection = await MongoHelper.getCollection(
+            CollectionNames.USER,
+        );
+
+        const user = await usersCollection.findOne({
+            _id: new ObjectId(id),
+        });
 
         return MongoHelper.map({
             ...user,
