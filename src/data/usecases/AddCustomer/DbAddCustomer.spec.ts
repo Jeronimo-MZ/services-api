@@ -1,5 +1,5 @@
 import { LoadUserByIdRepositorySpy } from "@/data/mocks";
-import { mockAddCustomerParams } from "@/domain/mocks";
+import { mockAddCustomerParams, throwError } from "@/domain/mocks";
 
 import { DbAddCustomer } from "./DbAddCustomer";
 
@@ -25,5 +25,15 @@ describe("DbAddUser", () => {
         expect(loadUserByIdRepositorySpy.id).toEqual(
             addCustomerParams.providerId,
         );
+    });
+
+    it("should throw if LoadUserByIdRepository throws", async () => {
+        const { sut, loadUserByIdRepositorySpy } = makeSut();
+        jest.spyOn(
+            loadUserByIdRepositorySpy,
+            "loadById",
+        ).mockImplementationOnce(throwError);
+        const promise = sut.add(mockAddCustomerParams());
+        await expect(promise).rejects.toThrow();
     });
 });
