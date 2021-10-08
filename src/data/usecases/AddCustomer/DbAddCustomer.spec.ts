@@ -58,7 +58,6 @@ describe("DbAddUser", () => {
         const { sut, addCustomerRepositorySpy } = makeSut();
         const addCustomerParams = mockAddCustomerParams();
         await sut.add(addCustomerParams);
-
         expect(addCustomerRepositorySpy.params).toEqual(addCustomerParams);
     });
 
@@ -69,5 +68,11 @@ describe("DbAddUser", () => {
         );
         const promise = sut.add(mockAddCustomerParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should return a Customer on success", async () => {
+        const { sut, addCustomerRepositorySpy } = makeSut();
+        const customer = await sut.add(mockAddCustomerParams());
+        expect(customer).toEqual(addCustomerRepositorySpy.result);
     });
 });
