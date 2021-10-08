@@ -1,6 +1,7 @@
 import { AddCustomer } from "@/domain/usecases/AddCustomer";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
@@ -20,12 +21,12 @@ export class AddCustomerController
             const error = this.validation.validate(request);
             if (error) return badRequest(error);
             const { institution, name, userId } = request;
-            await this.addCustomer.add({
+            const customer = await this.addCustomer.add({
                 institution,
                 name,
                 providerId: userId,
             });
-            return undefined as any;
+            return ok(customer);
         } catch (error) {
             return serverError(error as Error);
         }
