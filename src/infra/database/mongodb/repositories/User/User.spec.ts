@@ -112,4 +112,21 @@ describe("User Mongo Repository", () => {
             expect(user).toBeNull();
         });
     });
+
+    describe("loadById()", () => {
+        it("should return a user on success", async () => {
+            const sut = makeSut();
+            const addUserParams = mockAddUserParams();
+            const { insertedId } = await usersCollection.insertOne(
+                addUserParams,
+            );
+            const user = await sut.loadById(insertedId.toHexString());
+
+            expect(user).toBeTruthy();
+            expect(user?.id).toBe(insertedId.toHexString());
+            expect(user?.name).toBe(addUserParams.name);
+            expect(user?.email).toBe(addUserParams.email);
+            expect(user?.password).toBe(addUserParams.password);
+        });
+    });
 });
