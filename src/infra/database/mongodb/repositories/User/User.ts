@@ -103,6 +103,8 @@ export class UserMongoRepository
             _id: new ObjectId(id),
         });
 
+        if (!user) return null;
+
         return MongoHelper.map({
             ...user,
         });
