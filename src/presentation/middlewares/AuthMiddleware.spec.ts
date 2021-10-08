@@ -36,4 +36,11 @@ describe("Auth Middleware", () => {
         await sut.handle(httpRequest);
         expect(loadUserByTokenSpy.accessToken).toBe(httpRequest.accessToken);
     });
+
+    it("should return 403 if LoadUserByToken returns null", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        loadUserByTokenSpy.result = null;
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(forbidden(new AccessDeniedError()));
+    });
 });
