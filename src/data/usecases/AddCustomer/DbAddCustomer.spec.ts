@@ -1,4 +1,7 @@
-import { LoadUserByIdRepositorySpy } from "@/data/mocks";
+import {
+    AddCustomerRepositorySpy,
+    LoadUserByIdRepositorySpy,
+} from "@/data/mocks";
 import { mockAddCustomerParams, throwError } from "@/domain/mocks";
 
 import { DbAddCustomer } from "./DbAddCustomer";
@@ -6,14 +9,20 @@ import { DbAddCustomer } from "./DbAddCustomer";
 type SutTypes = {
     sut: DbAddCustomer;
     loadUserByIdRepositorySpy: LoadUserByIdRepositorySpy;
+    addCustomerRepositorySpy: AddCustomerRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
     const loadUserByIdRepositorySpy = new LoadUserByIdRepositorySpy();
-    const sut = new DbAddCustomer(loadUserByIdRepositorySpy);
+    const addCustomerRepositorySpy = new AddCustomerRepositorySpy();
+    const sut = new DbAddCustomer(
+        loadUserByIdRepositorySpy,
+        addCustomerRepositorySpy,
+    );
     return {
         sut,
         loadUserByIdRepositorySpy,
+        addCustomerRepositorySpy,
     };
 };
 
@@ -35,5 +44,13 @@ describe("DbAddUser", () => {
         ).mockImplementationOnce(throwError);
         const promise = sut.add(mockAddCustomerParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call AddCustomerRepository with correct values", async () => {
+        const { sut, addCustomerRepositorySpy } = makeSut();
+        const addCustomerParams = mockAddCustomerParams();
+        await sut.add(addCustomerParams);
+
+        expect(addCustomerRepositorySpy.params).toEqual(addCustomerParams);
     });
 });
