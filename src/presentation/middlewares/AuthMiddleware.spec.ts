@@ -1,11 +1,15 @@
 import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
+import { AccessDeniedError } from "@/presentation/errors/AccessDeniedError";
+import {
+    forbidden,
+    ok,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
+import { LoadUserByTokenSpy } from "@/presentation/mocks/mockUser";
 
-import { AccessDeniedError } from "../errors/AccessDeniedError";
-import { forbidden, serverError } from "../helpers/http/httpHelper";
-import { LoadUserByTokenSpy } from "../mocks/mockUser";
-import { AuthMiddleware } from ".";
+import { AuthMiddleware } from "./AuthMiddleware";
 
 const mockRequest = (): AuthMiddleware.Request => ({
     accessToken: faker.random.alphaNumeric(50),
@@ -53,5 +57,15 @@ describe("Auth Middleware", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new Error()));
+    });
+
+    it("should return 200 if LoadUserByToken returns a user", async () => {
+        const { sut, loadUserByTokenSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(
+            ok({
+                userId: loadUserByTokenSpy.result?.id,
+            }),
+        );
     });
 });
