@@ -4,6 +4,7 @@ import {
     LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
+import { LoadUserByIdRepository } from "@/data/protocols/database/User/LoadUserByIdRepository";
 import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
 import { AddUserParams } from "@/domain/usecases/AddUser";
@@ -24,6 +25,16 @@ export class LoadUserByTokenRepositorySpy implements LoadUserByTokenRepository {
 
     async loadByToken(token: string): Promise<User | null> {
         this.token = token;
+        return this.result;
+    }
+}
+
+export class LoadUserByIdRepositorySpy implements LoadUserByIdRepository {
+    id: string;
+    result: User | null = mockUserModel();
+
+    async loadById(id: string): Promise<User | null> {
+        this.id = id;
         return this.result;
     }
 }
