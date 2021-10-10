@@ -1,4 +1,5 @@
 export enum CollectionNames {
-    USER = "users",
     CUSTOMER = "customers",
+    ERROR = "errors",
+    USER = "users",
 }
