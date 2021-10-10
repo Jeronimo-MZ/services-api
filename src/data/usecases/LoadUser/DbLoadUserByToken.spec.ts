@@ -37,8 +37,8 @@ describe("DbLoadUserByToken", () => {
     it("should return null if Decrypter returns null", async () => {
         const { sut, decrypterSpy } = makeSut();
         decrypterSpy.plaintext = null;
-        const account = await sut.load(token);
-        expect(account).toBeNull();
+        const user = await sut.load(token);
+        expect(user).toBeNull();
     });
 
     it("should throw if Decrypter throws", async () => {
@@ -66,7 +66,7 @@ describe("DbLoadUserByToken", () => {
 
     it("should return a user on success", async () => {
         const { sut, loadUserByTokenRepositorySpy } = makeSut();
-        const account = await sut.load(token);
-        expect(account).toEqual(loadUserByTokenRepositorySpy.result);
+        const user = await sut.load(token);
+        expect(user).toEqual(loadUserByTokenRepositorySpy.result);
     });
 });
