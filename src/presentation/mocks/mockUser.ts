@@ -2,27 +2,24 @@ import faker from "faker";
 
 import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
-import { AddUser, AddUserParams } from "@/domain/usecases/AddUser";
-import {
-    Authentication,
-    AuthenticationParams,
-} from "@/domain/usecases/Authentication";
+import { AddUser } from "@/domain/usecases/AddUser";
+import { Authentication } from "@/domain/usecases/Authentication";
 import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
 
 export class AddUserSpy implements AddUser {
     result: User | null = mockUserModel();
-    params: AddUserParams;
+    params: AddUser.Params;
 
-    async add(params: AddUserParams): Promise<User | null> {
+    async add(params: AddUser.Params): Promise<User | null> {
         this.params = params;
         return this.result;
     }
 }
 
 export class AuthenticationSpy implements Authentication {
-    params: AuthenticationParams;
+    params: Authentication.Params;
     result: string | null = faker.datatype.uuid();
-    async auth(params: AuthenticationParams): Promise<string | null> {
+    async auth(params: Authentication.Params): Promise<string | null> {
         this.params = params;
         return this.result;
     }

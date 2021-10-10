@@ -4,7 +4,7 @@ import {
     LoadUserByEmailRepository,
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
-import { AddUser, AddUserParams } from "@/domain/usecases/AddUser";
+import { AddUser } from "@/domain/usecases/AddUser";
 
 export class DbAddUser implements AddUser {
     constructor(
@@ -12,7 +12,7 @@ export class DbAddUser implements AddUser {
         private readonly loadUserByEmailRepository: LoadUserByEmailRepository,
         private readonly addUserRepository: AddUserRepository,
     ) {}
-    async add({ name, password, email }: AddUserParams): Promise<User | null> {
+    async add({ name, password, email }: AddUser.Params): Promise<User | null> {
         const user = await this.loadUserByEmailRepository.loadByEmail(email);
         if (user) {
             return null;

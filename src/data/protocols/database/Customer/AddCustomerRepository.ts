@@ -1,6 +1,6 @@
 import { Customer } from "@/domain/models/Customer";
-import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
+import { AddCustomer } from "@/domain/usecases/AddCustomer";
 
 export interface AddCustomerRepository {
-    add(data: AddCustomerParams): Promise<Customer>;
+    add(data: AddCustomer.Params): Promise<Customer>;
 }

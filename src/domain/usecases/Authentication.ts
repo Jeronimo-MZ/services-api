@@ -1,8 +1,10 @@
-export type AuthenticationParams = {
-    email: string;
-    password: string;
-};
-
 export interface Authentication {
-    auth(data: AuthenticationParams): Promise<string | null>;
+    auth(data: Authentication.Params): Promise<string | null>;
+}
+
+export namespace Authentication {
+    export type Params = {
+        email: string;
+        password: string;
+    };
 }

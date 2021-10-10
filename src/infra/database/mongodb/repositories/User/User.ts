@@ -8,7 +8,7 @@ import {
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
-import { AddUserParams } from "@/domain/usecases/AddUser";
+import { AddUser } from "@/domain/usecases/AddUser";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 export class UserMongoRepository
@@ -19,7 +19,7 @@ export class UserMongoRepository
         LoadUserByTokenRepository,
         LoadUserByIdRepository
 {
-    async add({ name, email, password }: AddUserParams): Promise<User> {
+    async add({ name, email, password }: AddUser.Params): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
             CollectionNames.USER,
         );

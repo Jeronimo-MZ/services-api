@@ -1,11 +1,13 @@
 import { Customer } from "@/domain/models/Customer";
 
-export type AddCustomerParams = {
-    providerId: string;
-    name: string;
-    institution: string;
-};
-
 export interface AddCustomer {
-    add(data: AddCustomerParams): Promise<Customer>;
+    add(data: AddCustomer.Params): Promise<Customer>;
+}
+
+export namespace AddCustomer {
+    export type Params = {
+        providerId: string;
+        name: string;
+        institution: string;
+    };
 }

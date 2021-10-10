@@ -7,7 +7,7 @@ import {
 import { LoadUserByIdRepository } from "@/data/protocols/database/User/LoadUserByIdRepository";
 import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
-import { AddUserParams } from "@/domain/usecases/AddUser";
+import { AddUser } from "@/domain/usecases/AddUser";
 
 export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
     email: string;
@@ -40,10 +40,10 @@ export class LoadUserByIdRepositorySpy implements LoadUserByIdRepository {
 }
 
 export class AddUserRepositorySpy implements AddUserRepository {
-    params: AddUserParams;
+    params: AddUser.Params;
     result: User = mockUserModel();
 
-    async add(params: AddUserParams): Promise<User> {
+    async add(params: AddUser.Params): Promise<User> {
         this.params = params;
         return this.result;
     }

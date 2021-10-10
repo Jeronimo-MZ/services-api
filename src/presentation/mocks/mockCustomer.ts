@@ -1,13 +1,13 @@
 import { mockCustomerModel } from "@/domain/mocks";
 import { Customer } from "@/domain/models/Customer";
-import { AddCustomer, AddCustomerParams } from "@/domain/usecases/AddCustomer";
+import { AddCustomer } from "@/domain/usecases/AddCustomer";
 import { LoadUserCustomers } from "@/domain/usecases/LoadUserCustomers";
 
 export class AddCustomerSpy implements AddCustomer {
     result: Customer = mockCustomerModel();
-    params: AddCustomerParams;
+    params: AddCustomer.Params;
 
-    async add(params: AddCustomerParams): Promise<Customer> {
+    async add(params: AddCustomer.Params): Promise<Customer> {
         this.params = params;
         return this.result;
     }

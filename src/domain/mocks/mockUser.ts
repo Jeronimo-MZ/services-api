@@ -1,10 +1,10 @@
 import faker from "faker";
 
 import { User } from "@/domain/models/User";
-import { AddUserParams } from "@/domain/usecases/AddUser";
-import { AuthenticationParams } from "@/domain/usecases/Authentication";
+import { AddUser } from "@/domain/usecases/AddUser";
+import { Authentication } from "@/domain/usecases/Authentication";
 
-export const mockAddUserParams = (): AddUserParams => ({
+export const mockAddUserParams = (): AddUser.Params => ({
     name: faker.name.firstName() + " " + faker.name.lastName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
@@ -21,7 +21,7 @@ export const mockUserModel = (): User => ({
     accessToken: null,
 });
 
-export const mockAuthenticationParams = (): AuthenticationParams => ({
+export const mockAuthenticationParams = (): Authentication.Params => ({
     email: faker.internet.email(),
     password: faker.internet.password(),
 });

@@ -3,10 +3,7 @@ import {
     LoadUserByEmailRepository,
     UpdateAccessTokenRepository,
 } from "@/data/protocols/database/User";
-import {
-    Authentication,
-    AuthenticationParams,
-} from "@/domain/usecases/Authentication";
+import { Authentication } from "@/domain/usecases/Authentication";
 
 export class DbAuthentication implements Authentication {
     constructor(
@@ -19,7 +16,7 @@ export class DbAuthentication implements Authentication {
     async auth({
         email,
         password,
-    }: AuthenticationParams): Promise<string | null> {
+    }: Authentication.Params): Promise<string | null> {
         const user = await this.loadUserByEmailRepository.loadByEmail(email);
         if (!user) return null;
 

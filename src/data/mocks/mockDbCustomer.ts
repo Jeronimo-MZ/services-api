@@ -4,13 +4,13 @@ import {
 } from "@/data/protocols/database/Customer";
 import { mockCustomerModel } from "@/domain/mocks";
 import { Customer } from "@/domain/models/Customer";
-import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
+import { AddCustomer } from "@/domain/usecases/AddCustomer";
 
 export class AddCustomerRepositorySpy implements AddCustomerRepository {
-    params: AddCustomerParams;
+    params: AddCustomer.Params;
     result: Customer = mockCustomerModel();
 
-    async add(params: AddCustomerParams): Promise<Customer> {
+    async add(params: AddCustomer.Params): Promise<Customer> {
         this.params = params;
         return this.result;
     }

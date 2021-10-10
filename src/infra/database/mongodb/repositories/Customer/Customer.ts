@@ -3,7 +3,7 @@ import {
     LoadCustomersByProviderIdRepository,
 } from "@/data/protocols/database/Customer";
 import { Customer } from "@/domain/models/Customer";
-import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
+import { AddCustomer } from "@/domain/usecases/AddCustomer";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 export class CustomerMongoRepository
@@ -13,7 +13,7 @@ export class CustomerMongoRepository
         institution,
         name,
         providerId,
-    }: AddCustomerParams): Promise<Customer> {
+    }: AddCustomer.Params): Promise<Customer> {
         const customersCollection = await MongoHelper.getCollection(
             CollectionNames.CUSTOMER,
         );

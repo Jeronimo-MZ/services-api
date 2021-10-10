@@ -1,6 +1,6 @@
 import { User } from "@/domain/models/User";
-import { AddUserParams } from "@/domain/usecases/AddUser";
+import { AddUser } from "@/domain/usecases/AddUser";
 
 export interface AddUserRepository {
-    add(userData: AddUserParams): Promise<User>;
+    add(userData: AddUser.Params): Promise<User>;
 }

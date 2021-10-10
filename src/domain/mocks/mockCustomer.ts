@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import { Customer } from "@/domain/models/Customer";
-import { AddCustomerParams } from "@/domain/usecases/AddCustomer";
+import { AddCustomer } from "@/domain/usecases/AddCustomer";
 
 export const mockCustomerModel = (): Customer => ({
     id: faker.datatype.uuid(),
@@ -11,7 +11,7 @@ export const mockCustomerModel = (): Customer => ({
     providerId: faker.datatype.uuid(),
 });
 
-export const mockAddCustomerParams = (): AddCustomerParams => ({
+export const mockAddCustomerParams = (): AddCustomer.Params => ({
     institution: faker.name.findName(),
     name: faker.name.findName(),
     providerId: faker.datatype.uuid(),
