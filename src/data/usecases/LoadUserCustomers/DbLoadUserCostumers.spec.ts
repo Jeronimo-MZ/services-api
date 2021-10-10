@@ -41,4 +41,11 @@ describe("DbUserCustomers", () => {
         const promise = sut.load(userId);
         await expect(promise).rejects.toThrow();
     });
+
+    it("should return user customers on success", async () => {
+        const { sut, loadCustomerByProviderIdRepositorySpy, userId } =
+            makeSut();
+        const customers = await sut.load(userId);
+        expect(customers).toBe(loadCustomerByProviderIdRepositorySpy.result);
+    });
 });
