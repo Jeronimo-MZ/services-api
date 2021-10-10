@@ -1,5 +1,3 @@
-import { ObjectID } from "bson";
-
 import {
     AddCustomerRepository,
     LoadCustomersByProviderIdRepository,
@@ -39,7 +37,7 @@ export class CustomerMongoRepository
         );
         const customers = (await customersCollection
             .find({
-                providerId: new ObjectID(providerId),
+                providerId: providerId,
             })
             .toArray()) as Customer[];
         return customers.map(MongoHelper.map);

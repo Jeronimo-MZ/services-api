@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import { ObjectID } from "bson";
 import faker from "faker";
 import { Collection } from "mongodb";
 
@@ -34,7 +33,7 @@ const makeCustomer = async (providerId: string): Promise<Customer> => {
     const customerData = {
         institution: faker.company.companyName(),
         name: faker.name.findName(),
-        providerId: new ObjectID(providerId),
+        providerId: providerId,
         phone: null,
     };
 
