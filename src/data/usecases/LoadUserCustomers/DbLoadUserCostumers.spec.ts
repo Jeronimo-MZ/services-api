@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { LoadCustomersByProviderIdRepositorySpy } from "@/data/mocks";
+import { throwError } from "@/domain/mocks";
 
 import { DbLoadUserCustomers } from "./DbLoadUserCustomers";
 
@@ -28,5 +29,16 @@ describe("DbUserCustomers", () => {
             makeSut();
         await sut.load(userId);
         expect(loadCustomerByProviderIdRepositorySpy.providerId).toBe(userId);
+    });
+
+    it("should throw if LoadCustomerByProviderIdRepository throws", async () => {
+        const { sut, loadCustomerByProviderIdRepositorySpy, userId } =
+            makeSut();
+        jest.spyOn(
+            loadCustomerByProviderIdRepositorySpy,
+            "loadByProviderId",
+        ).mockImplementationOnce(throwError);
+        const promise = sut.load(userId);
+        await expect(promise).rejects.toThrow();
     });
 });
