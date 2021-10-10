@@ -8,7 +8,8 @@ export class DbLoadUserCustomers implements LoadUserCustomers {
     ) {}
 
     async load(userId: string): Promise<Customer[]> {
-        this.loadCustomersByProviderIdRepository.loadByProviderId(userId);
-        return [];
+        return await this.loadCustomersByProviderIdRepository.loadByProviderId(
+            userId,
+        );
     }
 }
