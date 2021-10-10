@@ -6,6 +6,7 @@ import {
     badRequest,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
+import { LoadUserCustomersSpy } from "@/presentation/mocks/mockCustomer";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { LoadUserCustomersController } from "./LoadUserCustomersController";
@@ -13,14 +14,20 @@ import { LoadUserCustomersController } from "./LoadUserCustomersController";
 type SutTypes = {
     sut: LoadUserCustomersController;
     validationSpy: ValidationSpy;
+    loadUserCustomersSpy: LoadUserCustomersSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new LoadUserCustomersController(validationSpy);
+    const loadUserCustomersSpy = new LoadUserCustomersSpy();
+    const sut = new LoadUserCustomersController(
+        validationSpy,
+        loadUserCustomersSpy,
+    );
     return {
         sut,
         validationSpy,
+        loadUserCustomersSpy,
     };
 };
 const mockRequest = (): LoadUserCustomersController.Request => {
@@ -51,5 +58,12 @@ describe("SignUp Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should call LoadUserCustomers with correct userId", async () => {
+        const { sut, loadUserCustomersSpy } = makeSut();
+        const request = mockRequest();
+        await sut.handle(request);
+        expect(loadUserCustomersSpy.userId).toEqual(request.userId);
     });
 });
