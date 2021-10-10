@@ -26,13 +26,10 @@ export class CustomerMongoRepository
             providerId,
         };
 
-        const { insertedId } = await customersCollection.insertOne(
-            customerData,
-        );
+        await customersCollection.insertOne(customerData);
 
-        const user = await customersCollection.findOne(insertedId);
         return MongoHelper.map({
-            ...user,
+            ...customerData,
         });
     }
 

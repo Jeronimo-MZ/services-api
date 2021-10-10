@@ -33,12 +33,10 @@ export class UserMongoRepository
             accessToken: null,
         };
 
-        const result = await usersCollection.insertOne(userData);
-        const user = (await usersCollection.findOne(
-            result.insertedId,
-        )) as Document;
+        await usersCollection.insertOne(userData);
+
         return MongoHelper.map({
-            ...user,
+            ...userData,
         });
     }
 
