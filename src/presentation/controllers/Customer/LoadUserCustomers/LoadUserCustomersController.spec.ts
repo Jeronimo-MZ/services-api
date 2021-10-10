@@ -66,4 +66,13 @@ describe("SignUp Controller", () => {
         await sut.handle(request);
         expect(loadUserCustomersSpy.userId).toEqual(request.userId);
     });
+
+    it("should return 500 if LoadUserCustomers throws", async () => {
+        const { sut, loadUserCustomersSpy } = makeSut();
+        jest.spyOn(loadUserCustomersSpy, "load").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
 });
