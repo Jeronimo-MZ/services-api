@@ -9,6 +9,6 @@ export class DateValidation implements Validation {
 
     validate(input: any): Error | null {
         this.dateValidator.isValid(input[this.fieldName]);
-        return undefined as any;
+        return null;
     }
 }
