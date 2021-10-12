@@ -1,3 +1,5 @@
+import { ObjectID } from "bson";
+
 import {
     AddCustomerRepository,
     LoadCustomersByProviderIdRepository,
@@ -47,7 +49,14 @@ export class CustomerMongoRepository
         return customers.map(MongoHelper.map);
     }
 
-    async loadById(_id: string): Promise<Customer | null> {
-        return null;
+    async loadById(id: string): Promise<Customer | null> {
+        const customersCollection = await MongoHelper.getCollection(
+            CollectionNames.CUSTOMER,
+        );
+        const customer = await customersCollection.findOne({
+            _id: new ObjectID(id),
+        });
+        if (!customer) return null;
+        return MongoHelper.map(customer);
     }
 }
