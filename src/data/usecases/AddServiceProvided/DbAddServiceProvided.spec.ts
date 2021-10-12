@@ -41,4 +41,12 @@ describe("DbAddServiceProvided", () => {
         const promise = sut.add(mockAddServiceProvidedParams());
         await expect(promise).rejects.toThrow();
     });
+
+    it("should return null if customer providerId and the given providerId are different", async () => {
+        const { sut } = makeSut();
+        const params = mockAddServiceProvidedParams();
+        params.providerId = "different_id";
+        const serviceProvided = await sut.add(params);
+        expect(serviceProvided).toBeNull();
+    });
 });
