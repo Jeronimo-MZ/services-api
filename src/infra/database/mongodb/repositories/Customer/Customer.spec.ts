@@ -29,11 +29,11 @@ const makeUserId = async () => {
     };
 };
 
-const makeCustomer = async (providerId: string): Promise<Customer> => {
+const makeCustomer = async (providerId?: string): Promise<Customer> => {
     const customerData = {
         institution: faker.company.companyName(),
         name: faker.name.findName(),
-        providerId: providerId,
+        providerId: providerId || faker.datatype.uuid(),
         phone: null,
     };
 
@@ -98,6 +98,13 @@ describe("Customer Mongo Repository", () => {
     });
 
     describe("loadById()", () => {
+        it("should return a customer on success", async () => {
+            const sut = makeSut();
+            const customer = await makeCustomer();
+            const loadedCustomer = await sut.loadById(customer.id);
+            expect(loadedCustomer).toEqual(customer);
+        });
+
         it("should return null if loadById fails", async () => {
             const sut = makeSut();
             const customer = await sut.loadById(faker.datatype.string(12));
