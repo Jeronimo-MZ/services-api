@@ -1,6 +1,7 @@
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
@@ -35,7 +36,7 @@ export class AddServiceProvidedController
             if (serviceProvided instanceof Error) {
                 return badRequest(serviceProvided);
             }
-            return undefined as any;
+            return ok(serviceProvided);
         } catch (error) {
             return serverError(error as Error);
         }
