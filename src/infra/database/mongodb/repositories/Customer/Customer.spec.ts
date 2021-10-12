@@ -96,4 +96,12 @@ describe("Customer Mongo Repository", () => {
             expect(loadedCustomers).toEqual([]);
         });
     });
+
+    describe("loadById()", () => {
+        it("should return null if loadById fails", async () => {
+            const sut = makeSut();
+            const customer = await sut.loadById(faker.datatype.string(12));
+            expect(customer).toBeNull();
+        });
+    });
 });
