@@ -1,3 +1,4 @@
+import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 import {
     badRequest,
     serverError,
@@ -8,7 +9,10 @@ import { Controller, HttpResponse } from "@/presentation/protocols";
 export class AddServiceProvidedController
     implements Controller<AddServiceProvidedController.Request>
 {
-    constructor(private readonly validation: ValidationSpy) {}
+    constructor(
+        private readonly validation: ValidationSpy,
+        private readonly addServiceProvided: AddServiceProvided,
+    ) {}
 
     async handle(
         request: AddServiceProvidedController.Request,
@@ -18,6 +22,16 @@ export class AddServiceProvidedController
             if (error) {
                 return badRequest(error);
             }
+            const { customerId, name, price, userId, details, paymentDate } =
+                request;
+            await this.addServiceProvided.add({
+                customerId,
+                name,
+                price,
+                providerId: userId,
+                details,
+                paymentDate,
+            });
             return undefined as any;
         } catch (error) {
             return serverError(error as Error);
@@ -27,7 +41,7 @@ export class AddServiceProvidedController
 
 export namespace AddServiceProvidedController {
     export type Request = {
-        providerId: string;
+        userId: string;
         customerId: string;
         name: string;
         price: number;
