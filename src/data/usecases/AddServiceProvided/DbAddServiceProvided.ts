@@ -16,15 +16,23 @@ export class DbAddServiceProvided implements AddServiceProvided {
         details,
         paymentDate,
     }: AddServiceProvided.Params): Promise<ServiceProvided | null> {
-        await this.loadCustomerByIdRepository.loadById(customerId);
-        await this.addServiceProvidedRepository.add({
+        const customer = await this.loadCustomerByIdRepository.loadById(
             customerId,
-            name,
-            price,
-            providerId,
-            details,
-            paymentDate,
-        });
+        );
+        if (customer) {
+            if (customer.providerId === providerId) {
+                const serviceProvided =
+                    await this.addServiceProvidedRepository.add({
+                        customerId,
+                        name,
+                        price,
+                        providerId,
+                        details,
+                        paymentDate,
+                    });
+                return serviceProvided;
+            }
+        }
         return null;
     }
 }
