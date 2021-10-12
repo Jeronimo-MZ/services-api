@@ -1,4 +1,5 @@
 import { LoadCustomerByIdRepositorySpy } from "@/data/mocks";
+import { AddServiceProvidedRepositorySpy } from "@/data/mocks/mockDbServiceProvided";
 import { mockAddServiceProvidedParams, throwError } from "@/domain/mocks";
 
 import { DbAddServiceProvided } from "./DbAddServiceProvided";
@@ -6,14 +7,21 @@ import { DbAddServiceProvided } from "./DbAddServiceProvided";
 type SutTypes = {
     sut: DbAddServiceProvided;
     loadCustomerByIdRepositorySpy: LoadCustomerByIdRepositorySpy;
+    addServiceProvidedRepositorySpy: AddServiceProvidedRepositorySpy;
 };
 const makeSut = (): SutTypes => {
     const loadCustomerByIdRepositorySpy = new LoadCustomerByIdRepositorySpy();
-    const sut = new DbAddServiceProvided(loadCustomerByIdRepositorySpy);
+    const addServiceProvidedRepositorySpy =
+        new AddServiceProvidedRepositorySpy();
+    const sut = new DbAddServiceProvided(
+        loadCustomerByIdRepositorySpy,
+        addServiceProvidedRepositorySpy,
+    );
 
     return {
         sut,
         loadCustomerByIdRepositorySpy,
+        addServiceProvidedRepositorySpy,
     };
 };
 
@@ -48,5 +56,12 @@ describe("DbAddServiceProvided", () => {
         params.providerId = "different_id";
         const serviceProvided = await sut.add(params);
         expect(serviceProvided).toBeNull();
+    });
+
+    it("should call AddServiceProvidedRepository with correct values", async () => {
+        const { sut, addServiceProvidedRepositorySpy } = makeSut();
+        const params = mockAddServiceProvidedParams();
+        await sut.add(params);
+        expect(addServiceProvidedRepositorySpy.params).toEqual(params);
     });
 });
