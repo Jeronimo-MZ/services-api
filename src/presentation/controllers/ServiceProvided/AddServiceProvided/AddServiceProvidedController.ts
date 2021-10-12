@@ -1,4 +1,7 @@
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 import { Controller, HttpResponse } from "@/presentation/protocols";
 
@@ -10,11 +13,15 @@ export class AddServiceProvidedController
     async handle(
         request: AddServiceProvidedController.Request,
     ): Promise<HttpResponse> {
-        const error = this.validation.validate(request);
-        if (error) {
-            return badRequest(error);
+        try {
+            const error = this.validation.validate(request);
+            if (error) {
+                return badRequest(error);
+            }
+            return undefined as any;
+        } catch (error) {
+            return serverError(error as Error);
         }
-        return undefined as any;
     }
 }
 
