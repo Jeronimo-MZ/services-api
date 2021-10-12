@@ -2,12 +2,16 @@ import {
     AddCustomerRepository,
     LoadCustomersByProviderIdRepository,
 } from "@/data/protocols/database/Customer";
+import { LoadCustomerByIdRepository } from "@/data/protocols/database/Customer/LoadCustomerByIdRepository";
 import { Customer } from "@/domain/models/Customer";
 import { AddCustomer } from "@/domain/usecases/AddCustomer";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 
 export class CustomerMongoRepository
-    implements AddCustomerRepository, LoadCustomersByProviderIdRepository
+    implements
+        AddCustomerRepository,
+        LoadCustomersByProviderIdRepository,
+        LoadCustomerByIdRepository
 {
     async add({
         institution,
@@ -41,5 +45,9 @@ export class CustomerMongoRepository
             })
             .toArray()) as Customer[];
         return customers.map(MongoHelper.map);
+    }
+
+    async loadById(_id: string): Promise<Customer | null> {
+        return null;
     }
 }
