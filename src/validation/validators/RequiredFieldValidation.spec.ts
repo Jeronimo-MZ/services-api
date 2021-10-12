@@ -17,7 +17,7 @@ describe("RequiredField Validation", () => {
         expect(error).toEqual(new MissingParamError(field));
     });
 
-    it("should not return if validation succeeds", () => {
+    it("should return null if validation succeeds", () => {
         const sut = makeSut();
         const error = sut.validate({ [field]: faker.random.word() });
         expect(error).toBeNull();
