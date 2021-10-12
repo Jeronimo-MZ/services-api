@@ -24,4 +24,11 @@ describe("DbAddServiceProvided", () => {
         await sut.add(params);
         expect(loadCustomerByIdRepositorySpy.id).toBe(params.customerId);
     });
+
+    it("should return null if LoadCustomerByIdRepository returns null", async () => {
+        const { sut, loadCustomerByIdRepositorySpy } = makeSut();
+        loadCustomerByIdRepositorySpy.result = null;
+        const serviceProvided = await sut.add(mockAddServiceProvidedParams());
+        expect(serviceProvided).toBeNull();
+    });
 });
