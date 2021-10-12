@@ -64,4 +64,14 @@ describe("DbAddServiceProvided", () => {
         await sut.add(params);
         expect(addServiceProvidedRepositorySpy.params).toEqual(params);
     });
+
+    it("should call AddServiceProvidedRepository with correct values", async () => {
+        const { sut, addServiceProvidedRepositorySpy } = makeSut();
+        jest.spyOn(
+            addServiceProvidedRepositorySpy,
+            "add",
+        ).mockImplementationOnce(throwError);
+        const promise = sut.add(mockAddServiceProvidedParams());
+        await expect(promise).rejects.toThrow();
+    });
 });
