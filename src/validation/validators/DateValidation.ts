@@ -1,3 +1,4 @@
+import { InvalidParamError } from "@/presentation/errors";
 import { Validation } from "@/presentation/protocols";
 import { DateValidator } from "@/validation/protocols/DateValidator";
 
@@ -8,7 +9,10 @@ export class DateValidation implements Validation {
     ) {}
 
     validate(input: any): Error | null {
-        this.dateValidator.isValid(input[this.fieldName]);
+        const isValid = this.dateValidator.isValid(input[this.fieldName]);
+        if (!isValid) {
+            return new InvalidParamError(this.fieldName);
+        }
         return null;
     }
 }
