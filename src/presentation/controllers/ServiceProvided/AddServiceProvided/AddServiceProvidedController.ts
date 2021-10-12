@@ -24,7 +24,7 @@ export class AddServiceProvidedController
             }
             const { customerId, name, price, userId, details, paymentDate } =
                 request;
-            await this.addServiceProvided.add({
+            const serviceProvided = await this.addServiceProvided.add({
                 customerId,
                 name,
                 price,
@@ -32,6 +32,9 @@ export class AddServiceProvidedController
                 details,
                 paymentDate,
             });
+            if (serviceProvided instanceof Error) {
+                return badRequest(serviceProvided);
+            }
             return undefined as any;
         } catch (error) {
             return serverError(error as Error);
