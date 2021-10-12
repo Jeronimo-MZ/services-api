@@ -2,6 +2,7 @@ import { LoadCustomerByIdRepository } from "@/data/protocols/database/Customer/L
 import { AddServiceProvidedRepository } from "@/data/protocols/database/ServiceProvided/AddServiceProvidedRepository";
 import { ServiceProvided } from "@/domain/models/ServiceProvided";
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
+import { InvalidParamError } from "@/presentation/errors";
 
 export class DbAddServiceProvided implements AddServiceProvided {
     constructor(
@@ -15,7 +16,7 @@ export class DbAddServiceProvided implements AddServiceProvided {
         providerId,
         details,
         paymentDate,
-    }: AddServiceProvided.Params): Promise<ServiceProvided | null> {
+    }: AddServiceProvided.Params): Promise<ServiceProvided | Error> {
         const customer = await this.loadCustomerByIdRepository.loadById(
             customerId,
         );
@@ -32,7 +33,9 @@ export class DbAddServiceProvided implements AddServiceProvided {
                     });
                 return serviceProvided;
             }
+            return new InvalidParamError("providerId");
+        } else {
+            return new InvalidParamError("customerId");
         }
-        return null;
     }
 }

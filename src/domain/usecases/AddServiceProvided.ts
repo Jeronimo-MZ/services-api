@@ -1,7 +1,7 @@
 import { ServiceProvided } from "@/domain/models/ServiceProvided";
 
 export interface AddServiceProvided {
-    add(data: AddServiceProvided.Params): Promise<ServiceProvided | null>;
+    add(data: AddServiceProvided.Params): Promise<ServiceProvided | Error>;
 }
 
 export namespace AddServiceProvided {

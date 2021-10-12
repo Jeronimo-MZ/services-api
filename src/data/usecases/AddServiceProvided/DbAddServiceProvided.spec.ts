@@ -2,6 +2,7 @@ import { LoadCustomerByIdRepositorySpy } from "@/data/mocks";
 import { AddServiceProvidedRepositorySpy } from "@/data/mocks/mockDbServiceProvided";
 import { mockAddServiceProvidedParams, throwError } from "@/domain/mocks";
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
+import { InvalidParamError } from "@/presentation/errors";
 
 import { DbAddServiceProvided } from "./DbAddServiceProvided";
 
@@ -38,11 +39,11 @@ describe("DbAddServiceProvided", () => {
         expect(loadCustomerByIdRepositorySpy.id).toBe(params.customerId);
     });
 
-    it("should return null if LoadCustomerByIdRepository returns null", async () => {
+    it("should return an Error if LoadCustomerByIdRepository returns null", async () => {
         const { sut, loadCustomerByIdRepositorySpy, params } = makeSut();
         loadCustomerByIdRepositorySpy.result = null;
         const serviceProvided = await sut.add(params);
-        expect(serviceProvided).toBeNull();
+        expect(serviceProvided).toEqual(new InvalidParamError("customerId"));
     });
 
     it("should throw if LoadCustomerByIdRepository throws", async () => {
@@ -55,11 +56,11 @@ describe("DbAddServiceProvided", () => {
         await expect(promise).rejects.toThrow();
     });
 
-    it("should return null if customer providerId and the given providerId are different", async () => {
+    it("should return an Error if customer providerId and the given providerId are different", async () => {
         const { sut, params } = makeSut();
         params.providerId = "different_id";
         const serviceProvided = await sut.add(params);
-        expect(serviceProvided).toBeNull();
+        expect(serviceProvided).toEqual(new InvalidParamError("providerId"));
     });
 
     it("should call AddServiceProvidedRepository with correct values", async () => {
