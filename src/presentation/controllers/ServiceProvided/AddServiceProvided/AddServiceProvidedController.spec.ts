@@ -78,4 +78,13 @@ describe("SignUp Controller", () => {
             paymentDate: request.paymentDate,
         });
     });
+
+    it("should return 500 if AddServiceProvided throws", async () => {
+        const { sut, addServiceProviderSpy } = makeSut();
+        jest.spyOn(addServiceProviderSpy, "add").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
 });
