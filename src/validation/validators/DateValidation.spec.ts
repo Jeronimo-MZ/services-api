@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
+import { InvalidParamError } from "@/presentation/errors";
 
 import { DateValidatorSpy } from "../mocks/mockDateValidator";
 import { DateValidation } from "./DateValidation";
@@ -42,5 +43,13 @@ describe("Date Validation", () => {
             throwError,
         );
         expect(sut.validate).toThrow();
+    });
+
+    it("should return an error if DateValidator returns false", () => {
+        const { sut, dateValidatorSpy } = makeSut();
+        dateValidatorSpy.isDateValid = false;
+        const date = faker.date.recent().toString();
+        const error = sut.validate({ [field]: date });
+        expect(error).toEqual(new InvalidParamError(field));
     });
 });
