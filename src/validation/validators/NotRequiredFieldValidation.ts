@@ -8,7 +8,7 @@ export class NotRequiredFieldValidation implements Validation {
 
     validate(input: any): Error | null {
         if (input[this.fieldName]) {
-            this.validation.validate(input);
+            return this.validation.validate(input);
         }
         return null;
     }
