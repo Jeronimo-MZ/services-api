@@ -1,5 +1,7 @@
 import faker from "faker";
 
+import { throwError } from "@/domain/mocks";
+
 import { DateValidatorSpy } from "../mocks/mockDateValidator";
 import { DateValidation } from "./DateValidation";
 
@@ -32,5 +34,13 @@ describe("Date Validation", () => {
         const date = faker.date.recent().toString();
         const error = sut.validate({ [field]: date });
         expect(error).toBeNull();
+    });
+
+    it("should throw if DateValidator throws", () => {
+        const { sut, dateValidatorSpy } = makeSut();
+        jest.spyOn(dateValidatorSpy, "isValid").mockImplementationOnce(
+            throwError,
+        );
+        expect(sut.validate).toThrow();
     });
 });
