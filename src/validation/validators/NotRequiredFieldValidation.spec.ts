@@ -31,4 +31,11 @@ describe("NotRequiredField Validation", () => {
         sut.validate(input);
         expect(validationSpy.input).toEqual(input);
     });
+
+    it("should return null if Validation returns null", () => {
+        const { sut, validationSpy } = makeSut();
+        validationSpy.error = null;
+        const error = sut.validate({ [field]: faker.random.word() });
+        expect(error).toBe(validationSpy.error);
+    });
 });
