@@ -1,5 +1,7 @@
-import { LoadCustomerByIdRepositorySpy } from "@/data/mocks";
-import { AddServiceProvidedRepositorySpy } from "@/data/mocks/mockDbServiceProvided";
+import {
+    AddServiceProvidedRepositorySpy,
+    LoadCustomerByIdRepositorySpy,
+} from "@/data/mocks";
 import { mockAddServiceProvidedParams, throwError } from "@/domain/mocks";
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 import { InvalidParamError } from "@/presentation/errors";

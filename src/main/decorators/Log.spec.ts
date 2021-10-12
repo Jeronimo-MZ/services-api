@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { LogErrorRepositorySpy } from "@/data/mocks/mockDbLog";
+import { LogErrorRepositorySpy } from "@/data/mocks";
 import { LogControllerDecorator } from "@/main/decorators/Log";
 import { ok, serverError } from "@/presentation/helpers/http/httpHelper";
 import { Controller, HttpResponse } from "@/presentation/protocols";

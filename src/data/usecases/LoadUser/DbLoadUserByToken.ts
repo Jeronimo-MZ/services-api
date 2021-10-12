@@ -1,4 +1,4 @@
-import { Decrypter } from "@/data/protocols/cryptography/Decrypter";
+import { Decrypter } from "@/data/protocols/cryptography";
 import { LoadUserByTokenRepository } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
 import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";

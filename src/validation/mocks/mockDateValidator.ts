@@ -1,4 +1,4 @@
-import { DateValidator } from "@/validation/protocols/DateValidator";
+import { DateValidator } from "@/validation/protocols";
 
 export class DateValidatorSpy implements DateValidator {
     isDateValid = true;
