@@ -87,4 +87,11 @@ describe("SignUp Controller", () => {
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
+
+    it("should return 400 if AddServiceProvided returns an error", async () => {
+        const { sut, addServiceProviderSpy } = makeSut();
+        addServiceProviderSpy.result = new Error();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(badRequest(addServiceProviderSpy.result));
+    });
 });
