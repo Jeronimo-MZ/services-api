@@ -13,13 +13,20 @@ const makeSut = (): DateValidatorAdapter => {
     const sut = new DateValidatorAdapter();
     return sut;
 };
+const date = faker.date.recent().toString();
 
 describe("DateValidatorAdapter", () => {
     it("it should call validator with correct date", () => {
         const sut = makeSut();
-        const date = faker.date.recent().toString();
         const isDateSpy = jest.spyOn(validator, "isDate");
         sut.isValid(date);
         expect(isDateSpy).toHaveBeenCalledWith(date);
+    });
+
+    it("should return false if validator returns false", () => {
+        const sut = makeSut();
+        jest.spyOn(validator, "isDate").mockReturnValueOnce(false);
+        const isValid = sut.isValid(date);
+        expect(isValid).toBe(false);
     });
 });
