@@ -26,4 +26,11 @@ describe("Date Validation", () => {
         sut.validate({ [field]: date });
         expect(dateValidatorSpy.date).toBe(date);
     });
+
+    it("should return null if DateValidator returns true", () => {
+        const { sut } = makeSut();
+        const date = faker.date.recent().toString();
+        const error = sut.validate({ [field]: date });
+        expect(error).toBeNull();
+    });
 });
