@@ -36,7 +36,7 @@ const mockRequest = (): AddCustomerController.Request => {
     };
 };
 
-describe("SignUp Controller", () => {
+describe("AddCustomer Controller", () => {
     it("should call Validation with correct values", async () => {
         const { sut, validationSpy } = makeSut();
         const request = mockRequest();
