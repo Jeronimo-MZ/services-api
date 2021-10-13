@@ -3,6 +3,7 @@ import { ServiceProvided } from "@/domain/models/ServiceProvided";
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 
 import { AddServiceProvidedRepository } from "../protocols/database/ServiceProvided/AddServiceProvidedRepository";
+import { LoadServicesProvidedByProviderIdRepository } from "../protocols/database/ServiceProvided/LoadServicesProvidedByProviderIdRepository";
 
 export class AddServiceProvidedRepositorySpy
     implements AddServiceProvidedRepository
@@ -12,6 +13,22 @@ export class AddServiceProvidedRepositorySpy
 
     async add(params: AddServiceProvided.Params): Promise<ServiceProvided> {
         this.params = params;
+        return this.result;
+    }
+}
+
+export class LoadServicesProvidedByProviderIdRepositorySpy
+    implements LoadServicesProvidedByProviderIdRepository
+{
+    providerId: string;
+    result: ServiceProvided[] = [
+        mockServiceProvidedModel(),
+        mockServiceProvidedModel(),
+        mockServiceProvidedModel(),
+    ];
+
+    async loadByProviderId(providerId: string): Promise<ServiceProvided[]> {
+        this.providerId = providerId;
         return this.result;
     }
 }
