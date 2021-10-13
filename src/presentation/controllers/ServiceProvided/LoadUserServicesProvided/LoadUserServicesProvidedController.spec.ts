@@ -6,6 +6,7 @@ import {
     badRequest,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
+import { LoadUserServicesProvidedSpy } from "@/presentation/mocks/mockServiceProvided";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { LoadUserServicesProvidedController } from "./LoadUserServicesProvided";
@@ -13,14 +14,20 @@ import { LoadUserServicesProvidedController } from "./LoadUserServicesProvided";
 type SutTypes = {
     sut: LoadUserServicesProvidedController;
     validationSpy: ValidationSpy;
+    loadUserServicesProvidedSpy: LoadUserServicesProvidedSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const sut = new LoadUserServicesProvidedController(validationSpy);
+    const loadUserServicesProvidedSpy = new LoadUserServicesProvidedSpy();
+    const sut = new LoadUserServicesProvidedController(
+        validationSpy,
+        loadUserServicesProvidedSpy,
+    );
     return {
         sut,
         validationSpy,
+        loadUserServicesProvidedSpy,
     };
 };
 const mockRequest = (): LoadUserServicesProvidedController.Request => {
@@ -51,5 +58,12 @@ describe("LoadUserServicesProvided Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should call LoadUserServicesProvided with correct id", async () => {
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
+        const request = mockRequest();
+        await sut.handle(request);
+        expect(loadUserServicesProvidedSpy.userId).toBe(request.userId);
     });
 });
