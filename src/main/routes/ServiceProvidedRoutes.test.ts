@@ -5,6 +5,8 @@ import { Collection } from "mongodb";
 import request from "supertest";
 
 import { Customer } from "@/domain/models/Customer";
+import { ServiceProvided } from "@/domain/models/ServiceProvided";
+import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 import { CollectionNames } from "@/infra/database/mongodb/helpers";
 import { MongoHelper } from "@/infra/database/mongodb/helpers/MongoHelper";
 import { app } from "@/main/config/app";
@@ -13,6 +15,7 @@ import { setupRoutes } from "@/main/config/routes";
 
 let usersCollection: Collection;
 let customersCollection: Collection;
+let servicesProvidedCollection: Collection;
 
 const makeUserTokenAndId = async () => {
     const userData = {
@@ -55,12 +58,31 @@ const makeCustomer = async (providerId: string): Promise<Customer> => {
     return MongoHelper.map(customerData);
 };
 
+const makeServiceProvided = async (
+    providerId: string,
+    customerId: string,
+): Promise<ServiceProvided> => {
+    const serviceProvidedData: AddServiceProvided.Params = {
+        name: faker.name.findName(),
+        customerId,
+        providerId,
+        price: faker.datatype.number(),
+        details: faker.lorem.paragraph(),
+    };
+
+    await servicesProvidedCollection.insertOne(serviceProvidedData);
+    return MongoHelper.map(serviceProvidedData);
+};
+
 describe("User routes", () => {
     beforeAll(async () => {
         await MongoHelper.connect(process.env.MONGO_URL as string);
         usersCollection = await MongoHelper.getCollection(CollectionNames.USER);
         customersCollection = await MongoHelper.getCollection(
             CollectionNames.CUSTOMER,
+        );
+        servicesProvidedCollection = await MongoHelper.getCollection(
+            CollectionNames.SERVICE_PROVIDED,
         );
         setupRoutes(app);
     });
@@ -70,6 +92,8 @@ describe("User routes", () => {
 
     beforeEach(async () => {
         await usersCollection.deleteMany({});
+        await customersCollection.deleteMany({});
+        await servicesProvidedCollection.deleteMany({});
     });
 
     describe("POST /services", () => {
@@ -88,6 +112,22 @@ describe("User routes", () => {
                     paymentDate: "2020/12/25",
                 })
                 .expect(200);
+        });
+
+        describe("GET /api/services", () => {
+            it("should return 200 on success", async () => {
+                const { token, id } = await makeUserTokenAndId();
+                const customer = await makeCustomer(id);
+                makeServiceProvided(id, customer.id);
+                makeServiceProvided(id, customer.id);
+                const response = await request(app)
+                    .get("/api/services")
+                    .set("x-access-token", token)
+                    .send()
+                    .expect(200);
+
+                console.log(response.body);
+            });
         });
     });
 });
