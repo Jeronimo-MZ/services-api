@@ -4,14 +4,13 @@ import {
     ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
-import { Controller, HttpResponse } from "@/presentation/protocols";
+import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class AddServiceProvidedController
     implements Controller<AddServiceProvidedController.Request>
 {
     constructor(
-        private readonly validation: ValidationSpy,
+        private readonly validation: Validation,
         private readonly addServiceProvided: AddServiceProvided,
     ) {}
 
@@ -31,7 +30,7 @@ export class AddServiceProvidedController
                 price,
                 providerId: userId,
                 details,
-                paymentDate,
+                paymentDate: paymentDate ? new Date(paymentDate) : paymentDate,
             });
             if (serviceProvided instanceof Error) {
                 return badRequest(serviceProvided);
