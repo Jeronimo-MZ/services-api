@@ -29,4 +29,10 @@ describe("DateValidatorAdapter", () => {
         const isValid = sut.isValid(date);
         expect(isValid).toBe(false);
     });
+
+    it("should return true if validator returns true", () => {
+        const sut = makeSut();
+        const isValid = sut.isValid(date);
+        expect(isValid).toBe(true);
+    });
 });
