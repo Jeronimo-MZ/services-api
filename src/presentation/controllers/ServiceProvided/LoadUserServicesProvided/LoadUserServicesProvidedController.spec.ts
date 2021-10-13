@@ -4,6 +4,7 @@ import { throwError } from "@/domain/mocks";
 import { InvalidParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { LoadUserServicesProvidedSpy } from "@/presentation/mocks/mockServiceProvided";
@@ -74,5 +75,11 @@ describe("LoadUserServicesProvided Controller", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should return 200 on success", async () => {
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(ok(loadUserServicesProvidedSpy.result));
     });
 });
