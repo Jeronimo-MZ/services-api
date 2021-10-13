@@ -1,3 +1,4 @@
+import { LoadUserServicesProvided } from "@/domain/usecases/LoadUserServicesProvided";
 import {
     badRequest,
     serverError,
@@ -7,7 +8,10 @@ import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 export class LoadUserServicesProvidedController
     implements Controller<LoadUserServicesProvidedController.Request>
 {
-    constructor(private readonly validation: Validation) {}
+    constructor(
+        private readonly validation: Validation,
+        private readonly loadUserServicesProvided: LoadUserServicesProvided,
+    ) {}
 
     async handle(
         request: LoadUserServicesProvidedController.Request,
@@ -17,6 +21,7 @@ export class LoadUserServicesProvidedController
             if (error) {
                 return badRequest(error);
             }
+            await this.loadUserServicesProvided.load(request.userId);
             return undefined as any;
         } catch (error) {
             return serverError(error as Error);
