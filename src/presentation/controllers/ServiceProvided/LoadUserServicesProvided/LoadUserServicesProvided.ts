@@ -1,3 +1,4 @@
+import { badRequest } from "@/presentation/helpers/http/httpHelper";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class LoadUserServicesProvidedController
@@ -8,7 +9,10 @@ export class LoadUserServicesProvidedController
     async handle(
         request: LoadUserServicesProvidedController.Request,
     ): Promise<HttpResponse> {
-        this.validation.validate(request);
+        const error = this.validation.validate(request);
+        if (error) {
+            return badRequest(error);
+        }
         return undefined as any;
     }
 }
