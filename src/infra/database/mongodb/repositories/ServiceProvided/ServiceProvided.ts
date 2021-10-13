@@ -1,11 +1,14 @@
 import { AddServiceProvidedRepository } from "@/data/protocols/database/ServiceProvided/AddServiceProvidedRepository";
+import { LoadServicesProvidedByProviderIdRepository } from "@/data/protocols/database/ServiceProvided/LoadServicesProvidedByProviderIdRepository";
 import { ServiceProvided } from "@/domain/models/ServiceProvided";
 import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 
 import { CollectionNames, MongoHelper } from "../../helpers";
 
 export class ServiceProvidedMongoRepository
-    implements AddServiceProvidedRepository
+    implements
+        AddServiceProvidedRepository,
+        LoadServicesProvidedByProviderIdRepository
 {
     async add({
         customerId,
@@ -31,5 +34,15 @@ export class ServiceProvidedMongoRepository
         await serviceProvidedCollection.insertOne(serviceProvided);
 
         return MongoHelper.map(serviceProvided);
+    }
+
+    async loadByProviderId(providerId: string): Promise<ServiceProvided[]> {
+        const serviceProvidedCollection = await MongoHelper.getCollection(
+            CollectionNames.SERVICE_PROVIDED,
+        );
+        const ServicesProvided = await serviceProvidedCollection
+            .find({ providerId })
+            .toArray();
+        return ServicesProvided.map(MongoHelper.map);
     }
 }
