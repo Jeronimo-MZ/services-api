@@ -1,3 +1,4 @@
+import faker from "faker";
 import { Collection } from "mongodb";
 
 import { mockAddServiceProvidedParams } from "@/domain/mocks";
@@ -9,6 +10,18 @@ import { ServiceProvidedMongoRepository } from "./ServiceProvided";
 const makeSut = (): ServiceProvidedMongoRepository =>
     new ServiceProvidedMongoRepository();
 let serviceProvidedCollection: Collection;
+
+const makeServiceProvided = async (
+    providerId?: string,
+): Promise<ServiceProvided> => {
+    const serviceProvided = mockAddServiceProvidedParams();
+    if (providerId) {
+        serviceProvided.providerId = providerId;
+    }
+    await serviceProvidedCollection.insertOne(serviceProvided);
+
+    return MongoHelper.map(serviceProvided);
+};
 
 describe("ServiceProvided Mongo Repository", () => {
     beforeAll(async () => {
@@ -46,6 +59,23 @@ describe("ServiceProvided Mongo Repository", () => {
                 serviceProvided.paymentDate,
             );
             expect(serviceProvided.price).toBe(serviceProvided.price);
+        });
+    });
+
+    describe("loadByProviderId()", () => {
+        it("should returns an array of ServicesProvided with the given providerId", async () => {
+            const services = [await makeServiceProvided()];
+            for (let i = 0; i < 3; i++) {
+                services.push(
+                    await makeServiceProvided(services[0].providerId),
+                );
+            }
+            const sut = makeSut();
+            let loadedServices = await sut.loadByProviderId(
+                services[0].providerId,
+            );
+            expect(loadedServices).toEqual(services);
+            loadedServices = await sut.loadByProviderId(faker.datatype.uuid());
         });
     });
 });
