@@ -10,7 +10,7 @@ const makeSut = (): ServiceProvidedMongoRepository =>
     new ServiceProvidedMongoRepository();
 let serviceProvidedCollection: Collection;
 
-describe("Customer Mongo Repository", () => {
+describe("ServiceProvided Mongo Repository", () => {
     beforeAll(async () => {
         await MongoHelper.connect(process.env.MONGO_URL as string);
 
