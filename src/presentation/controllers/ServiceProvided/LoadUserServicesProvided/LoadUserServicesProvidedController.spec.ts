@@ -9,7 +9,7 @@ import {
 import { LoadUserServicesProvidedSpy } from "@/presentation/mocks/mockServiceProvided";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
-import { LoadUserServicesProvidedController } from "./LoadUserServicesProvided";
+import { LoadUserServicesProvidedController } from "./LoadUserServicesProvidedController";
 
 type SutTypes = {
     sut: LoadUserServicesProvidedController;
