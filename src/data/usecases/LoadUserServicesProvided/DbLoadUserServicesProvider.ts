@@ -7,9 +7,8 @@ export class DbLoadUserServicesProvider implements LoadUserServicesProvided {
         private readonly loadServicesProvidedByProviderIdRepository: LoadServicesProvidedByProviderIdRepository,
     ) {}
     async load(userId: string): Promise<ServiceProvided[]> {
-        await this.loadServicesProvidedByProviderIdRepository.loadByProviderId(
+        return await this.loadServicesProvidedByProviderIdRepository.loadByProviderId(
             userId,
         );
-        return [];
     }
 }
