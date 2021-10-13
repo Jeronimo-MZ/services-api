@@ -1,7 +1,11 @@
 import faker from "faker";
 
-import { InvalidParamError } from "@/presentation/errors";
-import { badRequest } from "@/presentation/helpers/http/httpHelper";
+import { throwError } from "@/domain/mocks";
+import { InvalidParamError, ServerError } from "@/presentation/errors";
+import {
+    badRequest,
+    serverError,
+} from "@/presentation/helpers/http/httpHelper";
 import { ValidationSpy } from "@/presentation/mocks/mockValidation";
 
 import { LoadUserServicesProvidedController } from "./LoadUserServicesProvided";
@@ -38,5 +42,14 @@ describe("LoadUserServicesProvided Controller", () => {
         validationSpy.error = new InvalidParamError(faker.random.word());
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(badRequest(validationSpy.error));
+    });
+
+    it("should return 500 if validation throws", async () => {
+        const { sut, validationSpy } = makeSut();
+        jest.spyOn(validationSpy, "validate").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
 });
