@@ -1,6 +1,7 @@
 import { LoadUserServicesProvided } from "@/domain/usecases/LoadUserServicesProvided";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
@@ -21,8 +22,10 @@ export class LoadUserServicesProvidedController
             if (error) {
                 return badRequest(error);
             }
-            await this.loadUserServicesProvided.load(request.userId);
-            return undefined as any;
+            const servicesProvided = await this.loadUserServicesProvided.load(
+                request.userId,
+            );
+            return ok(servicesProvided);
         } catch (error) {
             return serverError(error as Error);
         }
