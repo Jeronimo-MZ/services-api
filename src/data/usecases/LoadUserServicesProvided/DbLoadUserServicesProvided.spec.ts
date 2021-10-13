@@ -45,4 +45,13 @@ describe("DbLoadUserServicesProvided", () => {
         const promise = sut.load(userId);
         await expect(promise).rejects.toThrow();
     });
+
+    it("should return user ServicesProvided on success", async () => {
+        const { sut, loadServicesProvidedByProviderIdRepositorySpy, userId } =
+            makeSut();
+        const ServicesProvided = await sut.load(userId);
+        expect(ServicesProvided).toBe(
+            loadServicesProvidedByProviderIdRepositorySpy.result,
+        );
+    });
 });
