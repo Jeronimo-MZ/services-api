@@ -66,4 +66,13 @@ describe("LoadUserServicesProvided Controller", () => {
         await sut.handle(request);
         expect(loadUserServicesProvidedSpy.userId).toBe(request.userId);
     });
+
+    it("should return 500 if LoadUserServicesProvided throws", async () => {
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
+        jest.spyOn(loadUserServicesProvidedSpy, "load").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
 });
