@@ -61,4 +61,11 @@ describe("LogController Decorator", () => {
         await sut.handle(faker.random.objectElement());
         expect(logErrorRepositorySpy.stack).toBe(serverError.body.stack);
     });
+
+    it("should not call LogErrorRepository if controller does not return a server error", async () => {
+        const { sut, logErrorRepositorySpy } = makeSut();
+        const logErrorSpy = jest.spyOn(logErrorRepositorySpy, "logError");
+        await sut.handle(faker.lorem.sentence());
+        expect(logErrorSpy).not.toHaveBeenCalled();
+    });
 });

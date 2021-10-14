@@ -10,16 +10,15 @@
 
     "mutate": [
         "**/src/**/*.ts",
-        "!**/**/*.spec.ts",
-        "!**/**/*.test.ts",
         "!**/infra/database/**/*.ts",
-        "!**/main/config/**/*.ts",
-        "!**/main/factories/**/*.ts",
-        "!**/main/routes/**/*.ts",
-        "!**/main/server.ts",
+        "!**/main/**/*.ts",
+        "**/main/decorators/**/*.ts",
+        "**/main/middlewares/**/*.ts",
         "!**/mocks/**/*.ts",
         "!**/errors/**/*.ts",
-        "!**/presentation/helpers/**/*.ts"
+        "!**/presentation/helpers/**/*.ts",
+        "!**/**/*.spec.ts",
+        "!**/**/*.test.ts"
     ],
     "testRunner": "jest",
     "coverageAnalysis": "perTest",

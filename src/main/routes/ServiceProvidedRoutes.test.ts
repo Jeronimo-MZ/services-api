@@ -74,7 +74,7 @@ const makeServiceProvided = async (
     return MongoHelper.map(serviceProvidedData);
 };
 
-describe("User routes", () => {
+describe("ServiceProvided routes", () => {
     beforeAll(async () => {
         await MongoHelper.connect(process.env.MONGO_URL as string);
         usersCollection = await MongoHelper.getCollection(CollectionNames.USER);
@@ -96,7 +96,7 @@ describe("User routes", () => {
         await servicesProvidedCollection.deleteMany({});
     });
 
-    describe("POST /services", () => {
+    describe("POST /api/services", () => {
         it("should return 200 on success", async () => {
             const { token, id } = await makeUserTokenAndId();
             const customer = await makeCustomer(id);
