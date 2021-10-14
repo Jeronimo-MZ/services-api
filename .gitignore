@@ -2,6 +2,11 @@ requirements.md
 globalConfig.json
 dist/
 
+# stryker temp files
+.stryker-tmp
+
+reports/
+
 # Logs
 logs
 *.log

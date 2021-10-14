@@ -20,9 +20,10 @@ const makeSut = (): SutTypes => {
 
 describe("NotRequiredField Validation", () => {
     it("should return null if field is not provided", () => {
-        const { sut } = makeSut();
+        const { sut, validationSpy } = makeSut();
         const error = sut.validate({});
         expect(error).toBeNull();
+        expect(validationSpy.input).toBeUndefined();
     });
 
     it("should call Validation if field is provided", () => {

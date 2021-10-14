@@ -1,0 +1,29 @@
+{
+    "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+    "packageManager": "yarn",
+    "reporters": ["html", "clear-text", "progress"],
+    "jest": {
+        "configFile": "./jest.config.js",
+        "enableFindRelatedTests": true,
+        "projectType": "custom"
+    },
+
+    "mutate": [
+        "**/src/**/*.ts",
+        "!**/**/*.spec.ts",
+        "!**/**/*.test.ts",
+        "!**/infra/database/**/*.ts",
+        "!**/main/config/**/*.ts",
+        "!**/main/factories/**/*.ts",
+        "!**/main/routes/**/*.ts",
+        "!**/main/server.ts",
+        "!**/mocks/**/*.ts",
+        "!**/errors/**/*.ts",
+        "!**/presentation/helpers/**/*.ts"
+    ],
+    "testRunner": "jest",
+    "coverageAnalysis": "perTest",
+    "checkers": ["typescript"],
+    "tsconfigFile": "tsconfig.json",
+    "allowConsoleColors": true
+}
