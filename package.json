@@ -16,7 +16,8 @@
         "test:unit": "yarn test --watch -c jest-unit.config.js",
         "test:integration": "yarn test --watch -c jest-integration.config.js",
         "test:staged": "yarn test --findRelatedTests",
-        "test:ci": "yarn test --coverage"
+        "test:ci": "yarn test --coverage",
+        "test-mutation": "stryker run"
     },
     "devDependencies": {
         "@shelf/jest-mongodb": "^2.1.0",
