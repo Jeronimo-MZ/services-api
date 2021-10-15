@@ -5,6 +5,18 @@
         "name": "Jerónimo Matavel"
     },
     "license": "MIT",
+    "keywords": [
+        "clean architecture",
+        "TDD",
+        "DDD",
+        "Test-Driven Development",
+        "clean code",
+        "conventional commits",
+        "Rest API",
+        "SOLID principles",
+        "Design Patterns",
+        "Continuous Integration"
+    ],
     "scripts": {
         "start": "node dist/main/server.js",
         "build": "rimraf dist && tsc -p tsconfig-build.json && tsc-alias -p tsconfig-build.json",
