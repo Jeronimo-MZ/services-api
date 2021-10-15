@@ -49,10 +49,10 @@ yarn dev
 Or compile the code and run the js code
 
 ```sh
-    # build
-    yarn build
-    # start
-    yarn start
+# compile the code
+yarn build
+# start server
+yarn start
 ```
 
 ## Tests
@@ -60,26 +60,26 @@ Or compile the code and run the js code
 This project is covered by tests, if you make any changes to the code, you can execute them using the following commands:
 
 ```sh
-    # to run Unit Tests
-    yarn test:unit
+# to run Unit Tests
+yarn test:unit
 
-    # to run Integration Tests
-    yarn test:integration
+# to run Integration Tests
+yarn test:integration
 
-    # to run all tests
-    yarn test
+# to run all tests
+yarn test
 
-    # to run all tests with more details
-    yarn test:verbose
+# to run all tests with more details
+yarn test:verbose
 
-    # to run all tests and generate coverage reports
-    yarn test:ci
+# to run all tests and generate coverage reports
+yarn test:ci
 ```
 
 You can also run mutation tests using stryker using this command:
 
 ```sh
-   yarn test-mutation
+yarn test-mutation
 ```
 
 **WARNING:** Mutation tests are much slower than the others and can slow down your computer, i recommend you to close other programs before running them.
