@@ -26,7 +26,7 @@ git clone https://github.com/Jeronimo-MZ/services-api.git
 Or, if you want to use SSH , clone this repository running:
 
 ```sh
-git git@github.com:Jeronimo-MZ/services-api.git
+git clone git@github.com:Jeronimo-MZ/services-api.git
 ```
 
 Then install the project dependencies running:
