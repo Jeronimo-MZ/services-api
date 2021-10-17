@@ -5,8 +5,8 @@ export const UserSchema = {
         name: { type: "string" },
         email: { type: "string" },
         isAdmin: { type: "boolean", default: false },
-        avatar: { type: "string", default: null },
-        occupation: { type: "string", default: null },
-        accessToken: { type: "string", default: null },
+        avatar: { type: "string", nullable: true },
+        occupation: { type: "string", nullable: true },
+        accessToken: { type: "string", nullable: true },
     },
 };

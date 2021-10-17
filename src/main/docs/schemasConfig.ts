@@ -1,7 +1,9 @@
 import {
     AddCustomerParamsSchema,
     AddCustomerResponseSchema,
+    CustomerSchema,
     ErrorSchema,
+    LoadUserCustomersResponseSchema,
     LoginParamsSchema,
     LoginResponseSchema,
     SignUpParamsSchema,
@@ -18,4 +20,6 @@ export const schemas = {
     signUpResponse: SignUpResponseSchema,
     addCustomerParams: AddCustomerParamsSchema,
     addCustomerResponse: AddCustomerResponseSchema,
+    loadUserCustomersResponse: LoadUserCustomersResponseSchema,
+    customer: CustomerSchema,
 };
