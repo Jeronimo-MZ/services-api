@@ -55,6 +55,10 @@ yarn build
 yarn start
 ```
 
+## Docs
+
+You can find the api routes documentation at **/api/docs** route. if you are running in localhost it should be **http://localhost:3333/api/docs**.
+
 ## Tests
 
 This project is covered by tests, if you make any changes to the code, you can execute them using the following commands:
