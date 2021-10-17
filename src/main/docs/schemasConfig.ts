@@ -6,6 +6,7 @@ import {
     CustomerSchema,
     ErrorSchema,
     LoadUserCustomersResponseSchema,
+    LoadUserServicesProvidedResponseSchema,
     LoginParamsSchema,
     LoginResponseSchema,
     ServiceProvidedSchema,
@@ -33,6 +34,7 @@ const serviceProvidedSchemas = {
     addServiceProvidedParams: AddServiceProvidedParamsSchema,
     addServiceProvidedResponse: AddServiceProvidedResponseSchema,
     serviceProvided: ServiceProvidedSchema,
+    loadUserServicesProvidedResponse: LoadUserServicesProvidedResponseSchema,
 };
 
 export const schemas = {
