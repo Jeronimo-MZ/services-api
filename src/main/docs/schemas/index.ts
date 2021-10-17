@@ -1,3 +1,6 @@
+export * from "./AddCustomerParamsSchema";
+export * from "./AddCustomerResponseSchema";
+export * from "./apiKeyAuthSchema";
 export * from "./ErrorSchema";
 export * from "./LoginParamsSchema";
 export * from "./LoginResponseSchema";
