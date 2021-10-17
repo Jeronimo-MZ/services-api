@@ -18,7 +18,7 @@ export default {
             url: "/api",
         },
     ],
-    tags: [{ name: "User" }, { name: "Customer" }],
+    tags: [{ name: "User" }, { name: "Customer" }, { name: "ServiceProvided" }],
     paths,
     schemas,
     components,
