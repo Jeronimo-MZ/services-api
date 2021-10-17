@@ -10,6 +10,7 @@ import {
     LoginParamsSchema,
     LoginResponseSchema,
     ServiceProvidedSchema,
+    ShowUserResponseSchema,
     SignUpParamsSchema,
     SignUpResponseSchema,
     UserSchema,
@@ -21,6 +22,7 @@ const userSchemas = {
     user: UserSchema,
     signUpParams: SignUpParamsSchema,
     signUpResponse: SignUpResponseSchema,
+    showUserResponse: ShowUserResponseSchema,
 };
 
 const customerSchemas = {
