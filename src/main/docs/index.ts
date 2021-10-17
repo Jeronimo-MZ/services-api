@@ -1,3 +1,7 @@
+import { components } from "./componentsConfig";
+import { paths } from "./pathsConfig";
+import { schemas } from "./schemasConfig";
+
 export default {
     openapi: "3.0.0",
     info: {
@@ -9,9 +13,13 @@ export default {
         name: "MIT",
         url: "https://opensource.org/licenses/MIT",
     },
-    ervers: [
+    servers: [
         {
             url: "/api",
         },
     ],
+    tags: [{ name: "Login" }],
+    paths,
+    schemas,
+    components,
 };
