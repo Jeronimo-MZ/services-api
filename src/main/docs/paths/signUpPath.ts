@@ -1,11 +1,11 @@
-export const loginPath = {
+export const SignUpPath = {
     post: {
         tags: ["User"],
-        summary: "Rota de autenticação de um usuário",
+        summary: "Rota de Criação de um usuário",
         requestBody: {
             content: {
                 "application/json": {
-                    schema: { $ref: "#/schemas/loginParams" },
+                    schema: { $ref: "#/schemas/signUpParams" },
                 },
             },
         },
@@ -14,15 +14,15 @@ export const loginPath = {
                 description: "sucesso",
                 content: {
                     "application/json": {
-                        schema: { $ref: "#/schemas/loginResponse" },
+                        schema: { $ref: "#/schemas/signUpResponse" },
                     },
                 },
             },
             400: {
                 $ref: "#/components/badRequest",
             },
-            401: {
-                $ref: "#/components/unauthorized",
+            403: {
+                $ref: "#/components/forbidden",
             },
             404: {
                 $ref: "#/components/notFound",

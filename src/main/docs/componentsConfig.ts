@@ -1,5 +1,6 @@
 import {
     badRequest,
+    forbidden,
     notFound,
     serverError,
     unauthorized,
@@ -10,4 +11,5 @@ export const components = {
     serverError,
     unauthorized,
     notFound,
+    forbidden,
 };

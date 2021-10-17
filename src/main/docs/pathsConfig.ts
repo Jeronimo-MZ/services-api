@@ -1,5 +1,6 @@
-import { loginPath } from "@/main/docs/paths";
+import { loginPath, SignUpPath } from "@/main/docs/paths";
 
 export const paths = {
     "/login": loginPath,
+    "/signup": SignUpPath,
 };
