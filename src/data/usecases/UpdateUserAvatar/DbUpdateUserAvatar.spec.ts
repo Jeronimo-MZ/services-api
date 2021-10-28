@@ -55,4 +55,13 @@ describe("DbUpdateUserAvatar", () => {
         await sut.update(mockUpdateUserAvatarParams());
         expect(generateSpy).toHaveBeenCalled();
     });
+
+    it("should throw if UUIDGenerator throws", async () => {
+        const { sut, uuidGeneratorSpy } = makeSut();
+        jest.spyOn(uuidGeneratorSpy, "generate").mockImplementationOnce(
+            throwError,
+        );
+        const promise = sut.update(mockUpdateUserAvatarParams());
+        await expect(promise).rejects.toThrow();
+    });
 });
