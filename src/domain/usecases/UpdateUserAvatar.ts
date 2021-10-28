@@ -5,7 +5,10 @@ export interface UpdateUserAvatar {
 export namespace UpdateUserAvatar {
     export type Params = {
         userId: string;
-        tempFilePath: string;
+        file: {
+            buffer: Buffer;
+            mimeType: string;
+        };
     };
 
     export type Result = {
