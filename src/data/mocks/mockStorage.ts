@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { SaveFile } from "../protocols/Storage";
+import { DeleteFile, SaveFile } from "../protocols/Storage";
 
 export class SaveFileSpy implements SaveFile {
     file: Buffer;
@@ -11,5 +11,13 @@ export class SaveFileSpy implements SaveFile {
         this.file = file;
         this.fileName = fileName;
         return this.output;
+    }
+}
+
+export class DeleteFileSpy implements DeleteFile {
+    fileName: string;
+
+    async delete({ fileName }: DeleteFile.Input): Promise<void> {
+        this.fileName = fileName;
     }
 }

@@ -1,5 +1,8 @@
+import faker from "faker";
+
 import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import {
+    DeleteFileSpy,
     LoadUserByIdRepositorySpy,
     SaveFileSpy,
     UpdateUserAvatarRepositorySpy,
@@ -14,6 +17,7 @@ type SutTypes = {
     loadUserByIdRepositorySpy: LoadUserByIdRepositorySpy;
     uuidGeneratorSpy: UUIDGeneratorSpy;
     saveFileSpy: SaveFileSpy;
+    deleteFileSpy: DeleteFileSpy;
     updateUserAvatarSpy: UpdateUserAvatarRepositorySpy;
 };
 
@@ -22,11 +26,13 @@ const makeSut = (): SutTypes => {
     const uuidGeneratorSpy = new UUIDGeneratorSpy();
     const saveFileSpy = new SaveFileSpy();
     const updateUserAvatarSpy = new UpdateUserAvatarRepositorySpy();
+    const deleteFileSpy = new DeleteFileSpy();
     const sut = new DbUpdateUserAvatar(
         loadUserByIdRepositorySpy,
         uuidGeneratorSpy,
         saveFileSpy,
         updateUserAvatarSpy,
+        deleteFileSpy,
     );
     return {
         sut,
@@ -34,6 +40,7 @@ const makeSut = (): SutTypes => {
         uuidGeneratorSpy,
         saveFileSpy,
         updateUserAvatarSpy,
+        deleteFileSpy,
     };
 };
 
@@ -108,5 +115,23 @@ describe("DbUpdateUserAvatar", () => {
         );
         const promise = sut.update(mockUpdateUserAvatarParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call DeleteFile after update if user already had an avatar", async () => {
+        const {
+            sut,
+            deleteFileSpy,
+            loadUserByIdRepositorySpy,
+            updateUserAvatarSpy,
+        } = makeSut();
+        const updateAvatarSpy = jest.spyOn(updateUserAvatarSpy, "updateAvatar");
+        if (loadUserByIdRepositorySpy.result)
+            loadUserByIdRepositorySpy.result.avatar = faker.internet.url();
+        const params = mockUpdateUserAvatarParams();
+        await sut.update(params);
+        expect(updateAvatarSpy).toHaveBeenCalled();
+        expect(deleteFileSpy.fileName).toBe(
+            loadUserByIdRepositorySpy.result?.avatar,
+        );
     });
 });
