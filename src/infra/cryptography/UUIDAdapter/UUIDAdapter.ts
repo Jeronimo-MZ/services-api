@@ -4,7 +4,6 @@ import { UUIDGenerator } from "@/data/protocols/cryptography/UUIDGenerator";
 
 export class UUIDAdapter implements UUIDGenerator {
     generate(): string {
-        v4();
-        return undefined as any;
+        return v4();
     }
 }
