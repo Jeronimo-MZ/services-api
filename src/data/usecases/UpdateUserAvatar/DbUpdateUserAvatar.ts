@@ -4,7 +4,7 @@ import {
     LoadUserByIdRepository,
     UpdateUserAvatarRepository,
 } from "@/data/protocols/database/User/";
-import { DeleteFile, SaveFile } from "@/data/protocols/Storage";
+import { DeleteFile, SaveFile } from "@/data/protocols/storage";
 import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
 
 export class DbUpdateUserAvatar implements UpdateUserAvatar {
