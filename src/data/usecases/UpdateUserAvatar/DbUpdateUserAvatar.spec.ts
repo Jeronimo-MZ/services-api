@@ -1,6 +1,6 @@
 import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import { LoadUserByIdRepositorySpy } from "@/data/mocks";
-import { mockUpdateUserAvatarParams } from "@/domain/mocks";
+import { mockUpdateUserAvatarParams, throwError } from "@/domain/mocks";
 
 import { DbUpdateUserAvatar } from "./DbUpdateUserAvatar";
 
@@ -31,5 +31,15 @@ describe("DbUpdateUserAvatar", () => {
         loadUserByIdRepositorySpy.result = null;
         const promise = sut.update(mockUpdateUserAvatarParams());
         await expect(promise).rejects.toThrow(UnexpectedError);
+    });
+
+    it("should throw if LoadUserByIdRepository throws", async () => {
+        const { sut, loadUserByIdRepositorySpy } = makeSut();
+        jest.spyOn(
+            loadUserByIdRepositorySpy,
+            "loadById",
+        ).mockImplementationOnce(throwError);
+        const promise = sut.update(mockUpdateUserAvatarParams());
+        await expect(promise).rejects.toThrow();
     });
 });
