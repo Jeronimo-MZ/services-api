@@ -30,5 +30,8 @@ export const mockAuthenticationParams = (): Authentication.Params => ({
 
 export const mockUpdateUserAvatarParams = (): UpdateUserAvatar.Params => ({
     userId: faker.datatype.uuid(),
-    tempFilePath: faker.system.filePath(),
+    file: {
+        buffer: Buffer.from(faker.datatype.string()),
+        mimeType: "image/jpeg",
+    },
 });

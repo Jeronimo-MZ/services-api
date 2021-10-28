@@ -1,5 +1,9 @@
 import { UnexpectedError } from "@/data/errors/UnexpectedError";
-import { LoadUserByIdRepositorySpy, UUIDGeneratorSpy } from "@/data/mocks";
+import {
+    LoadUserByIdRepositorySpy,
+    SaveFileSpy,
+    UUIDGeneratorSpy,
+} from "@/data/mocks";
 import { mockUpdateUserAvatarParams, throwError } from "@/domain/mocks";
 
 import { DbUpdateUserAvatar } from "./DbUpdateUserAvatar";
@@ -8,19 +12,23 @@ type SutTypes = {
     sut: DbUpdateUserAvatar;
     loadUserByIdRepositorySpy: LoadUserByIdRepositorySpy;
     uuidGeneratorSpy: UUIDGeneratorSpy;
+    saveFileSpy: SaveFileSpy;
 };
 
 const makeSut = (): SutTypes => {
     const loadUserByIdRepositorySpy = new LoadUserByIdRepositorySpy();
     const uuidGeneratorSpy = new UUIDGeneratorSpy();
+    const saveFileSpy = new SaveFileSpy();
     const sut = new DbUpdateUserAvatar(
         loadUserByIdRepositorySpy,
         uuidGeneratorSpy,
+        saveFileSpy,
     );
     return {
         sut,
         loadUserByIdRepositorySpy,
         uuidGeneratorSpy,
+        saveFileSpy,
     };
 };
 
@@ -63,5 +71,13 @@ describe("DbUpdateUserAvatar", () => {
         );
         const promise = sut.update(mockUpdateUserAvatarParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call SaveFile with correct values", async () => {
+        const { saveFileSpy, sut, uuidGeneratorSpy } = makeSut();
+        const params = mockUpdateUserAvatarParams();
+        await sut.update(params);
+        expect(saveFileSpy.file).toBe(params.file.buffer);
+        expect(saveFileSpy.fileName).toBe(`${uuidGeneratorSpy.uuid}.jpeg`);
     });
 });
