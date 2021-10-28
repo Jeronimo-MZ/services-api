@@ -2,6 +2,8 @@ import faker from "faker";
 import { mocked } from "ts-jest/utils";
 import { v4 } from "uuid";
 
+import { throwError } from "@/domain/mocks";
+
 import { UUIDAdapter } from "./UUIDAdapter";
 
 const generatedUUID = faker.datatype.uuid();
@@ -21,5 +23,11 @@ describe("UUIDAdapter", () => {
         const sut = makeSut();
         const uuid = sut.generate();
         expect(uuid).toBe(generatedUUID);
+    });
+
+    it("should throw if uuid.v4 throws", () => {
+        const sut = makeSut();
+        mocked(v4).mockImplementationOnce(throwError);
+        expect(sut.generate).toThrow();
     });
 });
