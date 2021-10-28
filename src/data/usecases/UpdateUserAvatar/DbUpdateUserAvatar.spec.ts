@@ -1,3 +1,4 @@
+import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import { LoadUserByIdRepositorySpy } from "@/data/mocks";
 import { mockUpdateUserAvatarParams } from "@/domain/mocks";
 
@@ -23,5 +24,12 @@ describe("DbUpdateUserAvatar", () => {
         const params = mockUpdateUserAvatarParams();
         await sut.update(params);
         expect(loadUserByIdRepositorySpy.id).toBe(params.userId);
+    });
+
+    it("should throw UnexpectedError if LoadUserByIdRepository returns null", async () => {
+        const { sut, loadUserByIdRepositorySpy } = makeSut();
+        loadUserByIdRepositorySpy.result = null;
+        const promise = sut.update(mockUpdateUserAvatarParams());
+        await expect(promise).rejects.toThrow(UnexpectedError);
     });
 });
