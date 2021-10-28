@@ -16,4 +16,10 @@ describe("UUIDAdapter", () => {
         sut.generate();
         expect(v4).toHaveBeenCalledTimes(1);
     });
+
+    it("should return correct uuid", () => {
+        const sut = makeSut();
+        const uuid = sut.generate();
+        expect(uuid).toBe(generatedUUID);
+    });
 });
