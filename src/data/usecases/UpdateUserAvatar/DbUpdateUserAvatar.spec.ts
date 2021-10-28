@@ -100,4 +100,13 @@ describe("DbUpdateUserAvatar", () => {
         expect(updateUserAvatarSpy.userId).toBe(params.userId);
         expect(updateUserAvatarSpy.avatar).toBe(saveFileSpy.output);
     });
+
+    it("should throw if UpdateUserAvatarRepository throws", async () => {
+        const { sut, updateUserAvatarSpy } = makeSut();
+        jest.spyOn(updateUserAvatarSpy, "updateAvatar").mockImplementationOnce(
+            throwError,
+        );
+        const promise = sut.update(mockUpdateUserAvatarParams());
+        await expect(promise).rejects.toThrow();
+    });
 });
