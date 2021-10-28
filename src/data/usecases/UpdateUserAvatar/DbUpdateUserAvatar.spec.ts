@@ -134,4 +134,10 @@ describe("DbUpdateUserAvatar", () => {
             loadUserByIdRepositorySpy.result?.avatar,
         );
     });
+
+    it("should not call DeleteFile if user's avatar was null", async () => {
+        const { sut, deleteFileSpy } = makeSut();
+        await sut.update(mockUpdateUserAvatarParams());
+        expect(deleteFileSpy.fileName).toBeUndefined();
+    });
 });
