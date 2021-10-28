@@ -33,11 +33,11 @@ export class DbUpdateUserAvatar implements UpdateUserAvatar {
 
         await this.updateUserAvatarRepository.updateAvatar({
             userId,
-            avatar: avatar,
+            avatar,
         });
 
         if (oldAvatar) await this.deleteFile.delete({ fileName: oldAvatar });
 
-        return null as any;
+        return { avatarUrl: avatar };
     }
 }
