@@ -4,7 +4,7 @@ import {
     LoadUserByIdRepository,
     UpdateUserAvatarRepository,
 } from "@/data/protocols/database/User/";
-import { SaveFile } from "@/data/protocols/Storage";
+import { DeleteFile, SaveFile } from "@/data/protocols/Storage";
 import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
 
 export class DbUpdateUserAvatar implements UpdateUserAvatar {
@@ -13,6 +13,7 @@ export class DbUpdateUserAvatar implements UpdateUserAvatar {
         private readonly uuidGenerator: UUIDGenerator,
         private readonly saveFile: SaveFile,
         private readonly updateUserAvatarRepository: UpdateUserAvatarRepository,
+        private readonly deleteFile: DeleteFile,
     ) {}
     async update({
         userId,
@@ -23,16 +24,19 @@ export class DbUpdateUserAvatar implements UpdateUserAvatar {
             throw new UnexpectedError();
         }
 
+        const oldAvatar = user.avatar;
         const key = this.uuidGenerator.generate();
-        const avatarUrl = await this.saveFile.save({
+        const avatar = await this.saveFile.save({
             file: file.buffer,
             fileName: `${key}.${file.mimeType.split("/")[1]}`,
         });
 
         await this.updateUserAvatarRepository.updateAvatar({
             userId,
-            avatar: avatarUrl,
+            avatar: avatar,
         });
+
+        if (oldAvatar) await this.deleteFile.delete({ fileName: oldAvatar });
 
         return null as any;
     }
