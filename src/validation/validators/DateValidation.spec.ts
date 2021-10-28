@@ -2,8 +2,8 @@ import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
 import { InvalidParamError } from "@/presentation/errors";
+import { DateValidatorSpy } from "@/validation/mocks/mockDateValidator";
 
-import { DateValidatorSpy } from "../mocks/mockDateValidator";
 import { DateValidation } from "./DateValidation";
 
 const field = faker.random.word();

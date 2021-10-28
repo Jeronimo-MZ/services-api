@@ -1,7 +1,7 @@
 import faker from "faker";
 
-import { ServiceProvided } from "../models/ServiceProvided";
-import { AddServiceProvided } from "../usecases/AddServiceProvided";
+import { ServiceProvided } from "@/domain/models/ServiceProvided";
+import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
 
 export const mockAddServiceProvidedParams = (): AddServiceProvided.Params => ({
     customerId: faker.datatype.uuid(),
