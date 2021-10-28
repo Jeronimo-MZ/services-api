@@ -2,6 +2,7 @@ import { UnexpectedError } from "@/data/errors/UnexpectedError";
 import {
     LoadUserByIdRepositorySpy,
     SaveFileSpy,
+    UpdateUserAvatarRepositorySpy,
     UUIDGeneratorSpy,
 } from "@/data/mocks";
 import { mockUpdateUserAvatarParams, throwError } from "@/domain/mocks";
@@ -13,22 +14,26 @@ type SutTypes = {
     loadUserByIdRepositorySpy: LoadUserByIdRepositorySpy;
     uuidGeneratorSpy: UUIDGeneratorSpy;
     saveFileSpy: SaveFileSpy;
+    updateUserAvatarSpy: UpdateUserAvatarRepositorySpy;
 };
 
 const makeSut = (): SutTypes => {
     const loadUserByIdRepositorySpy = new LoadUserByIdRepositorySpy();
     const uuidGeneratorSpy = new UUIDGeneratorSpy();
     const saveFileSpy = new SaveFileSpy();
+    const updateUserAvatarSpy = new UpdateUserAvatarRepositorySpy();
     const sut = new DbUpdateUserAvatar(
         loadUserByIdRepositorySpy,
         uuidGeneratorSpy,
         saveFileSpy,
+        updateUserAvatarSpy,
     );
     return {
         sut,
         loadUserByIdRepositorySpy,
         uuidGeneratorSpy,
         saveFileSpy,
+        updateUserAvatarSpy,
     };
 };
 
@@ -86,5 +91,13 @@ describe("DbUpdateUserAvatar", () => {
         jest.spyOn(saveFileSpy, "save").mockImplementationOnce(throwError);
         const promise = sut.update(mockUpdateUserAvatarParams());
         await expect(promise).rejects.toThrow();
+    });
+
+    it("should call UpdateUserAvatarRepository with correct values", async () => {
+        const { sut, updateUserAvatarSpy, saveFileSpy } = makeSut();
+        const params = mockUpdateUserAvatarParams();
+        await sut.update(params);
+        expect(updateUserAvatarSpy.userId).toBe(params.userId);
+        expect(updateUserAvatarSpy.avatar).toBe(saveFileSpy.output);
     });
 });
