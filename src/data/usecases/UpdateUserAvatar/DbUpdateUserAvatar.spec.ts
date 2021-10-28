@@ -140,4 +140,10 @@ describe("DbUpdateUserAvatar", () => {
         await sut.update(mockUpdateUserAvatarParams());
         expect(deleteFileSpy.fileName).toBeUndefined();
     });
+
+    it("should return correct avatar on success", async () => {
+        const { sut, saveFileSpy } = makeSut();
+        const result = await sut.update(mockUpdateUserAvatarParams());
+        expect(result.avatarUrl).toBe(saveFileSpy.output);
+    });
 });
