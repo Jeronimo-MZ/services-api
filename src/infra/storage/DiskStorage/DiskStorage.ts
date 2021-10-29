@@ -10,6 +10,6 @@ export class DiskStorage implements SaveFile {
             path.resolve(this.staticFilesDirectory, fileName),
             file,
         );
-        return undefined as any;
+        return fileName;
     }
 }
