@@ -1,6 +1,7 @@
 import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
@@ -21,9 +22,9 @@ export class UpdateUserAvatarController
                 return badRequest(error);
             }
             const { userId, file } = request;
-            await this.updateUserAvatar.update({ userId, file });
+            const data = await this.updateUserAvatar.update({ userId, file });
 
-            return undefined as any;
+            return ok(data);
         } catch (error) {
             return serverError(error as Error);
         }
