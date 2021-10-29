@@ -6,6 +6,7 @@ import {
     LoadUserByIdRepository,
     LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
+    UpdateUserAvatarRepository,
 } from "@/data/protocols/database/User";
 import { User } from "@/domain/models/User";
 import { AddUser } from "@/domain/usecases/AddUser";
@@ -17,7 +18,8 @@ export class UserMongoRepository
         LoadUserByEmailRepository,
         UpdateAccessTokenRepository,
         LoadUserByTokenRepository,
-        LoadUserByIdRepository
+        LoadUserByIdRepository,
+        UpdateUserAvatarRepository
 {
     async add({ name, email, password }: AddUser.Params): Promise<User> {
         const usersCollection = await MongoHelper.getCollection(
@@ -67,6 +69,25 @@ export class UserMongoRepository
             {
                 $set: {
                     accessToken: token,
+                },
+            },
+        );
+    }
+
+    async updateAvatar({
+        avatar,
+        userId,
+    }: UpdateUserAvatarRepository.Input): Promise<void> {
+        const usersCollection = await MongoHelper.getCollection(
+            CollectionNames.USER,
+        );
+        await usersCollection.updateOne(
+            {
+                _id: new ObjectId(userId),
+            },
+            {
+                $set: {
+                    avatar,
                 },
             },
         );
