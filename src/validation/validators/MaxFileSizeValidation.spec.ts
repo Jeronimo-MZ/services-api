@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { InvalidParamError } from "@/presentation/errors";
+import { InvalidParamError, MaxFileSizeError } from "@/presentation/errors";
 
 import { MaxFileSizeValidation } from "./MaxFileSizeValidation";
 
@@ -28,5 +28,12 @@ describe("MaxFileSize Validation", () => {
         const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.datatype.number() });
         expect(error).toEqual(new InvalidParamError(field));
+    });
+
+    it("should return MaxFileSizeError if validation fails", () => {
+        const { sut } = makeSut();
+        const buffer = Buffer.from(new ArrayBuffer(6 * 1024 * 1024));
+        const error = sut.validate({ [field]: buffer });
+        expect(error).toEqual(new MaxFileSizeError(maxSizeInMb));
     });
 });
