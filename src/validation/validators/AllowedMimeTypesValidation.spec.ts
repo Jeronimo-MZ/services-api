@@ -13,6 +13,12 @@ describe("AllowedMimeType Validation", () => {
         expect(error).toEqual(new InvalidMimeTypeError(["jpg"]));
     });
 
+    it("should return InvalidMimeTypeError if value is invalid", () => {
+        const sut = new AllowedMimeTypesValidation(["png"], field);
+        const error = sut.validate({ [field]: "image/jpg" });
+        expect(error).toEqual(new InvalidMimeTypeError(["png"]));
+    });
+
     it("should return null if value is valid", () => {
         const sut = new AllowedMimeTypesValidation(["png"], field);
         const error = sut.validate({ [field]: "image/png" });
