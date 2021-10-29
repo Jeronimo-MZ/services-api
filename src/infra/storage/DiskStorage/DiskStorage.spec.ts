@@ -14,6 +14,8 @@ type SutTypes = {
     sut: DiskStorage;
 };
 const staticFilesDirectory = faker.system.directoryPath();
+const fileName = faker.system.fileName();
+
 const makeSut = (): SutTypes => {
     const sut = new DiskStorage(staticFilesDirectory);
     return {
@@ -23,7 +25,7 @@ const makeSut = (): SutTypes => {
 
 const makeSaveFileInput = (): SaveFile.Input => ({
     file: Buffer.from(faker.datatype.string()),
-    fileName: faker.system.fileName(),
+    fileName,
 });
 
 describe("DiskStorage", () => {
@@ -43,7 +45,7 @@ describe("DiskStorage", () => {
             mocked(writeFile).mockImplementationOnce(throwError);
             const input = makeSaveFileInput();
             const promise = sut.save(input);
-            expect(promise).rejects.toThrow();
+            await expect(promise).rejects.toThrow();
         });
 
         it("should return filename on success", async () => {
@@ -57,11 +59,17 @@ describe("DiskStorage", () => {
     describe("delete()", () => {
         it("should call unlink with correct values", async () => {
             const { sut } = makeSut();
-            const fileName = faker.system.fileName();
             await sut.delete({ fileName });
             expect(unlink).toHaveBeenCalledWith(
                 path.resolve(staticFilesDirectory, fileName),
             );
+        });
+
+        it("should throw if unlink throws", async () => {
+            const { sut } = makeSut();
+            mocked(unlink).mockImplementationOnce(throwError);
+            const promise = sut.delete({ fileName });
+            await expect(promise).rejects.toThrow();
         });
     });
 });
