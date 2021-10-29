@@ -45,5 +45,12 @@ describe("DiskStorage", () => {
             const promise = sut.save(input);
             expect(promise).rejects.toThrow();
         });
+
+        it("should return filename on success", async () => {
+            const { sut } = makeSut();
+            const input = makeSaveFileInput();
+            const filename = await sut.save(input);
+            expect(filename).toBe(input.fileName);
+        });
     });
 });
