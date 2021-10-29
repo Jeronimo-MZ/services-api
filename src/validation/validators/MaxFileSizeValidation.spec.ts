@@ -24,6 +24,13 @@ describe("MaxFileSize Validation", () => {
         expect(error).toBeNull();
     });
 
+    it("should return null if validation succeeds", () => {
+        const { sut } = makeSut();
+        const buffer = Buffer.from(new ArrayBuffer(5 * 1024 * 1024));
+        const error = sut.validate({ [field]: buffer });
+        expect(error).toBeNull();
+    });
+
     it("should return InvalidParamError if field is not a Buffer", () => {
         const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.datatype.number() });
