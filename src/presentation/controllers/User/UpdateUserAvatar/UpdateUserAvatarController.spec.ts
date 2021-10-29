@@ -70,4 +70,13 @@ describe("UpdateUserAvatarController", () => {
         expect(updateUserAvatarSpy.file).toEqual(request.file);
         expect(updateUserAvatarSpy.userId).toBe(request.userId);
     });
+
+    it("should return 500 if UpdateUserAvatar throws", async () => {
+        const { sut, updateUserAvatarSpy } = makeSut();
+        jest.spyOn(updateUserAvatarSpy, "update").mockImplementationOnce(
+            throwError,
+        );
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
 });
