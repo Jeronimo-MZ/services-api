@@ -88,6 +88,30 @@ describe("User Mongo Repository", () => {
         });
     });
 
+    describe("updateAvatar()", () => {
+        it("should update the user avatar on success", async () => {
+            const sut = makeSut();
+            const { insertedId } = await usersCollection.insertOne(
+                mockAddUserParams(),
+            );
+            let user = (await usersCollection.findOne({
+                _id: insertedId,
+            })) as User;
+            expect(user.avatar).toBeFalsy();
+
+            const avatar = faker.datatype.uuid();
+            await sut.updateAvatar({
+                userId: insertedId.toHexString(),
+                avatar,
+            });
+            user = (await usersCollection.findOne({
+                _id: insertedId,
+            })) as User;
+            expect(user).toBeTruthy();
+            expect(user.avatar).toBe(avatar);
+        });
+    });
+
     describe("loadByToken()", () => {
         it("should return a user on success", async () => {
             const sut = makeSut();
