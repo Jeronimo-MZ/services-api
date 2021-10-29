@@ -1,8 +1,10 @@
 import faker from "faker";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { mocked } from "ts-jest/utils";
 
 import { SaveFile } from "@/data/protocols/storage";
+import { throwError } from "@/domain/mocks";
 
 import { DiskStorage } from "./DiskStorage";
 
@@ -34,6 +36,14 @@ describe("DiskStorage", () => {
                 path.resolve(staticFilesDirectory, input.fileName),
                 input.file,
             );
+        });
+
+        it("should throw if writeFile throws", async () => {
+            const { sut } = makeSut();
+            mocked(writeFile).mockImplementationOnce(throwError);
+            const input = makeSaveFileInput();
+            const promise = sut.save(input);
+            expect(promise).rejects.toThrow();
         });
     });
 });
