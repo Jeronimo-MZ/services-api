@@ -68,7 +68,10 @@ describe("UpdateUserAvatarController", () => {
         const { sut, updateUserAvatarSpy } = makeSut();
         const request = mockRequest();
         await sut.handle(request);
-        expect(updateUserAvatarSpy.file).toEqual(request.file);
+        expect(updateUserAvatarSpy.file).toEqual({
+            mimeType: request.file.mimetype,
+            buffer: request.file.buffer,
+        });
         expect(updateUserAvatarSpy.userId).toBe(request.userId);
     });
 
