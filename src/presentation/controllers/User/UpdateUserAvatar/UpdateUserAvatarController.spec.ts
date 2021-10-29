@@ -4,6 +4,7 @@ import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
+    ok,
     serverError,
 } from "@/presentation/helpers/http/httpHelper";
 import { UpdateUserAvatarSpy } from "@/presentation/mocks/mockUser";
@@ -78,5 +79,11 @@ describe("UpdateUserAvatarController", () => {
         );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
+    });
+
+    it("should return 200 if on success", async () => {
+        const { sut, updateUserAvatarSpy } = makeSut();
+        const httpResponse = await sut.handle(mockRequest());
+        expect(httpResponse).toEqual(ok(updateUserAvatarSpy.result));
     });
 });
