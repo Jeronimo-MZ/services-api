@@ -1,5 +1,5 @@
 import faker from "faker";
-import { writeFile } from "fs/promises";
+import { unlink, writeFile } from "fs/promises";
 import path from "path";
 import { mocked } from "ts-jest/utils";
 
@@ -27,7 +27,7 @@ const makeSaveFileInput = (): SaveFile.Input => ({
 });
 
 describe("DiskStorage", () => {
-    describe("saveFile()", () => {
+    describe("save()", () => {
         it("should call writeFile with correct values", async () => {
             const { sut } = makeSut();
             const input = makeSaveFileInput();
@@ -51,6 +51,17 @@ describe("DiskStorage", () => {
             const input = makeSaveFileInput();
             const filename = await sut.save(input);
             expect(filename).toBe(input.fileName);
+        });
+    });
+
+    describe("delete()", () => {
+        it("should call unlink with correct values", async () => {
+            const { sut } = makeSut();
+            const fileName = faker.system.fileName();
+            await sut.delete({ fileName });
+            expect(unlink).toHaveBeenCalledWith(
+                path.resolve(staticFilesDirectory, fileName),
+            );
         });
     });
 });
