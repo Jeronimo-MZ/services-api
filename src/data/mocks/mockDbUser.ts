@@ -9,6 +9,8 @@ import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models/User";
 import { AddUser } from "@/domain/usecases/AddUser";
 
+import { UpdateUserAvatarRepository } from "../protocols/database/User/UpdateUserAvatarRepository";
+
 export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
     email: string;
     result: User | null = mockUserModel();
@@ -58,5 +60,20 @@ export class UpdateAccessTokenRepositorySpy
     async updateAccessToken(id: string, token: string): Promise<void> {
         this.id = id;
         this.token = token;
+    }
+}
+
+export class UpdateUserAvatarRepositorySpy
+    implements UpdateUserAvatarRepository
+{
+    userId: string;
+    avatar: string;
+
+    async updateAvatar({
+        avatar,
+        userId,
+    }: UpdateUserAvatarRepository.Input): Promise<void> {
+        this.userId = userId;
+        this.avatar = avatar;
     }
 }

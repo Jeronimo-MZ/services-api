@@ -1,9 +1,9 @@
 import faker from "faker";
 import { Collection } from "mongodb";
 
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
 import { env } from "@/main/config/env";
 
-import { CollectionNames, MongoHelper } from "../../helpers";
 import { LogMongoRepository } from "./Log";
 
 const makeSut = (): LogMongoRepository => {

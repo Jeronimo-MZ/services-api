@@ -5,6 +5,10 @@ dist/
 # stryker temp files
 .stryker-tmp
 
+# static files folder
+static/*
+!static/.gitkeep
+
 reports/
 
 # Logs

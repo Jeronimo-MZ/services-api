@@ -18,7 +18,7 @@ const makeSut = (): SutTypes => {
     };
 };
 
-describe("Email Validation", () => {
+describe("Min Length Validation", () => {
     it("should return null if validation succeeds", () => {
         const { sut } = makeSut();
         const error = sut.validate({ [field]: faker.random.alphaNumeric(5) });

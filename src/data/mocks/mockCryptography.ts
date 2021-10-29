@@ -7,6 +7,8 @@ import {
     Hasher,
 } from "@/data/protocols/cryptography";
 
+import { UUIDGenerator } from "../protocols/cryptography/UUIDGenerator";
+
 export class HasherSpy implements Hasher {
     digest = faker.datatype.uuid();
     plaintext: string;
@@ -46,5 +48,12 @@ export class DecrypterSpy implements Decrypter {
     async decrypt(ciphertext: string): Promise<string | null> {
         this.ciphertext = ciphertext;
         return this.plaintext;
+    }
+}
+
+export class UUIDGeneratorSpy implements UUIDGenerator {
+    uuid: string = faker.datatype.uuid();
+    generate(): string {
+        return this.uuid;
     }
 }

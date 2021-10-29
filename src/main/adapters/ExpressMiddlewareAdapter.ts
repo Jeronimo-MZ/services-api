@@ -11,6 +11,7 @@ export const adaptMiddleware = (middleware: Middleware) => {
         const req = {
             accessToken: request.headers?.["x-access-token"],
             ...(request.headers || {}),
+            file: request.file,
         };
         const httpResponse = await middleware.handle(req);
         if (httpResponse.statusCode === 200) {
