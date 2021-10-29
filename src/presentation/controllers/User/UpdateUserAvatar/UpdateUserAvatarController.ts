@@ -22,7 +22,13 @@ export class UpdateUserAvatarController
                 return badRequest(error);
             }
             const { userId, file } = request;
-            const data = await this.updateUserAvatar.update({ userId, file });
+            const data = await this.updateUserAvatar.update({
+                userId,
+                file: {
+                    buffer: file.buffer,
+                    mimeType: file.mimetype,
+                },
+            });
 
             return ok(data);
         } catch (error) {
@@ -34,6 +40,6 @@ export class UpdateUserAvatarController
 export namespace UpdateUserAvatarController {
     export type Request = {
         userId: string;
-        file: { buffer: Buffer; mimeType: string };
+        file: { buffer: Buffer; mimetype: string };
     };
 }

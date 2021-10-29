@@ -36,7 +36,7 @@ const mockRequest = (): UpdateUserAvatarController.Request => ({
     userId: faker.datatype.uuid(),
     file: {
         buffer: Buffer.from(faker.datatype.string()),
-        mimeType: "image/jpeg",
+        mimetype: "image/jpeg",
     },
 });
 
