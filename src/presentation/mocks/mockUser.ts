@@ -5,6 +5,7 @@ import { User } from "@/domain/models/User";
 import { AddUser } from "@/domain/usecases/AddUser";
 import { Authentication } from "@/domain/usecases/Authentication";
 import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
+import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
 
 export class AddUserSpy implements AddUser {
     result: User | null = mockUserModel();
@@ -30,6 +31,23 @@ export class LoadUserByTokenSpy implements LoadUserByToken {
     result: User | null = mockUserModel();
     async load(accessToken: string): Promise<User | null> {
         this.accessToken = accessToken;
+        return this.result;
+    }
+}
+
+export class UpdateUserAvatarSpy implements UpdateUserAvatar {
+    file: { buffer: Buffer; mimeType: string };
+    userId: string;
+    result = {
+        avatarUrl: faker.internet.url(),
+    };
+
+    async update({
+        file,
+        userId,
+    }: UpdateUserAvatar.Params): Promise<UpdateUserAvatar.Result> {
+        this.file = file;
+        this.userId = userId;
         return this.result;
     }
 }
