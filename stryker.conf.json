@@ -21,7 +21,8 @@
         "!**/errors/**/*.ts",
         "!**/presentation/helpers/**/*.ts",
         "!**/**/*.spec.ts",
-        "!**/**/*.test.ts"
+        "!**/**/*.test.ts",
+        "!**/**/index.ts"
     ],
     "testRunner": "jest",
     "coverageAnalysis": "perTest",
