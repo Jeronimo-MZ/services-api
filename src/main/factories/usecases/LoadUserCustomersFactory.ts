@@ -1,6 +1,6 @@
-import { DbLoadUserCustomers } from "@/data/usecases/LoadUserCustomers/DbLoadUserCustomers";
-import { LoadUserCustomers } from "@/domain/usecases/LoadUserCustomers";
-import { CustomerMongoRepository } from "@/infra/database/mongodb/repositories/Customer/Customer";
+import { DbLoadUserCustomers } from "@/data/usecases";
+import { LoadUserCustomers } from "@/domain/usecases";
+import { CustomerMongoRepository } from "@/infra/database/mongodb";
 
 export const makeLoadUserCustomers = (): LoadUserCustomers => {
     const customerRepository = new CustomerMongoRepository();

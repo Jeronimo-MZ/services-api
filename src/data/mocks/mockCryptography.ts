@@ -5,9 +5,8 @@ import {
     Encrypter,
     HashComparer,
     Hasher,
+    UUIDGenerator,
 } from "@/data/protocols/cryptography";
-
-import { UUIDGenerator } from "../protocols/cryptography/UUIDGenerator";
 
 export class HasherSpy implements Hasher {
     digest = faker.datatype.uuid();

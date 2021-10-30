@@ -1,7 +1,7 @@
 import { Decrypter } from "@/data/protocols/cryptography";
-import { LoadUserByTokenRepository } from "@/data/protocols/database/User";
-import { User } from "@/domain/models/User";
-import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
+import { LoadUserByTokenRepository } from "@/data/protocols/database";
+import { User } from "@/domain/models";
+import { LoadUserByToken } from "@/domain/usecases";
 
 export class DbLoadUserByToken implements LoadUserByToken {
     constructor(

@@ -1,4 +1,4 @@
-import { UnexpectedError } from "@/data/errors/UnexpectedError";
+import { UnexpectedError } from "@/data/errors";
 import {
     AddCustomerRepositorySpy,
     LoadUserByIdRepositorySpy,

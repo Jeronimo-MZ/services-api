@@ -1,7 +1,7 @@
 import faker from "faker";
 
-import { Customer } from "@/domain/models/Customer";
-import { AddCustomer } from "@/domain/usecases/AddCustomer";
+import { Customer } from "@/domain/models";
+import { AddCustomer } from "@/domain/usecases";
 
 export const mockCustomerModel = (): Customer => ({
     id: faker.datatype.uuid(),

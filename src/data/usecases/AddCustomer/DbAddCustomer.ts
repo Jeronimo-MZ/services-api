@@ -1,8 +1,10 @@
-import { UnexpectedError } from "@/data/errors/UnexpectedError";
-import { AddCustomerRepository } from "@/data/protocols/database/Customer";
-import { LoadUserByIdRepository } from "@/data/protocols/database/User/LoadUserByIdRepository";
-import { Customer } from "@/domain/models/Customer";
-import { AddCustomer } from "@/domain/usecases/AddCustomer";
+import { UnexpectedError } from "@/data/errors";
+import {
+    AddCustomerRepository,
+    LoadUserByIdRepository,
+} from "@/data/protocols/database";
+import { Customer } from "@/domain/models";
+import { AddCustomer } from "@/domain/usecases";
 
 export class DbAddCustomer implements AddCustomer {
     constructor(

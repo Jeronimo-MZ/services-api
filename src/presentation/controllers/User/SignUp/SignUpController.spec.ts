@@ -6,14 +6,8 @@ import {
     MissingParamError,
     ServerError,
 } from "@/presentation/errors";
-import {
-    badRequest,
-    forbidden,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
-import { AddUserSpy } from "@/presentation/mocks/mockUser";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+import { badRequest, forbidden, ok, serverError } from "@/presentation/helpers";
+import { AddUserSpy, ValidationSpy } from "@/presentation/mocks";
 
 import { SignUpController } from "./SignUpController";
 

@@ -1,10 +1,10 @@
-import { DbUpdateUserAvatar } from "@/data/usecases/UpdateUserAvatar/DbUpdateUserAvatar";
-import { UUIDAdapter } from "@/infra/cryptography/UUIDAdapter/UUIDAdapter";
-import { UserMongoRepository } from "@/infra/database/mongodb/repositories/User/User";
-import { DiskStorage } from "@/infra/storage/DiskStorage/DiskStorage";
+import { DbUpdateUserAvatar } from "@/data/usecases";
+import { UUIDAdapter } from "@/infra/cryptography";
+import { UserMongoRepository } from "@/infra/database/mongodb";
+import { DiskStorage } from "@/infra/storage";
 import { env } from "@/main/config/env";
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { UpdateUserAvatarController } from "@/presentation/controllers/User/UpdateUserAvatar/UpdateUserAvatarController";
+import { makeLogControllerDecorator } from "@/main/factories";
+import { UpdateUserAvatarController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 
 import { makeUpdateUserAvatarValidation } from "./UpdateUserAvatarValidationFactory";

@@ -2,7 +2,7 @@ import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
 import { InvalidParamError } from "@/presentation/errors";
-import { EmailValidatorSpy } from "@/validation/mocks/mockEmailValidator";
+import { EmailValidatorSpy } from "@/validation/mocks";
 
 import { EmailValidation } from "./EmailValidation";
 

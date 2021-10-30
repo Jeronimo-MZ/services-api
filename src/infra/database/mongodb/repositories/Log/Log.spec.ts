@@ -1,7 +1,7 @@
 import faker from "faker";
 import { Collection } from "mongodb";
 
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
 import { env } from "@/main/config/env";
 
 import { LogMongoRepository } from "./Log";

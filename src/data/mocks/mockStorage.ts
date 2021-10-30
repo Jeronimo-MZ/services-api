@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { DeleteFile, SaveFile } from "../protocols/storage";
+import { DeleteFile, SaveFile } from "@/data/protocols/storage";
 
 export class SaveFileSpy implements SaveFile {
     file: Buffer;

@@ -2,12 +2,12 @@ import { ObjectID } from "bson";
 
 import {
     AddCustomerRepository,
+    LoadCustomerByIdRepository,
     LoadCustomersByProviderIdRepository,
-} from "@/data/protocols/database/Customer";
-import { LoadCustomerByIdRepository } from "@/data/protocols/database/Customer/LoadCustomerByIdRepository";
-import { Customer } from "@/domain/models/Customer";
-import { AddCustomer } from "@/domain/usecases/AddCustomer";
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
+} from "@/data/protocols/database";
+import { Customer } from "@/domain/models";
+import { AddCustomer } from "@/domain/usecases";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
 
 export class CustomerMongoRepository
     implements

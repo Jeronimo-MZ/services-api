@@ -1,8 +1,10 @@
-import { DbAddCustomer } from "@/data/usecases/AddCustomer/DbAddCustomer";
-import { CustomerMongoRepository } from "@/infra/database/mongodb/repositories/Customer/Customer";
-import { UserMongoRepository } from "@/infra/database/mongodb/repositories/User/User";
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { AddCustomerController } from "@/presentation/controllers/Customer/AddCustomer/AddCustomerController";
+import { DbAddCustomer } from "@/data/usecases";
+import {
+    CustomerMongoRepository,
+    UserMongoRepository,
+} from "@/infra/database/mongodb";
+import { makeLogControllerDecorator } from "@/main/factories";
+import { AddCustomerController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 
 import { makeAddCustomerValidation } from "./AddCustomerValidationFactory";

@@ -1,11 +1,6 @@
-import { AddUser } from "@/domain/usecases/AddUser";
+import { AddUser } from "@/domain/usecases";
 import { EmailInUseError } from "@/presentation/errors";
-import {
-    badRequest,
-    forbidden,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
+import { badRequest, forbidden, ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class SignUpController implements Controller<SignUpController.Request> {

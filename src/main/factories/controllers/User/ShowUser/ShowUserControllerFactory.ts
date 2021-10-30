@@ -1,6 +1,8 @@
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { makeLoadUserByToken } from "@/main/factories/usecases/LoadUserByTokenFactory";
-import { ShowUserController } from "@/presentation/controllers/User/ShowUser/ShowUserController";
+import {
+    makeLoadUserByToken,
+    makeLogControllerDecorator,
+} from "@/main/factories";
+import { ShowUserController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 import { RequiredFieldValidation } from "@/validation/validators";
 

@@ -1,9 +1,5 @@
-import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
-import {
-    badRequest,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
+import { UpdateUserAvatar } from "@/domain/usecases";
+import { badRequest, ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class UpdateUserAvatarController

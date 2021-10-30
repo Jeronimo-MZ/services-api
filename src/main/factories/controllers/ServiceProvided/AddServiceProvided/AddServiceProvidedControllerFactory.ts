@@ -1,9 +1,11 @@
-import { DbAddServiceProvided } from "@/data/usecases/AddServiceProvided/DbAddServiceProvided";
-import { CustomerMongoRepository } from "@/infra/database/mongodb/repositories/Customer/Customer";
-import { ServiceProvidedMongoRepository } from "@/infra/database/mongodb/repositories/ServiceProvided/ServiceProvided";
-import { DateValidatorAdapter } from "@/infra/validation/DateValidatorAdapter";
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { AddServiceProvidedController } from "@/presentation/controllers/ServiceProvided/AddServiceProvided/AddServiceProvidedController";
+import { DbAddServiceProvided } from "@/data/usecases";
+import {
+    CustomerMongoRepository,
+    ServiceProvidedMongoRepository,
+} from "@/infra/database/mongodb";
+import { DateValidatorAdapter } from "@/infra/validation";
+import { makeLogControllerDecorator } from "@/main/factories";
+import { AddServiceProvidedController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 
 import { makeAddServiceProvidedValidation } from "./AddServiceProvidedValidation";

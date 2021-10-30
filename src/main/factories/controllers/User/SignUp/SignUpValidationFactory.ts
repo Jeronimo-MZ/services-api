@@ -1,4 +1,4 @@
-import { EmailValidatorAdapter } from "@/infra/validation/EmailValidatorAdapter";
+import { EmailValidatorAdapter } from "@/infra/validation";
 import { Validation } from "@/presentation/protocols";
 import {
     CompareFieldsValidation,

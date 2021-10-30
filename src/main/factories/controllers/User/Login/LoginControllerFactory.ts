@@ -1,6 +1,8 @@
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { makeDbAuthentication } from "@/main/factories/usecases/AuthenticationFactory";
-import { LoginController } from "@/presentation/controllers/User/Login/LoginController";
+import {
+    makeDbAuthentication,
+    makeLogControllerDecorator,
+} from "@/main/factories";
+import { LoginController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 
 import { makeLoginValidation } from "./LoginValidationFactory";

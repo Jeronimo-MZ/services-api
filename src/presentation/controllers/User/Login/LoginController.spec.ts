@@ -7,9 +7,8 @@ import {
     ok,
     serverError,
     unauthorized,
-} from "@/presentation/helpers/http/httpHelper";
-import { AuthenticationSpy } from "@/presentation/mocks/mockUser";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+} from "@/presentation/helpers";
+import { AuthenticationSpy, ValidationSpy } from "@/presentation/mocks";
 
 import { LoginController } from "./LoginController";
 

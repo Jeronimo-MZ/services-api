@@ -1,6 +1,6 @@
-import { LoadServicesProvidedByProviderIdRepository } from "@/data/protocols/database/ServiceProvided/LoadServicesProvidedByProviderIdRepository";
-import { ServiceProvided } from "@/domain/models/ServiceProvided";
-import { LoadUserServicesProvided } from "@/domain/usecases/LoadUserServicesProvided";
+import { LoadServicesProvidedByProviderIdRepository } from "@/data/protocols/database";
+import { ServiceProvided } from "@/domain/models";
+import { LoadUserServicesProvided } from "@/domain/usecases";
 
 export class DbLoadUserServicesProvider implements LoadUserServicesProvided {
     constructor(

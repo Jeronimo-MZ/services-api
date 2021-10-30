@@ -1,4 +1,4 @@
-import { LogErrorRepository } from "@/data/protocols/database/Log";
+import { LogErrorRepository } from "@/data/protocols/database";
 
 export class LogErrorRepositorySpy implements LogErrorRepository {
     stack: string;

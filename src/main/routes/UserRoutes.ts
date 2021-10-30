@@ -1,14 +1,13 @@
 import { Router } from "express";
 
-import { adaptRoute } from "@/main/adapters/ExpressRouteAdapter";
-import { makeLoginController } from "@/main/factories/controllers/User/Login/LoginControllerFactory";
-import { makeShowUserController } from "@/main/factories/controllers/User/ShowUser/ShowUserControllerFactory";
-import { makeSignUpController } from "@/main/factories/controllers/User/SignUp/SignUpControllerFactory";
-
-import { adaptMiddleware } from "../adapters/ExpressMiddlewareAdapter";
-import { adaptMulter } from "../adapters/MulterAdapter";
-import { makeUpdateUserAvatarController } from "../factories/controllers/User/UpdateUserAvatar/UpdateUserAvatarControllerFactory";
-import { makeAuthMiddleware } from "../factories/middlewares/AuthMiddlewareFactory";
+import { adaptMiddleware, adaptMulter, adaptRoute } from "@/main/adapters";
+import {
+    makeAuthMiddleware,
+    makeLoginController,
+    makeShowUserController,
+    makeSignUpController,
+    makeUpdateUserAvatarController,
+} from "@/main/factories";
 
 export default (router: Router): void => {
     router.post("/signup", adaptRoute(makeSignUpController()));

@@ -1,4 +1,4 @@
-import { ServiceProvided } from "@/domain/models/ServiceProvided";
+import { ServiceProvided } from "@/domain/models";
 
 export interface AddServiceProvided {
     add(data: AddServiceProvided.Params): Promise<ServiceProvided | Error>;

@@ -1,5 +1,4 @@
-import { ServerError } from "@/presentation/errors";
-import { UnauthorizedError } from "@/presentation/errors/UnauthorizedError";
+import { ServerError, UnauthorizedError } from "@/presentation/errors";
 import { HttpResponse } from "@/presentation/protocols";
 
 export const ok = (data: unknown): HttpResponse => ({

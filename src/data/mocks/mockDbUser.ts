@@ -1,15 +1,14 @@
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
+    LoadUserByIdRepository,
     LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
-} from "@/data/protocols/database/User";
-import { LoadUserByIdRepository } from "@/data/protocols/database/User/LoadUserByIdRepository";
+    UpdateUserAvatarRepository,
+} from "@/data/protocols/database";
 import { mockUserModel } from "@/domain/mocks";
-import { User } from "@/domain/models/User";
-import { AddUser } from "@/domain/usecases/AddUser";
-
-import { UpdateUserAvatarRepository } from "../protocols/database/User/UpdateUserAvatarRepository";
+import { User } from "@/domain/models";
+import { AddUser } from "@/domain/usecases";
 
 export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
     email: string;

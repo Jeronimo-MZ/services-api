@@ -2,10 +2,10 @@ import {
     AddCustomerRepository,
     LoadCustomerByIdRepository,
     LoadCustomersByProviderIdRepository,
-} from "@/data/protocols/database/Customer";
+} from "@/data/protocols/database";
 import { mockCustomerModel } from "@/domain/mocks";
-import { Customer } from "@/domain/models/Customer";
-import { AddCustomer } from "@/domain/usecases/AddCustomer";
+import { Customer } from "@/domain/models";
+import { AddCustomer } from "@/domain/usecases";
 
 export class AddCustomerRepositorySpy implements AddCustomerRepository {
     params: AddCustomer.Params;

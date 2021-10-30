@@ -7,9 +7,8 @@ import {
     ok,
     serverError,
     unauthorized,
-} from "@/presentation/helpers/http/httpHelper";
-import { LoadUserByTokenSpy } from "@/presentation/mocks/mockUser";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+} from "@/presentation/helpers";
+import { LoadUserByTokenSpy, ValidationSpy } from "@/presentation/mocks";
 
 import { ShowUserController } from "./ShowUserController";
 

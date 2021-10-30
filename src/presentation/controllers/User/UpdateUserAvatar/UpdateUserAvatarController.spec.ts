@@ -2,13 +2,8 @@ import faker from "faker";
 
 import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
-import {
-    badRequest,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
-import { UpdateUserAvatarSpy } from "@/presentation/mocks/mockUser";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+import { badRequest, ok, serverError } from "@/presentation/helpers";
+import { UpdateUserAvatarSpy, ValidationSpy } from "@/presentation/mocks";
 
 import { UpdateUserAvatarController } from "./UpdateUserAvatarController";
 

@@ -1,9 +1,5 @@
-import { LoadUserServicesProvided } from "@/domain/usecases/LoadUserServicesProvided";
-import {
-    badRequest,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
+import { LoadUserServicesProvided } from "@/domain/usecases";
+import { badRequest, ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class LoadUserServicesProvidedController

@@ -1,9 +1,5 @@
-import { LoadUserCustomers } from "@/domain/usecases/LoadUserCustomers";
-import {
-    badRequest,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
+import { LoadUserCustomers } from "@/domain/usecases";
+import { badRequest, ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class LoadUserCustomersController

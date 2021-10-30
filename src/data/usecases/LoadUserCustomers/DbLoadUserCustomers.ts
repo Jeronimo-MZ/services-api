@@ -1,6 +1,6 @@
-import { LoadCustomersByProviderIdRepository } from "@/data/protocols/database/Customer";
-import { Customer } from "@/domain/models/Customer";
-import { LoadUserCustomers } from "@/domain/usecases/LoadUserCustomers";
+import { LoadCustomersByProviderIdRepository } from "@/data/protocols/database";
+import { Customer } from "@/domain/models";
+import { LoadUserCustomers } from "@/domain/usecases";
 
 export class DbLoadUserCustomers implements LoadUserCustomers {
     constructor(

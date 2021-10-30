@@ -1,7 +1,7 @@
-import { DbLoadUserByToken } from "@/data/usecases/LoadUser/DbLoadUserByToken";
-import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
-import { JwtAdapter } from "@/infra/cryptography/JwtAdapter/JwtAdapter";
-import { UserMongoRepository } from "@/infra/database/mongodb/repositories/User/User";
+import { DbLoadUserByToken } from "@/data/usecases";
+import { LoadUserByToken } from "@/domain/usecases";
+import { JwtAdapter } from "@/infra/cryptography";
+import { UserMongoRepository } from "@/infra/database/mongodb";
 import { env } from "@/main/config/env";
 
 export const makeLoadUserByToken = (): LoadUserByToken => {

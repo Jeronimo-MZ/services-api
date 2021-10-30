@@ -1,7 +1,9 @@
-import { LoadCustomerByIdRepository } from "@/data/protocols/database/Customer/LoadCustomerByIdRepository";
-import { AddServiceProvidedRepository } from "@/data/protocols/database/ServiceProvided/AddServiceProvidedRepository";
-import { ServiceProvided } from "@/domain/models/ServiceProvided";
-import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
+import {
+    AddServiceProvidedRepository,
+    LoadCustomerByIdRepository,
+} from "@/data/protocols/database";
+import { ServiceProvided } from "@/domain/models";
+import { AddServiceProvided } from "@/domain/usecases";
 import { InvalidParamError } from "@/presentation/errors";
 
 export class DbAddServiceProvided implements AddServiceProvided {

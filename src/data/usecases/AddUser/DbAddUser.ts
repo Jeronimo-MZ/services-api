@@ -2,9 +2,9 @@ import { Hasher } from "@/data/protocols/cryptography";
 import {
     AddUserRepository,
     LoadUserByEmailRepository,
-} from "@/data/protocols/database/User";
-import { User } from "@/domain/models/User";
-import { AddUser } from "@/domain/usecases/AddUser";
+} from "@/data/protocols/database";
+import { User } from "@/domain/models";
+import { AddUser } from "@/domain/usecases";
 
 export class DbAddUser implements AddUser {
     constructor(

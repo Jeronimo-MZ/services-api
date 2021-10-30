@@ -1,6 +1,8 @@
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { makeLoadUserCustomers } from "@/main/factories/usecases/LoadUserCustomersFactory";
-import { LoadUserCustomersController } from "@/presentation/controllers/Customer/LoadUserCustomers/LoadUserCustomersController";
+import {
+    makeLoadUserCustomers,
+    makeLogControllerDecorator,
+} from "@/main/factories";
+import { LoadUserCustomersController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 import { RequiredFieldValidation } from "@/validation/validators";
 

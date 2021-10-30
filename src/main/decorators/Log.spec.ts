@@ -1,8 +1,8 @@
 import faker from "faker";
 
 import { LogErrorRepositorySpy } from "@/data/mocks";
-import { LogControllerDecorator } from "@/main/decorators/Log";
-import { ok, serverError } from "@/presentation/helpers/http/httpHelper";
+import { LogControllerDecorator } from "@/main/decorators";
+import { ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse } from "@/presentation/protocols";
 
 class ControllerSpy implements Controller {

@@ -1,9 +1,5 @@
-import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
-import {
-    badRequest,
-    ok,
-    serverError,
-} from "@/presentation/helpers/http/httpHelper";
+import { AddServiceProvided } from "@/domain/usecases";
+import { badRequest, ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class AddServiceProvidedController

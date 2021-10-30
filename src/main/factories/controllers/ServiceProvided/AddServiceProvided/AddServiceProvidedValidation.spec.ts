@@ -1,5 +1,5 @@
 import { Validation } from "@/presentation/protocols";
-import { DateValidatorSpy } from "@/validation/mocks/mockDateValidator";
+import { DateValidatorSpy } from "@/validation/mocks";
 import {
     DateValidation,
     NotRequiredFieldValidation,

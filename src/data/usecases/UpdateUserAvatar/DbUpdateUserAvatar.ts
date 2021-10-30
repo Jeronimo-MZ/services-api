@@ -1,11 +1,11 @@
-import { UnexpectedError } from "@/data/errors/UnexpectedError";
-import { UUIDGenerator } from "@/data/protocols/cryptography/UUIDGenerator";
+import { UnexpectedError } from "@/data/errors";
+import { UUIDGenerator } from "@/data/protocols/cryptography";
 import {
     LoadUserByIdRepository,
     UpdateUserAvatarRepository,
-} from "@/data/protocols/database/User/";
+} from "@/data/protocols/database";
 import { DeleteFile, SaveFile } from "@/data/protocols/storage";
-import { UpdateUserAvatar } from "@/domain/usecases/UpdateUserAvatar";
+import { UpdateUserAvatar } from "@/domain/usecases";
 
 export class DbUpdateUserAvatar implements UpdateUserAvatar {
     constructor(

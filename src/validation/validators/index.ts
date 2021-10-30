@@ -5,5 +5,6 @@ export * from "./EmailValidation";
 export * from "./MaxFileSizeValidation";
 export * from "./MinLengthValidation";
 export * from "./NotRequiredFieldValidation";
+export * from "./ObjectValidation";
 export * from "./RequiredFieldValidation";
 export * from "./ValidationComposite";

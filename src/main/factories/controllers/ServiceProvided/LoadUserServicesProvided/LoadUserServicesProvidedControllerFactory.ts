@@ -1,7 +1,7 @@
-import { DbLoadUserServicesProvider } from "@/data/usecases/LoadUserServicesProvided/DbLoadUserServicesProvider";
-import { ServiceProvidedMongoRepository } from "@/infra/database/mongodb/repositories/ServiceProvided/ServiceProvided";
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { LoadUserServicesProvidedController } from "@/presentation/controllers/ServiceProvided/LoadUserServicesProvided/LoadUserServicesProvidedController";
+import { DbLoadUserServicesProvider } from "@/data/usecases";
+import { ServiceProvidedMongoRepository } from "@/infra/database/mongodb";
+import { makeLogControllerDecorator } from "@/main/factories";
+import { LoadUserServicesProvidedController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 import { RequiredFieldValidation } from "@/validation/validators";
 

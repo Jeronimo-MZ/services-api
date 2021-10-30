@@ -1,8 +1,8 @@
-import { DbAddUser } from "@/data/usecases/AddUser/DbAddUser";
-import { BcryptAdapter } from "@/infra/cryptography/BcryptAdapter/BcryptAdapter";
-import { UserMongoRepository } from "@/infra/database/mongodb/repositories/User/User";
-import { makeLogControllerDecorator } from "@/main/factories/decorators/LogControllerFactory";
-import { SignUpController } from "@/presentation/controllers/User/SignUp/SignUpController";
+import { DbAddUser } from "@/data/usecases";
+import { BcryptAdapter } from "@/infra/cryptography";
+import { UserMongoRepository } from "@/infra/database/mongodb";
+import { makeLogControllerDecorator } from "@/main/factories";
+import { SignUpController } from "@/presentation/controllers";
 import { Controller } from "@/presentation/protocols";
 
 import { makeSignUpValidation } from "./SignUpValidationFactory";

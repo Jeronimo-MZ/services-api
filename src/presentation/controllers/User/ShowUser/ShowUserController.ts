@@ -1,10 +1,10 @@
-import { LoadUserByToken } from "@/domain/usecases/LoadUserByToken";
+import { LoadUserByToken } from "@/domain/usecases";
 import {
     badRequest,
     ok,
     serverError,
     unauthorized,
-} from "@/presentation/helpers/http/httpHelper";
+} from "@/presentation/helpers";
 import { Controller, HttpResponse, Validation } from "@/presentation/protocols";
 
 export class ShowUserController

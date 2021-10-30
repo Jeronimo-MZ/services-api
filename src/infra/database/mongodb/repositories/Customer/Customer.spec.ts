@@ -3,8 +3,8 @@ import faker from "faker";
 import { Collection } from "mongodb";
 
 import { mockAddCustomerParams } from "@/domain/mocks";
-import { Customer } from "@/domain/models/Customer";
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
+import { Customer } from "@/domain/models";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
 
 import { CustomerMongoRepository } from "./Customer";
 

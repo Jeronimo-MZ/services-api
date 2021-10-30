@@ -1,9 +1,10 @@
-import { AddServiceProvidedRepository } from "@/data/protocols/database/ServiceProvided/AddServiceProvidedRepository";
-import { LoadServicesProvidedByProviderIdRepository } from "@/data/protocols/database/ServiceProvided/LoadServicesProvidedByProviderIdRepository";
-import { ServiceProvided } from "@/domain/models/ServiceProvided";
-import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
-
-import { CollectionNames, MongoHelper } from "../../helpers";
+import {
+    AddServiceProvidedRepository,
+    LoadServicesProvidedByProviderIdRepository,
+} from "@/data/protocols/database";
+import { ServiceProvided } from "@/domain/models";
+import { AddServiceProvided } from "@/domain/usecases";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
 
 export class ServiceProvidedMongoRepository
     implements

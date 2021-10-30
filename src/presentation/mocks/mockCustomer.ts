@@ -1,7 +1,6 @@
 import { mockCustomerModel } from "@/domain/mocks";
-import { Customer } from "@/domain/models/Customer";
-import { AddCustomer } from "@/domain/usecases/AddCustomer";
-import { LoadUserCustomers } from "@/domain/usecases/LoadUserCustomers";
+import { Customer } from "@/domain/models";
+import { AddCustomer, LoadUserCustomers } from "@/domain/usecases";
 
 export class AddCustomerSpy implements AddCustomer {
     result: Customer = mockCustomerModel();

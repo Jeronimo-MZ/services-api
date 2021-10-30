@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { UnexpectedError } from "@/data/errors/UnexpectedError";
+import { UnexpectedError } from "@/data/errors";
 import {
     DeleteFileSpy,
     LoadUserByIdRepositorySpy,

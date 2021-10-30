@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import { MissingParamError } from "@/presentation/errors";
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+import { ValidationSpy } from "@/presentation/mocks";
 
 import { ValidationComposite } from "./ValidationComposite";
 

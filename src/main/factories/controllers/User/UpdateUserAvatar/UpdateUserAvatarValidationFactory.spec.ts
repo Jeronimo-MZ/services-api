@@ -2,10 +2,10 @@ import { Validation } from "@/presentation/protocols";
 import {
     AllowedMimeTypesValidation,
     MaxFileSizeValidation,
+    ObjectValidation,
     RequiredFieldValidation,
     ValidationComposite,
 } from "@/validation/validators";
-import { ObjectValidation } from "@/validation/validators/ObjectValidation";
 
 import { makeUpdateUserAvatarValidation } from "./UpdateUserAvatarValidationFactory";
 

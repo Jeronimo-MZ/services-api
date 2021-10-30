@@ -4,9 +4,8 @@ import jwt from "jsonwebtoken";
 import { Collection } from "mongodb";
 import request from "supertest";
 
-import { CollectionNames } from "@/infra/database/mongodb/helpers";
-import { MongoHelper } from "@/infra/database/mongodb/helpers/MongoHelper";
-import { DiskStorage } from "@/infra/storage/DiskStorage/DiskStorage";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
+import { DiskStorage } from "@/infra/storage";
 import { app } from "@/main/config/app";
 import { env } from "@/main/config/env";
 import { setupRoutes } from "@/main/config/routes";

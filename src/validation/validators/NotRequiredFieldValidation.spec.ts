@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { ValidationSpy } from "@/presentation/mocks/mockValidation";
+import { ValidationSpy } from "@/presentation/mocks";
 
 import { NotRequiredFieldValidation } from "./NotRequiredFieldValidation";
 

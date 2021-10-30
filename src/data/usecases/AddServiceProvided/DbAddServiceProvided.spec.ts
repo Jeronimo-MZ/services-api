@@ -3,7 +3,7 @@ import {
     LoadCustomerByIdRepositorySpy,
 } from "@/data/mocks";
 import { mockAddServiceProvidedParams, throwError } from "@/domain/mocks";
-import { AddServiceProvided } from "@/domain/usecases/AddServiceProvided";
+import { AddServiceProvided } from "@/domain/usecases";
 import { InvalidParamError } from "@/presentation/errors";
 
 import { DbAddServiceProvided } from "./DbAddServiceProvided";

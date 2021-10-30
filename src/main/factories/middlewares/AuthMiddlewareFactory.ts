@@ -1,4 +1,4 @@
-import { makeLoadUserByToken } from "@/main/factories/usecases/LoadUserByTokenFactory";
+import { makeLoadUserByToken } from "@/main/factories";
 import { AuthMiddleware } from "@/presentation/middlewares";
 
 export const makeAuthMiddleware = (): AuthMiddleware => {

@@ -7,10 +7,10 @@ import {
     LoadUserByTokenRepository,
     UpdateAccessTokenRepository,
     UpdateUserAvatarRepository,
-} from "@/data/protocols/database/User";
-import { User } from "@/domain/models/User";
-import { AddUser } from "@/domain/usecases/AddUser";
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb/helpers";
+} from "@/data/protocols/database";
+import { User } from "@/domain/models";
+import { AddUser } from "@/domain/usecases";
+import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
 
 export class UserMongoRepository
     implements
