@@ -1,9 +1,9 @@
-import { v4 } from "uuid";
+import { randomUUID } from "crypto";
 
 import { UUIDGenerator } from "@/data/protocols/cryptography";
 
 export class UUIDAdapter implements UUIDGenerator {
     generate(): string {
-        return v4();
+        return randomUUID();
     }
 }

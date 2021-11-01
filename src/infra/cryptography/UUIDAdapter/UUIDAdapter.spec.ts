@@ -1,22 +1,22 @@
+import { randomUUID } from "crypto";
 import faker from "faker";
 import { mocked } from "ts-jest/utils";
-import { v4 } from "uuid";
 
 import { throwError } from "@/domain/mocks";
 
 import { UUIDAdapter } from "./UUIDAdapter";
 
 const generatedUUID = faker.datatype.uuid();
-jest.mock("uuid");
-mocked(v4).mockReturnValue(generatedUUID);
+jest.mock("crypto");
+mocked(randomUUID).mockReturnValue(generatedUUID);
 
 const makeSut = () => new UUIDAdapter();
 
 describe("UUIDAdapter", () => {
-    it("should call uuid.v4", () => {
+    it("should call crypto.randomUUID", () => {
         const sut = makeSut();
         sut.generate();
-        expect(v4).toHaveBeenCalledTimes(1);
+        expect(randomUUID).toHaveBeenCalledTimes(1);
     });
 
     it("should return correct uuid", () => {
@@ -25,9 +25,9 @@ describe("UUIDAdapter", () => {
         expect(uuid).toBe(generatedUUID);
     });
 
-    it("should throw if uuid.v4 throws", () => {
+    it("should throw if crypto.randomUUID throws", () => {
         const sut = makeSut();
-        mocked(v4).mockImplementationOnce(throwError);
+        mocked(randomUUID).mockImplementationOnce(throwError);
         expect(sut.generate).toThrow();
     });
 });
