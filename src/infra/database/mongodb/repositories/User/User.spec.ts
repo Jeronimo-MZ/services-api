@@ -34,13 +34,26 @@ describe("User Mongo Repository", () => {
             expect(user).toBeTruthy();
             expect(user.id).toBeTruthy();
             expect(user.name).toBe(userParams.name);
-            expect(user.email).toBe(userParams.email);
+            expect(user.email).toBe(userParams.email.toLowerCase());
             expect(user.password).toBe(userParams.password);
             expect(user.isAdmin).toBe(false);
             expect(user.avatar).toBeNull();
             expect(user.occupation).toBeNull();
             expect(user.avatar).toBeNull();
             expect(user.accessToken).toBeNull();
+        });
+
+        it("should save email in lowercase", async () => {
+            const sut = makeSut();
+            const userParams = mockAddUserParams();
+            const user = await sut.add({
+                name: userParams.name,
+                password: userParams.password,
+                email: userParams.email.toUpperCase(),
+            });
+
+            expect(user).toBeTruthy();
+            expect(user.email).toBe(userParams.email.toLocaleLowerCase());
         });
     });
 

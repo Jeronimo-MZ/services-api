@@ -27,7 +27,7 @@ export class UserMongoRepository
         );
         const userData: Omit<User, "id"> = {
             name,
-            email,
+            email: email.toLowerCase(),
             password,
             isAdmin: false,
             avatar: null,
