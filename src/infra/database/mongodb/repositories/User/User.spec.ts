@@ -61,15 +61,16 @@ describe("User Mongo Repository", () => {
         it("should return a user on success", async () => {
             const sut = makeSut();
             const addUserParams = mockAddUserParams();
-            const { insertedId } = await usersCollection.insertOne(
-                addUserParams,
-            );
+            const { insertedId } = await usersCollection.insertOne({
+                ...addUserParams,
+                email: addUserParams.email.toLowerCase(),
+            });
             const user = await sut.loadByEmail(addUserParams.email);
 
             expect(user).toBeTruthy();
             expect(user?.id).toBe(insertedId.toHexString());
             expect(user?.name).toBe(addUserParams.name);
-            expect(user?.email).toBe(addUserParams.email);
+            expect(user?.email).toBe(addUserParams.email.toLowerCase());
             expect(user?.password).toBe(addUserParams.password);
         });
 

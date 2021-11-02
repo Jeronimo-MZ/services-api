@@ -14,7 +14,7 @@ let usersCollection: Collection;
 
 const makeUserTokenAndId = async () => {
     const userData = {
-        email: faker.internet.email(),
+        email: faker.internet.email().toLowerCase(),
         name: faker.name.findName(),
         password: faker.internet.password(),
     };
@@ -78,7 +78,7 @@ describe("User routes", () => {
         });
         it("should return 200 on success", async () => {
             const userData = {
-                email: faker.internet.email(),
+                email: faker.internet.email().toLowerCase(),
                 name: faker.name.findName(),
                 password: faker.internet.password(),
             };

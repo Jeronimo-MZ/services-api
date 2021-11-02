@@ -47,7 +47,9 @@ export class UserMongoRepository
             CollectionNames.USER,
         );
 
-        const user = await usersCollection.findOne({ email });
+        const user = await usersCollection.findOne({
+            email: email.toLowerCase(),
+        });
 
         if (!user) {
             return null;
