@@ -1,5 +1,7 @@
 import faker from "faker";
+import { mocked } from "ts-jest/utils";
 
+import { pinoLogger } from "@/main/adapters";
 import { LogControllerDecorator } from "@/main/decorators";
 import { ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse } from "@/presentation/protocols";
@@ -40,6 +42,8 @@ const makeSut = (): SutTypes => {
     };
 };
 
+jest.mock("@/main/adapters/PinoLoggerAdapter");
+
 describe("LogController Decorator", () => {
     it("should call controller handle", async () => {
         const { sut, controllerSpy } = makeSut();
@@ -60,6 +64,22 @@ describe("LogController Decorator", () => {
         controllerSpy.httpResponse = serverError;
         await sut.handle(faker.random.objectElement());
         expect(logErrorRepositorySpy.stack).toBe(serverError.body.stack);
+    });
+
+    it("should call PinoLogger with correct error if controller returns a server error", async () => {
+        const { sut, controllerSpy } = makeSut();
+        mocked(pinoLogger.error).mockReset();
+        const serverError = mockServerError();
+        controllerSpy.httpResponse = serverError;
+        await sut.handle(faker.helpers.createCard());
+        expect(pinoLogger.error).toHaveBeenCalledWith(serverError.body);
+    });
+
+    it("should not call PinoLogger if controller does not return a server error", async () => {
+        const { sut } = makeSut();
+        mocked(pinoLogger.error).mockReset();
+        await sut.handle(faker.helpers.createCard());
+        expect(pinoLogger.error).not.toHaveBeenCalled();
     });
 
     it("should not call LogErrorRepository if controller does not return a server error", async () => {
