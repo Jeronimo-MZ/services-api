@@ -1,8 +1,7 @@
 import faker from "faker";
 
 import { InvalidParamError } from "@/presentation/errors";
-
-import { CompareFieldsValidation } from "./CompareFieldsValidation";
+import { CompareFieldsValidation } from "@/validation/validators";
 
 const field = faker.random.word();
 const fieldToCompare = faker.random.word();

@@ -1,8 +1,7 @@
 import faker from "faker";
 
 import { InvalidMimeTypeError } from "@/presentation/errors";
-
-import { AllowedMimeTypesValidation } from "./AllowedMimeTypesValidation";
+import { AllowedMimeTypesValidation } from "@/validation/validators";
 
 const field = faker.random.word();
 

@@ -1,8 +1,7 @@
 import faker from "faker";
 
 import { InvalidParamError } from "@/presentation/errors";
-
-import { MinLengthValidation } from "./MinLengthValidation";
+import { MinLengthValidation } from "@/validation/validators";
 
 const field = faker.random.word();
 const minLength = 5;

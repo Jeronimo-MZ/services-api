@@ -1,8 +1,7 @@
 import faker from "faker";
 
 import { InvalidParamError, MaxFileSizeError } from "@/presentation/errors";
-
-import { MaxFileSizeValidation } from "./MaxFileSizeValidation";
+import { MaxFileSizeValidation } from "@/validation/validators";
 
 type SutTypes = {
     sut: MaxFileSizeValidation;
