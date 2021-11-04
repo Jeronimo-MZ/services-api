@@ -2,10 +2,12 @@ import faker from "faker";
 import { Collection } from "mongodb";
 
 import { User } from "@/domain/models";
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
+import {
+    CollectionNames,
+    MongoHelper,
+    UserMongoRepository,
+} from "@/infra/database/mongodb";
 import { mockAddUserParams } from "@/tests/domain/mocks";
-
-import { UserMongoRepository } from "./User";
 
 const makeSut = (): UserMongoRepository => new UserMongoRepository();
 const token = faker.random.alphaNumeric(50);

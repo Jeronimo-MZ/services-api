@@ -2,9 +2,8 @@ import { randomUUID } from "crypto";
 import faker from "faker";
 import { mocked } from "ts-jest/utils";
 
+import { UUIDAdapter } from "@/infra/cryptography";
 import { throwError } from "@/tests/domain/mocks";
-
-import { UUIDAdapter } from "./UUIDAdapter";
 
 const generatedUUID = faker.datatype.uuid();
 jest.mock("crypto");

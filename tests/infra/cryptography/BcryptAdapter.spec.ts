@@ -1,9 +1,8 @@
 import bcrypt from "bcrypt";
 import faker from "faker";
 
+import { BcryptAdapter } from "@/infra/cryptography";
 import { throwError } from "@/tests/domain/mocks";
-
-import { BcryptAdapter } from "./BcryptAdapter";
 
 const salt = 12;
 const generatedHash = faker.random.alphaNumeric(30);

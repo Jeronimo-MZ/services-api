@@ -3,10 +3,12 @@ import faker from "faker";
 import { Collection } from "mongodb";
 
 import { Customer } from "@/domain/models";
-import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
+import {
+    CollectionNames,
+    CustomerMongoRepository,
+    MongoHelper,
+} from "@/infra/database/mongodb";
 import { mockAddCustomerParams } from "@/tests/domain/mocks";
-
-import { CustomerMongoRepository } from "./Customer";
 
 const makeSut = (): CustomerMongoRepository => new CustomerMongoRepository();
 let customersCollection: Collection;

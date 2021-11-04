@@ -1,5 +1,4 @@
-import { CollectionNames } from ".";
-import { MongoHelper as sut } from "./MongoHelper";
+import { CollectionNames, MongoHelper as sut } from "@/infra/database/mongodb";
 
 describe("Mongo Helper", () => {
     beforeAll(async () => {

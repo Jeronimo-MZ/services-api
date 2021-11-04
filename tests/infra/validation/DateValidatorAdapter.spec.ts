@@ -1,7 +1,7 @@
 import faker from "faker";
 import validator from "validator";
 
-import { DateValidatorAdapter } from "./DateValidatorAdapter";
+import { DateValidatorAdapter } from "@/infra/validation";
 
 jest.mock("validator", () => ({
     isDate(): boolean {

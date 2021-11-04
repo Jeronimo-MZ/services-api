@@ -114,7 +114,7 @@ describe("User routes", () => {
 
     describe("PATCH /users/avatar", () => {
         beforeAll(() => {
-            jest.mock("@/infra/storage/DiskStorage/DiskStorage");
+            jest.mock("@/infra/storage/DiskStorage");
             jest.spyOn(DiskStorage.prototype, "save").mockImplementation(
                 async () => "any_url",
             );

@@ -1,9 +1,9 @@
 import faker from "faker";
 
-import { LogErrorRepositorySpy } from "@/data/mocks";
 import { LogControllerDecorator } from "@/main/decorators";
 import { ok, serverError } from "@/presentation/helpers";
 import { Controller, HttpResponse } from "@/presentation/protocols";
+import { LogErrorRepositorySpy } from "@/tests/data/mocks";
 
 class ControllerSpy implements Controller {
     httpResponse = ok(faker.random.objectElement());

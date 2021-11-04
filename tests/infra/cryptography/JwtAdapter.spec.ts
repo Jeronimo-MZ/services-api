@@ -1,9 +1,8 @@
 import faker from "faker";
 import jwt from "jsonwebtoken";
 
+import { JwtAdapter } from "@/infra/cryptography";
 import { throwError } from "@/tests/domain/mocks";
-
-import { JwtAdapter } from "./JwtAdapter";
 
 const secret = faker.random.alphaNumeric(50);
 const plaintext = faker.datatype.uuid();

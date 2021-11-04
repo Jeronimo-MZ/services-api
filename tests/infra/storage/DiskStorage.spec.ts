@@ -4,9 +4,8 @@ import path from "path";
 import { mocked } from "ts-jest/utils";
 
 import { SaveFile } from "@/data/protocols/storage";
+import { DiskStorage } from "@/infra/storage";
 import { throwError } from "@/tests/domain/mocks";
-
-import { DiskStorage } from "./DiskStorage";
 
 jest.mock("fs/promises");
 
