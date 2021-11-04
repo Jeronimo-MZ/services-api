@@ -6,8 +6,8 @@ dist/
 .stryker-tmp
 
 # static files folder
-static/*
-!static/.gitkeep
+public/*
+!public/.gitkeep
 
 reports/
 
