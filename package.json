@@ -18,7 +18,7 @@
         "Continuous Integration"
     ],
     "scripts": {
-        "start": "node dist/main/server.js",
+        "start": "node dist/src/main/server.js",
         "build": "rimraf dist && tsc -p tsconfig-build.json && tsc-alias -p tsconfig-build.json",
         "dev": "tsnd -r tsconfig-paths/register --transpile-only --inspect --ignore-watch node_modules src/main/server.ts ",
         "lint": "eslint src",
