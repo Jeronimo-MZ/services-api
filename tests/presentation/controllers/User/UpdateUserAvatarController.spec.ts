@@ -1,11 +1,10 @@
 import faker from "faker";
 
+import { UpdateUserAvatarController } from "@/presentation/controllers";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import { badRequest, ok, serverError } from "@/presentation/helpers";
-import { UpdateUserAvatarSpy, ValidationSpy } from "@/presentation/mocks";
 import { throwError } from "@/tests/domain/mocks";
-
-import { UpdateUserAvatarController } from "./UpdateUserAvatarController";
+import { UpdateUserAvatarSpy, ValidationSpy } from "@/tests/presentation/mocks";
 
 type SutTypes = {
     sut: UpdateUserAvatarController;

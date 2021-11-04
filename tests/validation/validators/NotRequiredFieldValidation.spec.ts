@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { ValidationSpy } from "@/presentation/mocks";
+import { ValidationSpy } from "@/tests/presentation/mocks";
 import { NotRequiredFieldValidation } from "@/validation/validators";
 
 const field = faker.random.word();

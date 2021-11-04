@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import { LoginController } from "@/presentation/controllers";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
@@ -7,10 +8,8 @@ import {
     serverError,
     unauthorized,
 } from "@/presentation/helpers";
-import { AuthenticationSpy, ValidationSpy } from "@/presentation/mocks";
 import { throwError } from "@/tests/domain/mocks";
-
-import { LoginController } from "./LoginController";
+import { AuthenticationSpy, ValidationSpy } from "@/tests/presentation/mocks";
 
 type SutTypes = {
     sut: LoginController;

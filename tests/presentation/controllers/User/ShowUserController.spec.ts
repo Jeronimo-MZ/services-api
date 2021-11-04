@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import { ShowUserController } from "@/presentation/controllers";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
@@ -7,10 +8,8 @@ import {
     serverError,
     unauthorized,
 } from "@/presentation/helpers";
-import { LoadUserByTokenSpy, ValidationSpy } from "@/presentation/mocks";
 import { throwError } from "@/tests/domain/mocks";
-
-import { ShowUserController } from "./ShowUserController";
+import { LoadUserByTokenSpy, ValidationSpy } from "@/tests/presentation/mocks";
 
 type SutTypes = {
     sut: ShowUserController;

@@ -1,2 +1,2 @@
-export * from "./AddServiceProvided/AddServiceProvidedController";
-export * from "./LoadUserServicesProvided/LoadUserServicesProvidedController";
+export * from "./AddServiceProvidedController";
+export * from "./LoadUserServicesProvidedController";

@@ -1,37 +1,40 @@
 import faker from "faker";
 
+import { LoadUserServicesProvidedController } from "@/presentation/controllers";
 import { InvalidParamError, ServerError } from "@/presentation/errors";
 import { badRequest, ok, serverError } from "@/presentation/helpers";
-import { AddCustomerSpy, ValidationSpy } from "@/presentation/mocks";
 import { throwError } from "@/tests/domain/mocks";
-
-import { AddCustomerController } from "./AddCustomerController";
+import {
+    LoadUserServicesProvidedSpy,
+    ValidationSpy,
+} from "@/tests/presentation/mocks";
 
 type SutTypes = {
-    sut: AddCustomerController;
+    sut: LoadUserServicesProvidedController;
     validationSpy: ValidationSpy;
-    addCustomerSpy: AddCustomerSpy;
+    loadUserServicesProvidedSpy: LoadUserServicesProvidedSpy;
 };
 
 const makeSut = (): SutTypes => {
     const validationSpy = new ValidationSpy();
-    const addCustomerSpy = new AddCustomerSpy();
-    const sut = new AddCustomerController(validationSpy, addCustomerSpy);
+    const loadUserServicesProvidedSpy = new LoadUserServicesProvidedSpy();
+    const sut = new LoadUserServicesProvidedController(
+        validationSpy,
+        loadUserServicesProvidedSpy,
+    );
     return {
         sut,
         validationSpy,
-        addCustomerSpy,
+        loadUserServicesProvidedSpy,
     };
 };
-const mockRequest = (): AddCustomerController.Request => {
+const mockRequest = (): LoadUserServicesProvidedController.Request => {
     return {
-        institution: faker.name.findName(),
-        name: faker.name.findName(),
         userId: faker.datatype.uuid(),
     };
 };
 
-describe("AddCustomer Controller", () => {
+describe("LoadUserServicesProvided Controller", () => {
     it("should call Validation with correct values", async () => {
         const { sut, validationSpy } = makeSut();
         const request = mockRequest();
@@ -55,27 +58,25 @@ describe("AddCustomer Controller", () => {
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
 
-    it("should call AddCustomer with correct values", async () => {
-        const { sut, addCustomerSpy } = makeSut();
+    it("should call LoadUserServicesProvided with correct id", async () => {
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
         const request = mockRequest();
         await sut.handle(request);
-        expect(addCustomerSpy.params).toEqual({
-            institution: request.institution,
-            name: request.name,
-            providerId: request.userId,
-        });
+        expect(loadUserServicesProvidedSpy.userId).toBe(request.userId);
     });
 
-    it("should return 500 if AddCustomer throws", async () => {
-        const { sut, addCustomerSpy } = makeSut();
-        jest.spyOn(addCustomerSpy, "add").mockImplementationOnce(throwError);
+    it("should return 500 if LoadUserServicesProvided throws", async () => {
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
+        jest.spyOn(loadUserServicesProvidedSpy, "load").mockImplementationOnce(
+            throwError,
+        );
         const httpResponse = await sut.handle(mockRequest());
         expect(httpResponse).toEqual(serverError(new ServerError(undefined)));
     });
 
     it("should return 200 on success", async () => {
-        const { sut, addCustomerSpy } = makeSut();
+        const { sut, loadUserServicesProvidedSpy } = makeSut();
         const httpResponse = await sut.handle(mockRequest());
-        expect(httpResponse).toEqual(ok(addCustomerSpy.result));
+        expect(httpResponse).toEqual(ok(loadUserServicesProvidedSpy.result));
     });
 });

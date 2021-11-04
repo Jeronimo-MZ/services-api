@@ -1,7 +1,7 @@
 import faker from "faker";
 
 import { InvalidParamError, MissingParamError } from "@/presentation/errors";
-import { ValidationSpy } from "@/presentation/mocks";
+import { ValidationSpy } from "@/tests/presentation/mocks";
 import { ObjectValidation } from "@/validation/validators";
 
 const field = faker.random.word();

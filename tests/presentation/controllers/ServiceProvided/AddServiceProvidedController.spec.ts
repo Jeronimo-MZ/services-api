@@ -1,11 +1,13 @@
 import faker from "faker";
 
+import { AddServiceProvidedController } from "@/presentation/controllers";
 import { InvalidParamError, ServerError } from "@/presentation/errors";
 import { badRequest, ok, serverError } from "@/presentation/helpers";
-import { AddServiceProviderSpy, ValidationSpy } from "@/presentation/mocks";
 import { throwError } from "@/tests/domain/mocks";
-
-import { AddServiceProvidedController } from "./AddServiceProvidedController";
+import {
+    AddServiceProviderSpy,
+    ValidationSpy,
+} from "@/tests/presentation/mocks";
 
 type SutTypes = {
     sut: AddServiceProvidedController;

@@ -2,10 +2,9 @@ import faker from "faker";
 
 import { AccessDeniedError } from "@/presentation/errors";
 import { forbidden, ok, serverError } from "@/presentation/helpers";
-import { LoadUserByTokenSpy } from "@/presentation/mocks";
+import { AuthMiddleware } from "@/presentation/middlewares";
 import { throwError } from "@/tests/domain/mocks";
-
-import { AuthMiddleware } from "./AuthMiddleware";
+import { LoadUserByTokenSpy } from "@/tests/presentation/mocks";
 
 const mockRequest = (): AuthMiddleware.Request => ({
     accessToken: faker.random.alphaNumeric(50),
