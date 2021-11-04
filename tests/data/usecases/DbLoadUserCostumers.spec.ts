@@ -1,9 +1,8 @@
 import faker from "faker";
 
-import { LoadCustomersByProviderIdRepositorySpy } from "@/data/mocks";
+import { DbLoadUserCustomers } from "@/data/usecases/DbLoadUserCustomers";
 import { throwError } from "@/domain/mocks";
-
-import { DbLoadUserCustomers } from "./DbLoadUserCustomers";
+import { LoadCustomersByProviderIdRepositorySpy } from "@/tests/data/mocks";
 
 type SutTypes = {
     sut: DbLoadUserCustomers;

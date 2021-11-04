@@ -1,9 +1,8 @@
 import faker from "faker";
 
-import { DecrypterSpy, LoadUserByTokenRepositorySpy } from "@/data/mocks";
+import { DbLoadUserByToken } from "@/data/usecases/DbLoadUserByToken";
 import { throwError } from "@/domain/mocks";
-
-import { DbLoadUserByToken } from "./DbLoadUserByToken";
+import { DecrypterSpy, LoadUserByTokenRepositorySpy } from "@/tests/data/mocks";
 
 type SutTypes = {
     sut: DbLoadUserByToken;

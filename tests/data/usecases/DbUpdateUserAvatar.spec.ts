@@ -1,16 +1,15 @@
 import faker from "faker";
 
 import { UnexpectedError } from "@/data/errors";
+import { DbUpdateUserAvatar } from "@/data/usecases/DbUpdateUserAvatar";
+import { mockUpdateUserAvatarParams, throwError } from "@/domain/mocks";
 import {
     DeleteFileSpy,
     LoadUserByIdRepositorySpy,
     SaveFileSpy,
     UpdateUserAvatarRepositorySpy,
     UUIDGeneratorSpy,
-} from "@/data/mocks";
-import { mockUpdateUserAvatarParams, throwError } from "@/domain/mocks";
-
-import { DbUpdateUserAvatar } from "./DbUpdateUserAvatar";
+} from "@/tests/data/mocks";
 
 type SutTypes = {
     sut: DbUpdateUserAvatar;

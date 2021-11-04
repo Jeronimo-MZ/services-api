@@ -1,11 +1,10 @@
 import { UnexpectedError } from "@/data/errors";
+import { DbAddCustomer } from "@/data/usecases/DbAddCustomer";
+import { mockAddCustomerParams, throwError } from "@/domain/mocks";
 import {
     AddCustomerRepositorySpy,
     LoadUserByIdRepositorySpy,
-} from "@/data/mocks";
-import { mockAddCustomerParams, throwError } from "@/domain/mocks";
-
-import { DbAddCustomer } from "./DbAddCustomer";
+} from "@/tests/data/mocks";
 
 type SutTypes = {
     sut: DbAddCustomer;
