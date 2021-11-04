@@ -1,9 +1,9 @@
-import { mockServiceProvidedModel } from "@/domain/mocks";
 import { ServiceProvided } from "@/domain/models";
 import {
     AddServiceProvided,
     LoadUserServicesProvided,
 } from "@/domain/usecases";
+import { mockServiceProvidedModel } from "@/tests/domain/mocks";
 
 export class AddServiceProviderSpy implements AddServiceProvided {
     result: ServiceProvided | Error = mockServiceProvidedModel();

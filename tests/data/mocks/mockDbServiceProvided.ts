@@ -2,9 +2,9 @@ import {
     AddServiceProvidedRepository,
     LoadServicesProvidedByProviderIdRepository,
 } from "@/data/protocols/database";
-import { mockServiceProvidedModel } from "@/domain/mocks";
 import { ServiceProvided } from "@/domain/models";
 import { AddServiceProvided } from "@/domain/usecases";
+import { mockServiceProvidedModel } from "@/tests/domain/mocks";
 
 export class AddServiceProvidedRepositorySpy
     implements AddServiceProvidedRepository

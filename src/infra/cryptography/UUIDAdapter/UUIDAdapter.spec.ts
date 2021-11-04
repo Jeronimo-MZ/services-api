@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import faker from "faker";
 import { mocked } from "ts-jest/utils";
 
-import { throwError } from "@/domain/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { UUIDAdapter } from "./UUIDAdapter";
 

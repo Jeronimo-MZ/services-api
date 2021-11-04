@@ -1,6 +1,5 @@
 import faker from "faker";
 
-import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models";
 import {
     AddUser,
@@ -8,6 +7,7 @@ import {
     LoadUserByToken,
     UpdateUserAvatar,
 } from "@/domain/usecases";
+import { mockUserModel } from "@/tests/domain/mocks";
 
 export class AddUserSpy implements AddUser {
     result: User | null = mockUserModel();

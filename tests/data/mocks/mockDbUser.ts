@@ -6,9 +6,9 @@ import {
     UpdateAccessTokenRepository,
     UpdateUserAvatarRepository,
 } from "@/data/protocols/database";
-import { mockUserModel } from "@/domain/mocks";
 import { User } from "@/domain/models";
 import { AddUser } from "@/domain/usecases";
+import { mockUserModel } from "@/tests/domain/mocks";
 
 export class LoadUserByEmailRepositorySpy implements LoadUserByEmailRepository {
     email: string;

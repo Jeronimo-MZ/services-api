@@ -2,9 +2,9 @@ import bcrypt from "bcrypt";
 import faker from "faker";
 import { Collection } from "mongodb";
 
-import { mockAddCustomerParams } from "@/domain/mocks";
 import { Customer } from "@/domain/models";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
+import { mockAddCustomerParams } from "@/tests/domain/mocks";
 
 import { CustomerMongoRepository } from "./Customer";
 

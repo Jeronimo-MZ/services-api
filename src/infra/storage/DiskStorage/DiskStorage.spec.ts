@@ -4,7 +4,7 @@ import path from "path";
 import { mocked } from "ts-jest/utils";
 
 import { SaveFile } from "@/data/protocols/storage";
-import { throwError } from "@/domain/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { DiskStorage } from "./DiskStorage";
 

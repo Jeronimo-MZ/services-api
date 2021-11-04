@@ -1,10 +1,14 @@
 import { DbAddUser } from "@/data/usecases/DbAddUser";
-import { mockAddUserParams, mockUserModel, throwError } from "@/domain/mocks";
 import {
     AddUserRepositorySpy,
     HasherSpy,
     LoadUserByEmailRepositorySpy,
 } from "@/tests/data/mocks";
+import {
+    mockAddUserParams,
+    mockUserModel,
+    throwError,
+} from "@/tests/domain/mocks";
 
 type SutTypes = {
     sut: DbAddUser;

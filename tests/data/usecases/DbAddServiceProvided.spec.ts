@@ -1,11 +1,11 @@
 import { DbAddServiceProvided } from "@/data/usecases/DbAddServiceProvided";
-import { mockAddServiceProvidedParams, throwError } from "@/domain/mocks";
 import { AddServiceProvided } from "@/domain/usecases";
 import { InvalidParamError } from "@/presentation/errors";
 import {
     AddServiceProvidedRepositorySpy,
     LoadCustomerByIdRepositorySpy,
 } from "@/tests/data/mocks";
+import { mockAddServiceProvidedParams, throwError } from "@/tests/domain/mocks";
 
 type SutTypes = {
     sut: DbAddServiceProvided;

@@ -1,7 +1,7 @@
 import faker from "faker";
 import jwt from "jsonwebtoken";
 
-import { throwError } from "@/domain/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { JwtAdapter } from "./JwtAdapter";
 

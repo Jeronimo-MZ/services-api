@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import faker from "faker";
 
-import { throwError } from "@/domain/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { BcryptAdapter } from "./BcryptAdapter";
 

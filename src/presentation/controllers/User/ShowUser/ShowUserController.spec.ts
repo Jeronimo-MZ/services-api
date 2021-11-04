@@ -1,6 +1,5 @@
 import faker from "faker";
 
-import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import {
     badRequest,
@@ -9,6 +8,7 @@ import {
     unauthorized,
 } from "@/presentation/helpers";
 import { LoadUserByTokenSpy, ValidationSpy } from "@/presentation/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { ShowUserController } from "./ShowUserController";
 

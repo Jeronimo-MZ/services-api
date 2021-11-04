@@ -1,11 +1,11 @@
 import { DbAuthentication } from "@/data/usecases/DbAuthentication";
-import { mockAuthenticationParams, throwError } from "@/domain/mocks";
 import {
     EncrypterSpy,
     HashComparerSpy,
     LoadUserByEmailRepositorySpy,
     UpdateAccessTokenRepositorySpy,
 } from "@/tests/data/mocks";
+import { mockAuthenticationParams, throwError } from "@/tests/domain/mocks";
 
 type SutTypes = {
     sut: DbAuthentication;

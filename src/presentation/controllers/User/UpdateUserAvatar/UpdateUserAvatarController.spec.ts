@@ -1,9 +1,9 @@
 import faker from "faker";
 
-import { throwError } from "@/domain/mocks";
 import { MissingParamError, ServerError } from "@/presentation/errors";
 import { badRequest, ok, serverError } from "@/presentation/helpers";
 import { UpdateUserAvatarSpy, ValidationSpy } from "@/presentation/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { UpdateUserAvatarController } from "./UpdateUserAvatarController";
 

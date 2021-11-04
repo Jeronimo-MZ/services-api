@@ -1,9 +1,9 @@
 import faker from "faker";
 
-import { throwError } from "@/domain/mocks";
 import { AccessDeniedError } from "@/presentation/errors";
 import { forbidden, ok, serverError } from "@/presentation/helpers";
 import { LoadUserByTokenSpy } from "@/presentation/mocks";
+import { throwError } from "@/tests/domain/mocks";
 
 import { AuthMiddleware } from "./AuthMiddleware";
 

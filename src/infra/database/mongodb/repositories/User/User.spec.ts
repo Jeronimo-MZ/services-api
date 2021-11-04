@@ -1,9 +1,9 @@
 import faker from "faker";
 import { Collection } from "mongodb";
 
-import { mockAddUserParams } from "@/domain/mocks";
 import { User } from "@/domain/models";
 import { CollectionNames, MongoHelper } from "@/infra/database/mongodb";
+import { mockAddUserParams } from "@/tests/domain/mocks";
 
 import { UserMongoRepository } from "./User";
 
