@@ -1,3 +1,3 @@
-export * from "./BcryptAdapter/BcryptAdapter";
-export * from "./JwtAdapter/JwtAdapter";
-export * from "./UUIDAdapter/UUIDAdapter";
+export * from "./BcryptAdapter";
+export * from "./JwtAdapter";
+export * from "./UUIDAdapter";

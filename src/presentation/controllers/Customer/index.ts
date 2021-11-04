@@ -1,2 +1,2 @@
-export * from "./AddCustomer/AddCustomerController";
-export * from "./LoadUserCustomers/LoadUserCustomersController";
+export * from "./AddCustomerController";
+export * from "./LoadUserCustomersController";

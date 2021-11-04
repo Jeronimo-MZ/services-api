@@ -1,2 +1,3 @@
-export * from "./AddServiceProvided/AddServiceProvidedControllerFactory";
-export * from "./LoadUserServicesProvided/LoadUserServicesProvidedControllerFactory";
+export * from "./AddServiceProvidedControllerFactory";
+export * from "./AddServiceProvidedValidation";
+export * from "./LoadUserServicesProvidedControllerFactory";

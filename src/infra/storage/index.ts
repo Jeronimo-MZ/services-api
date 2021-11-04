@@ -1,1 +1,1 @@
-export * from "./DiskStorage/DiskStorage";
+export * from "./DiskStorage";

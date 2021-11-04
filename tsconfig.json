@@ -8,11 +8,12 @@
         "strictPropertyInitialization": false,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "rootDir": "src",
-        "baseUrl": "src",
+        "rootDir": ".",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["*"]
+            "@/*": ["src/*"],
+            "@/tests/*": ["tests/*"]
         }
     },
-    "include": ["src"]
+    "include": ["src", "tests"]
 }

@@ -1,2 +1,3 @@
-export * from "./AddCustomer/AddCustomerControllerFactory";
-export * from "./LoadUserCustomers/LoadUserCustomersControllerFactory";
+export * from "./AddCustomerControllerFactory";
+export * from "./AddCustomerValidationFactory";
+export * from "./LoadUserCustomersControllerFactory";
