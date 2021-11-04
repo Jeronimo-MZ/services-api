@@ -1,3 +1,4 @@
+import { makeAddServiceProvidedValidation } from "@/main/factories";
 import { Validation } from "@/presentation/protocols";
 import { DateValidatorSpy } from "@/tests/validation/mocks";
 import {
@@ -6,8 +7,6 @@ import {
     RequiredFieldValidation,
     ValidationComposite,
 } from "@/validation/validators";
-
-import { makeAddServiceProvidedValidation } from "./AddServiceProvidedValidation";
 
 jest.mock("@/validation/validators/ValidationComposite");
 

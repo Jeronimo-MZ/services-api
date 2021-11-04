@@ -1,10 +1,9 @@
+import { makeAddCustomerValidation } from "@/main/factories";
 import { Validation } from "@/presentation/protocols";
 import {
     RequiredFieldValidation,
     ValidationComposite,
 } from "@/validation/validators";
-
-import { makeAddCustomerValidation } from "./AddCustomerValidationFactory";
 
 jest.mock("@/validation/validators/ValidationComposite");
 

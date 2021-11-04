@@ -1,3 +1,4 @@
+import { makeUpdateUserAvatarValidation } from "@/main/factories";
 import { Validation } from "@/presentation/protocols";
 import {
     AllowedMimeTypesValidation,
@@ -6,8 +7,6 @@ import {
     RequiredFieldValidation,
     ValidationComposite,
 } from "@/validation/validators";
-
-import { makeUpdateUserAvatarValidation } from "./UpdateUserAvatarValidationFactory";
 
 jest.mock("@/validation/validators/ValidationComposite");
 
