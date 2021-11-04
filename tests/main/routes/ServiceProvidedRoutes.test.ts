@@ -118,13 +118,11 @@ describe("ServiceProvided routes", () => {
                 const customer = await makeCustomer(id);
                 makeServiceProvided(id, customer.id);
                 makeServiceProvided(id, customer.id);
-                const response = await request(app)
+                await request(app)
                     .get("/api/services")
                     .set("x-access-token", token)
                     .send()
                     .expect(200);
-
-                console.log(response.body);
             });
         });
     });

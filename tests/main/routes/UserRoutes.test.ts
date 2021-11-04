@@ -138,7 +138,6 @@ describe("User routes", () => {
                     filename: "any_name",
                     contentType: "image/png",
                 });
-            console.log(body);
             expect(status).toBe(200);
             expect(body).toEqual({
                 avatarUrl: "any_url",
