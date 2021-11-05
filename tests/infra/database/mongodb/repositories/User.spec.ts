@@ -148,7 +148,7 @@ describe("User Mongo Repository", () => {
 
         it("should return null if loadByToken fails", async () => {
             const sut = makeSut();
-            const user = await sut.loadByEmail(faker.internet.email());
+            const user = await sut.loadByToken(token);
             expect(user).toBeNull();
         });
     });
