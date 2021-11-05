@@ -77,6 +77,21 @@ describe("AddServiceProvided Controller", () => {
         });
     });
 
+    it("should call AddServiceProvided with undefined paymendDate if paymentDate is not provided", async () => {
+        const { sut, addServiceProviderSpy } = makeSut();
+        const request = mockRequest();
+        delete request.paymentDate;
+        await sut.handle(request);
+        expect(addServiceProviderSpy.params).toEqual({
+            customerId: request.customerId,
+            name: request.name,
+            price: request.price,
+            providerId: request.userId,
+            details: request.details,
+            paymentDate: undefined,
+        });
+    });
+
     it("should return 500 if AddServiceProvided throws", async () => {
         const { sut, addServiceProviderSpy } = makeSut();
         jest.spyOn(addServiceProviderSpy, "add").mockImplementationOnce(
