@@ -45,7 +45,7 @@ export class CustomerMongoRepository
             .find({
                 providerId: providerId,
             })
-            .toArray()) as Customer[];
+            .toArray()) as unknown as Customer[];
         return customers.map(MongoHelper.map);
     }
 

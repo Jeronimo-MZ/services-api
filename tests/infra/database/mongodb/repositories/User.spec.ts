@@ -91,14 +91,14 @@ describe("User Mongo Repository", () => {
             );
             let user = (await usersCollection.findOne({
                 _id: insertedId,
-            })) as User;
+            })) as unknown as User;
             expect(user.accessToken).toBeFalsy();
 
             const accessToken = faker.datatype.uuid();
             await sut.updateAccessToken(insertedId.toHexString(), accessToken);
             user = (await usersCollection.findOne({
                 _id: insertedId,
-            })) as User;
+            })) as unknown as User;
             expect(user).toBeTruthy();
             expect(user.accessToken).toBe(accessToken);
         });
@@ -112,7 +112,7 @@ describe("User Mongo Repository", () => {
             );
             let user = (await usersCollection.findOne({
                 _id: insertedId,
-            })) as User;
+            })) as unknown as User;
             expect(user.avatar).toBeFalsy();
 
             const avatar = faker.datatype.uuid();
@@ -122,7 +122,7 @@ describe("User Mongo Repository", () => {
             });
             user = (await usersCollection.findOne({
                 _id: insertedId,
-            })) as User;
+            })) as unknown as User;
             expect(user).toBeTruthy();
             expect(user.avatar).toBe(avatar);
         });
